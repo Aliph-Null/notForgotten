@@ -6,8 +6,17 @@
       "Order": 1,
       "id": "sec-1",
       "title": "Skywatchers",
-      "path": "SectionIoan/index.html",
+      "path": "Section1/index.html",
       "year": "32,500 BC",
+      "era": "Prehistoric age",
+      "Background-id": 1
+    },
+    {
+      "Order": 2,
+      "id": "TEST",
+      "title": "TEST",
+      "path": "SectionIoanExempluCompletat/index.html",
+      "year": "TESTING",
       "era": "Prehistoric age",
       "Background-id": 1
     }
