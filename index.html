@@ -2,17 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Viewer</title>
     <link rel="stylesheet" href="core_viewer.css" />
   </head>
   <body>
-    <!-- Fixed Background Layer -->
     <iframe id="bg-frame" class="bg-frame" title="Animated Background"></iframe>
 
-    <!-- Foreground Section Scroller -->
     <div class="scroller-container" id="scroller"></div>
-
-    <!-- Absolute Timeline -->
 
     <script src="core_viewer.js"></script>
 
@@ -23,7 +20,6 @@
       let currentState = 1;
 
       function sendState(targetState) {
-        // Clamp between 1 and 11
         const clamped = Math.max(
           MIN_STATE,
           Math.min(MAX_STATE, Number(targetState)),
@@ -41,28 +37,23 @@
         console.log("Sent state:", currentState);
       }
 
-      // Send initial state once the iframe finishes loading
       bgFrame.addEventListener("load", () => {
         sendState(currentState);
       });
 
-      // Listen for keyboard navigation (Arrow keys + Numpad prompt)
       window.addEventListener("keydown", (e) => {
-        // ArrowRight / ArrowUp -> Next state (wraps around 11 -> 1)
         if (e.key === "ArrowRight" || e.key === "ArrowUp") {
           e.preventDefault();
           const next = currentState >= MAX_STATE ? MIN_STATE : currentState + 1;
           sendState(next);
         }
 
-        // ArrowLeft / ArrowDown -> Previous state (wraps around 1 -> 11)
         if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
           e.preventDefault();
           const prev = currentState <= MIN_STATE ? MAX_STATE : currentState - 1;
           sendState(prev);
         }
 
-        // Any Numpad key -> Prompt user for target state (1–11)
         if (e.code.startsWith("Numpad")) {
           e.preventDefault();
           const input = window.prompt(

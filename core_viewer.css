@@ -6,6 +6,8 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -15,10 +17,12 @@ body {
   display: flex;
   width: 100vw;
   height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   scroll-behavior: smooth;
 
   scrollbar-width: none;
-  background: transparent; /* Must be transparent so the background shows through */
+  background: transparent;
 }
 .scroller-container::-webkit-scrollbar {
   display: none;
@@ -42,9 +46,22 @@ body {
   flex: 0 0 100vw;
   width: 100vw;
   height: 100vh;
+  flex-basis: 100dvw;
+  width: 100dvw;
+  height: 100dvh;
   border: none;
   display: block;
   scroll-snap-align: start;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.section-frame.active {
+  opacity: 1;
+}
+
+.scroller-container.vertical .section-frame {
+  flex-basis: 100dvh;
 }
 
 .bg-frame {
@@ -53,7 +70,30 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   border: none;
   z-index: 0;
-  pointer-events: none; /* Lets all clicks/scrolls pass right through to the scroller */
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .scroller-container,
+  .scroller-container.horizontal {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    height: 100dvh;
+  }
+
+  .scroller-container.horizontal .section-frame {
+    flex-basis: 100dvh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-frame {
+    transition: none;
+  }
 }
