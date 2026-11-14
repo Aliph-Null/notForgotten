@@ -2,8 +2,8 @@
   "horizontal": true,
   "background": "bg.html",
   "sections": [
-    { "id": "item-1", "title": "Luna", "path": "SectionTemplate/index.html?id=1" },
-    { "id": "item-2", "title": "Pamant", "path": "SectionTemplate/index.html?id=2" },
-    { "id": "item-3", "title": "Marte", "path": "SectionTemplate/index.html?id=3" }
+    { "id": "item-1", "title": "Luna", "path": "SectionTemplate/index.html?id=1", "Background-id": 9 },
+    { "id": "item-2", "title": "Pamant", "path": "SectionTemplate/index.html?id=2", "Background-id": 8 },
+    { "id": "item-3", "title": "Marte", "path": "SectionTemplate/index.html?id=3", "Background-id": 10 }
   ]
 }

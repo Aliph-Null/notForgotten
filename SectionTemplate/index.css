@@ -1,7 +1,7 @@
 @import url("../global.css");
 
 :root {
-  --paper: #f2f1ee;
+  --paper: rgba(242, 241, 238, 0.78);
   --ink: #111111;
   --muted: rgba(17, 17, 17, 0.78);
   --line: rgba(17, 17, 17, 1);
@@ -17,7 +17,7 @@ body {
   width: 100%;
   min-height: 100%;
   margin: 0;
-  background: var(--paper);
+  background: transparent;
   color: var(--ink);
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
 }
@@ -46,6 +46,7 @@ body.theme-marte {
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 0.75rem;
+  background: var(--paper);
 }
 
 .topbar {
