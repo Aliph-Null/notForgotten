@@ -1,0 +1,13 @@
+[
+  {"id": 1, "description": "Dark universe with twinkling stars and slowly drifting nebulae."},
+  {"id": 3, "description": "The Sun with a glowing asymmetric corona, animated plasma loops, and occasional large eruptions."},
+  {"id": 4, "description": "Lascaux cave paintings with flickering warm lamplight and subtle camera movement."},
+  {"id": 5, "description": "Illustrated Hypatia observing the starry sky, surrounded by astronomical instruments, scrolls, geometric drawings, and an oil lamp."},
+  {"id": 6, "description": "Detailed antique geocentric celestial map with Earth at the centre, moving planets, zodiac divisions, lunar phases, and engraved ornaments."},
+  {"id": 7, "description": "Slowly rotating constellation wheel crossing the middle of the screen, with three or four zodiac constellations visible at a time."},
+  {"id": 8, "description": "Cinematic Earth from space with detailed continents, oceans, clouds, atmospheric rim lighting, and gentle camera movement."},
+  {"id": 9, "description": "Cinematic Moon from space with detailed craters, lunar maria, soft shadows, and subtle camera movement."},
+  {"id": 10, "description": "Cinematic Mars from space with detailed surface features and its two orbiting moons, Phobos and Deimos."},
+  {"id": 11, "description": "Martian surface with rocky terrain, rust-coloured dunes, drifting dust, and a pale setting Sun surrounded by a blue glow."},
+  {"id": 12, "description": "Animated solar system with the Sun, all eight planets, orbital paths, Saturn’s rings, Earth’s Moon, and the asteroid belt. Sizes, distances, and speeds are illustrative."}
+]

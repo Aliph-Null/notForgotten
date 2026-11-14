@@ -1,5 +1,6 @@
 {
   "horizontal": true,
+  "background": "bg.html",
   "sections": [
     { "id": "sec-1", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
     { "id": "sec-2", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
