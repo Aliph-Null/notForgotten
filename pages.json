@@ -1,5 +1,6 @@
 {
   "horizontal": true,
+  "background": "bg.html",
   "sections": [
     { "id": "item-1", "title": "Luna", "path": "SectionTemplate/index.html?id=1" },
     { "id": "item-2", "title": "Pamant", "path": "SectionTemplate/index.html?id=2" },
