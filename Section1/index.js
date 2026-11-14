@@ -36,7 +36,6 @@ async function loadItem() {
       return value !== undefined && value !== null && String(value).trim().length > 0;
     });
 
-    updateTimeline(sectionId);
     applyTheme(item.TIP || "luna");
     const bagValid = validateBag(item);
 
@@ -78,21 +77,6 @@ async function loadItem() {
   } catch (error) {
     console.error("Unable to render item:", error);
   }
-}
-
-function updateTimeline(sectionId) {
-  const segments = document.querySelectorAll(".segment");
-  if (!segments.length) {
-    return;
-  }
-
-  const rawIndex = Number(sectionId) - 1;
-  const safeIndex = Number.isFinite(rawIndex) ? rawIndex : 0;
-  const boundedIndex = Math.min(Math.max(safeIndex, 0), segments.length - 1);
-
-  segments.forEach((segment, i) => {
-    segment.classList.toggle("active", i === boundedIndex);
-  });
 }
 
 function applyTheme(tip) {
