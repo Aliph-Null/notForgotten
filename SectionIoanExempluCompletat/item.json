@@ -1,0 +1,27 @@
+{
+  "Year": "2021",
+  "Dates": [
+    {
+      "date": "2021-04-19",
+      "text": "Ingenuity completes the first powered, controlled flight on another planet."
+    },
+    {
+      "date": "2021-04-30",
+      "text": "The helicopter completes its fourth flight, traveling farther and faster."
+    },
+    {
+      "date": "2022-04-08",
+      "text": "Flight 25 reaches a new distance and speed record for the mission."
+    }
+  ],
+  "Title": "Ingenuity Mars Helicopter",
+  "Body-Text": "A small technology demonstrator that made the first powered flight on another planet, proving that aerial exploration is possible in the thin Martian atmosphere.",
+  "Path": "ingenuity_mars.html",
+  "ModelPath": "IngenuityMarsHelicopter.glb",
+  "ModelFacts": [
+    "Mass: about 1.8 kg",
+    "Rotor speed: about 2,400 rpm",
+    "Designed for the thin Martian atmosphere"
+  ],
+  "Bottom %": 8
+}
