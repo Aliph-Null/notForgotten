@@ -129,9 +129,33 @@ function renderModel(modelPath) {
     return;
   }
 
-  const lower = String(modelPath).toLowerCase();
+  const modelFile = String(modelPath).split(/[?#]/, 1)[0].toLowerCase();
 
-  if (lower.endsWith(".html")) {
+  if (modelFile.endsWith(".usdz")) {
+    const link = document.createElement("a");
+    link.href = modelPath;
+    link.rel = "ar";
+    link.className = "usdz-link";
+    link.setAttribute("aria-label", "Open USDZ model in AR Quick Look");
+
+    link.textContent = "Open USDZ model";
+    stage.appendChild(link);
+    return;
+  }
+
+  if (/\.(gltf|glb)$/.test(modelFile)) {
+    const viewer = document.createElement("model-viewer");
+    viewer.src = modelPath;
+    viewer.alt = "3D model";
+    viewer.setAttribute("camera-controls", "");
+    viewer.setAttribute("auto-rotate", "");
+    viewer.setAttribute("ar", "");
+    viewer.setAttribute("ar-modes", "webxr scene-viewer quick-look");
+    stage.appendChild(viewer);
+    return;
+  }
+
+  if (modelFile.endsWith(".html")) {
     const iframe = document.createElement("iframe");
     iframe.src = modelPath;
     iframe.title = "Model";
@@ -139,7 +163,7 @@ function renderModel(modelPath) {
     return;
   }
 
-  if (/\.(png|jpg|jpeg|gif|svg|webp)$/.test(lower)) {
+  if (/\.(png|jpg|jpeg|svg|webp)$/.test(modelFile)) {
     const image = document.createElement("img");
     image.src = modelPath;
     image.alt = "Model";
@@ -147,7 +171,7 @@ function renderModel(modelPath) {
     return;
   }
 
-  if (/\.(mp4|webm|ogg)$/.test(lower)) {
+  if (/\.(mp4|webm|ogg)$/.test(modelFile)) {
     const video = document.createElement("video");
     video.src = modelPath;
     video.autoplay = true;
