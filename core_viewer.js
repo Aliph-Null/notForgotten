@@ -2,9 +2,7 @@ async function initViewer() {
   let data;
   try {
     const response = await fetch("pages.json");
-    if (!response.ok) {
-      throw new Error("pages.json not found");
-    }
+    if (!response.ok) throw new Error("pages.json not found");
     data = await response.json();
   } catch (error) {
     console.error("Viewer config failed:", error);
@@ -18,21 +16,23 @@ async function initViewer() {
     return;
   }
 
-  const horizontalSetting = Boolean(data.horizontal);
-  const mobileViewport = window.matchMedia("(max-width: 768px)");
-  const sections = Array.isArray(data.sections)
-    ? data.sections.filter((section) => section && section.path)
-    : [];
-  const sortedSections = [...sections].sort(
-    (a, b) => Number(a.Order || 0) - Number(b.Order || 0),
-  );
+  const sortedSections = (Array.isArray(data.sections) ? data.sections : [])
+    .filter((section) => section && section.path)
+    .sort((a, b) => Number(a.Order || 0) - Number(b.Order || 0));
   const frames = [];
+  const mobileViewport = window.matchMedia("(max-width: 768px)");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const FADE_MS = 500;
   let currentIndex = 0;
-  let horizontalMode = null;
+  let transitionUntil = 0;
+  let lastWheelTime = -Infinity;
+  let wheelTotal = 0;
+  let wheelGestureUsed = false;
+  let touchStart = null;
 
   function sendBgState(index) {
     const targetBgId = frames[index]?.dataset.bgId;
-    if (targetBgId !== undefined && bgFrame && bgFrame.contentWindow) {
+    if (targetBgId !== undefined && bgFrame?.contentWindow) {
       bgFrame.contentWindow.postMessage(
         { type: "SET_STATE", state: Number(targetBgId) },
         "*",
@@ -40,97 +40,154 @@ async function initViewer() {
     }
   }
 
-  function setActiveSection(index, notify = false) {
-    if (!Number.isInteger(index) || index < 0 || index >= frames.length) {
-      return;
-    }
-
+  function goToSection(index, force = false) {
+    if (!Number.isInteger(index) || index < 0 || index >= frames.length) return;
     const changed = index !== currentIndex;
+    if (!changed && !force) return;
+
     currentIndex = index;
+    if (changed) {
+      transitionUntil =
+        performance.now() + (reducedMotion.matches ? 0 : FADE_MS);
+    }
+    // Every iframe occupies the same viewport. CSS fades the old and new layers.
     frames.forEach((frame, frameIndex) => {
-      frame.classList.toggle("active", frameIndex === index);
+      const active = frameIndex === index;
+      if (!active && document.activeElement === frame) frame.blur();
+      frame.classList.toggle("active", active);
+      frame.inert = !active;
+      frame.tabIndex = active ? 0 : -1;
+      frame.setAttribute("aria-hidden", String(!active));
     });
-
-    if (changed || notify) {
-      sendBgState(index);
-      window.dispatchEvent(
-        new CustomEvent("sectionchange", { detail: { index } }),
-      );
-    }
+    sendBgState(index);
+    window.dispatchEvent(
+      new CustomEvent("sectionchange", { detail: { index } }),
+    );
   }
 
-  function currentScrollIndex() {
-    if (horizontalMode === null || frames.length === 0) {
-      return currentIndex;
+  function handleWheelDelta(deltaX, deltaY) {
+    if (!Number.isFinite(deltaX) || !Number.isFinite(deltaY)) return;
+    const delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX;
+    if (!delta) return;
+    const now = performance.now();
+    // A trackpad's momentum belongs to one gesture, not several section changes.
+    if (now - lastWheelTime > 180) {
+      wheelTotal = 0;
+      wheelGestureUsed = false;
     }
+    lastWheelTime = now;
+    if (wheelGestureUsed) return;
+    if (Math.sign(wheelTotal) !== Math.sign(delta)) wheelTotal = 0;
+    wheelTotal += delta;
+    if (Math.abs(wheelTotal) < 40) return;
+    wheelGestureUsed = true;
+    if (now >= transitionUntil)
+      goToSection(currentIndex + Math.sign(wheelTotal));
+  }
 
-    const pageSize = horizontalMode
-      ? scroller.clientWidth
-      : scroller.clientHeight;
-    const scrollPosition = horizontalMode
-      ? scroller.scrollLeft
-      : scroller.scrollTop;
+  function handleKeydown(event) {
+    const target = event.target;
+    if (
+      event.defaultPrevented ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      target?.isContentEditable ||
+      target?.closest?.("input, textarea, select, button, [role='slider']")
+    )
+      return;
+    let nextIndex;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown")
+      nextIndex = currentIndex + 1;
+    else if (event.key === "ArrowLeft" || event.key === "ArrowUp")
+      nextIndex = currentIndex - 1;
+    else return;
+    event.preventDefault();
+    if (!event.repeat && performance.now() >= transitionUntil)
+      goToSection(nextIndex);
+  }
 
-    return pageSize > 0
-      ? Math.min(
-          Math.max(Math.round(scrollPosition / pageSize), 0),
-          frames.length - 1,
+  function bindTouchNavigation(target) {
+    target.addEventListener(
+      "touchstart",
+      (event) => {
+        if (event.touches.length !== 1) {
+          touchStart = null;
+          return;
+        }
+        const touch = event.touches[0];
+        touchStart = {
+          x: touch.clientX,
+          y: touch.clientY,
+          index: currentIndex,
+        };
+      },
+      { passive: true },
+    );
+    target.addEventListener(
+      "touchend",
+      (event) => {
+        const start = touchStart;
+        touchStart = null;
+        if (
+          !start ||
+          event.touches.length ||
+          start.index !== currentIndex ||
+          performance.now() < transitionUntil
         )
-      : currentIndex;
+          return;
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+        const dx = start.x - touch.clientX;
+        const dy = start.y - touch.clientY;
+        const horizontal = Boolean(data.horizontal) && !mobileViewport.matches;
+        const delta = horizontal ? dx : dy;
+        const perpendicular = horizontal ? dy : dx;
+        if (
+          Math.abs(delta) >= 64 &&
+          Math.abs(delta) > Math.abs(perpendicular)
+        ) {
+          goToSection(currentIndex + Math.sign(delta));
+        }
+      },
+      { passive: true },
+    );
+    target.addEventListener(
+      "touchcancel",
+      () => {
+        touchStart = null;
+      },
+      { passive: true },
+    );
   }
 
-  function updateScrollMode() {
-    const nextMode = horizontalSetting && !mobileViewport.matches;
-    const index = currentScrollIndex();
-    const modeChanged = horizontalMode !== nextMode;
-
-    scroller.classList.toggle("horizontal", nextMode);
-    scroller.classList.toggle("vertical", !nextMode);
-    horizontalMode = nextMode;
-
-    requestAnimationFrame(() => {
-      scroller.scrollTo({
-        left: nextMode ? index * scroller.clientWidth : 0,
-        top: nextMode ? 0 : index * scroller.clientHeight,
-        behavior: "auto",
-      });
-      if (modeChanged) {
-        setActiveSection(index);
+  sortedSections.forEach((section, index) => {
+    const iframe = document.createElement("iframe");
+    if (section.id) iframe.id = section.id;
+    iframe.src = section.path;
+    iframe.className = "section-frame";
+    iframe.title = section.title || "Section";
+    iframe.inert = true;
+    iframe.tabIndex = -1;
+    iframe.setAttribute("aria-hidden", "true");
+    if (section["Background-id"] !== undefined) {
+      iframe.dataset.bgId = section["Background-id"];
+    }
+    iframe.addEventListener("load", () => {
+      // Local sections can receive swipes and arrow keys while the iframe has focus.
+      // Remote sections keep using the existing SECTION_WHEEL message bridge.
+      try {
+        const sectionDocument = iframe.contentDocument;
+        if (sectionDocument) {
+          bindTouchNavigation(sectionDocument);
+          sectionDocument.addEventListener("keydown", (event) => {
+            if (index === currentIndex) handleKeydown(event);
+          });
+        }
+      } catch (_) {
+        /* Cross-origin documents cannot be accessed by the parent. */
       }
     });
-  }
-
-  function goToSection(index, force = false) {
-    if (!Number.isInteger(index) || index < 0 || index >= frames.length) {
-      return;
-    }
-    if (index === currentIndex && !force) {
-      return;
-    }
-
-    scroller.scrollTo({
-      left: horizontalMode ? index * scroller.clientWidth : 0,
-      top: horizontalMode ? 0 : index * scroller.clientHeight,
-      behavior: "smooth",
-    });
-    setActiveSection(index, true);
-  }
-
-  sortedSections.forEach((sec, index) => {
-    const iframe = document.createElement("iframe");
-    iframe.id = sec.id;
-    iframe.src = sec.path;
-    iframe.className = "section-frame";
-    iframe.title = sec.title || "Section";
-
-    if (sec["Background-id"] !== undefined) {
-      iframe.dataset.bgId = sec["Background-id"];
-    }
-
-    if (index === 0) {
-      iframe.classList.add("active");
-    }
-
     scroller.appendChild(iframe);
     frames.push(iframe);
   });
@@ -141,74 +198,43 @@ async function initViewer() {
     getCurrentIndex: () => currentIndex,
   };
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const activeEntry = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  if (bgFrame) {
+    bgFrame.addEventListener("load", () => sendBgState(currentIndex));
+    if (data.background) bgFrame.src = data.background;
+  }
 
-      if (activeEntry) {
-        setActiveSection(frames.indexOf(activeEntry.target));
-      }
+  // Commit the initial opacity: 0 before enabling the first section's fade-in.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (frames.length) goToSection(currentIndex, true);
+    });
+  });
+
+  scroller.addEventListener(
+    "wheel",
+    (event) => {
+      event.preventDefault();
+      const unit =
+        event.deltaMode === 1
+          ? 16
+          : event.deltaMode === 2
+            ? scroller.clientHeight
+            : 1;
+      handleWheelDelta(event.deltaX * unit, event.deltaY * unit);
     },
-    { root: scroller, threshold: 0.5 },
+    { passive: false },
   );
 
-  frames.forEach((frame) => observer.observe(frame));
-  if (frames.length > 0) {
-    setActiveSection(0, true);
-  }
-
-  if (bgFrame) {
-    bgFrame.addEventListener("load", () => sendBgState(currentIndex), {
-      once: true,
-    });
-    if (data.background) {
-      bgFrame.src = data.background;
-    }
-  }
-
-  updateScrollMode();
-  window.addEventListener("resize", updateScrollMode);
-
-  if (horizontalSetting) {
-    scroller.addEventListener(
-      "wheel",
-      (event) => {
-        if (
-          !mobileViewport.matches &&
-          Math.abs(event.deltaY) > Math.abs(event.deltaX)
-        ) {
-          event.preventDefault();
-          scroller.scrollBy({ left: event.deltaY, behavior: "auto" });
-        }
-      },
-      { passive: false },
-    );
-  }
-
-  function handleWheelDelta(deltaX, deltaY) {
-    const delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX;
-    if (delta > 20) {
-      goToSection(currentIndex + 1);
-    } else if (delta < -20) {
-      goToSection(currentIndex - 1);
-    }
-  }
-
   window.addEventListener("message", (event) => {
-    if (event.data?.type === "SECTION_WHEEL") {
+    if (
+      event.data?.type === "SECTION_WHEEL" &&
+      event.source === frames[currentIndex]?.contentWindow
+    ) {
       handleWheelDelta(event.data.deltaX, event.data.deltaY);
     }
   });
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      goToSection(currentIndex + 1);
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      goToSection(currentIndex - 1);
-    }
-  });
+  window.addEventListener("keydown", handleKeydown);
+  bindTouchNavigation(scroller);
 }
 
 initViewer();
