@@ -5,101 +5,101 @@
     {
       "Order": 1,
       "id": "sec-1",
-      "title": "Sputnik 1",
+      "title": "Skywatchers",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 7
+      "year": "32,500 BC",
+      "era": "Prehistoric age",
+      "Background-id": 1
     },
     {
       "Order": 2,
       "id": "sec-2",
-      "title": "Gagarin",
+      "title": "Nebra sky disc",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 4
+      "year": "2000 BC",
+      "era": "Prehistoric age",
+      "Background-id": 2
     },
     {
       "Order": 3,
       "id": "sec-3",
-      "title": "Sputnik 1",
+      "title": "Star catalogue",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 11
+      "year": "1200 BC",
+      "era": "Ancient astronomy",
+      "Background-id": 3
     },
     {
       "Order": 4,
       "id": "sec-4",
-      "title": "Gagarin",
+      "title": "Eratosthenes",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 1
+      "year": "240 BC",
+      "era": "Ancient astronomy",
+      "Background-id": 4
     },
     {
       "Order": 5,
       "id": "sec-5",
-      "title": "Sputnik 1",
+      "title": "Ptolemy",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 9
+      "year": "150 AD",
+      "era": "Ancient astronomy",
+      "Background-id": 5
     },
     {
       "Order": 6,
       "id": "sec-6",
-      "title": "Gagarin",
+      "title": "Copernicus",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 3
+      "year": "1543",
+      "era": "The scientific revolution",
+      "Background-id": 6
     },
     {
       "Order": 7,
       "id": "sec-7",
-      "title": "Sputnik 1",
+      "title": "Galileo",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 12
+      "year": "1610",
+      "era": "The scientific revolution",
+      "Background-id": 7
     },
     {
       "Order": 8,
       "id": "sec-8",
-      "title": "Gagarin",
+      "title": "Newton",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 6
+      "year": "1687",
+      "era": "The scientific revolution",
+      "Background-id": 8
     },
     {
       "Order": 9,
       "id": "sec-9",
-      "title": "Sputnik 1",
+      "title": "Goddard",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 8
+      "year": "1926",
+      "era": "The scientific revolution",
+      "Background-id": 9
     },
     {
       "Order": 10,
       "id": "sec-10",
-      "title": "Gagarin",
+      "title": "Sputnik 1",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 5
+      "year": "1957",
+      "era": "The space race",
+      "Background-id": 10
     },
     {
       "Order": 11,
       "id": "sec-11",
-      "title": "Sputnik 1",
+      "title": "NASA founded",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 10
+      "year": "1958",
+      "era": "The space race",
+      "Background-id": 11
     },
     {
       "Order": 12,
@@ -107,170 +107,188 @@
       "title": "Gagarin",
       "path": "Section2/index.html",
       "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 1
+      "era": "The space race",
+      "Background-id": 12
     },
     {
       "Order": 13,
       "id": "sec-13",
-      "title": "Sputnik 1",
+      "title": "Tereshkova",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 7
+      "year": "1963",
+      "era": "The space race",
+      "Background-id": 1
     },
     {
       "Order": 14,
       "id": "sec-14",
-      "title": "Gagarin",
+      "title": "Apollo 8",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 3
+      "year": "1968",
+      "era": "The space race",
+      "Background-id": 2
     },
     {
       "Order": 15,
       "id": "sec-15",
-      "title": "Sputnik 1",
+      "title": "Apollo 11",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 9
+      "year": "1969",
+      "era": "The space race",
+      "Background-id": 3
     },
     {
       "Order": 16,
       "id": "sec-16",
-      "title": "Gagarin",
+      "title": "Apollo 13",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 12
+      "year": "1970",
+      "era": "The space race",
+      "Background-id": 4
     },
     {
       "Order": 17,
       "id": "sec-17",
-      "title": "Sputnik 1",
+      "title": "Apollo-Soyuz",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 4
+      "year": "1975",
+      "era": "The space race",
+      "Background-id": 5
     },
     {
       "Order": 18,
       "id": "sec-18",
-      "title": "Gagarin",
+      "title": "Viking 1",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 8
+      "year": "1976",
+      "era": "The space race",
+      "Background-id": 6
     },
     {
       "Order": 19,
       "id": "sec-19",
-      "title": "Sputnik 1",
+      "title": "Voyager",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 11
+      "year": "1977",
+      "era": "The Space Shuttle era",
+      "Background-id": 7
     },
     {
       "Order": 20,
       "id": "sec-20",
-      "title": "Gagarin",
+      "title": "First Shuttle",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 6
+      "year": "1981",
+      "era": "The Space Shuttle era",
+      "Background-id": 8
     },
     {
       "Order": 21,
       "id": "sec-21",
-      "title": "Sputnik 1",
+      "title": "Prunariu",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 5
+      "year": "1981",
+      "era": "The Space Shuttle era",
+      "Background-id": 9
     },
     {
       "Order": 22,
       "id": "sec-22",
-      "title": "Gagarin",
+      "title": "Hubble",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
+      "year": "1990",
+      "era": "The Space Shuttle era",
       "Background-id": 10
     },
     {
       "Order": 23,
       "id": "sec-23",
-      "title": "Sputnik 1",
+      "title": "Sojourner",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 1
+      "year": "1997",
+      "era": "The Space Shuttle era",
+      "Background-id": 11
     },
     {
       "Order": 24,
       "id": "sec-24",
-      "title": "Gagarin",
+      "title": "ISS",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Cursa spațială",
-      "Background-id": 9
+      "year": "1998",
+      "era": "The Space Shuttle era",
+      "Background-id": 12
     },
     {
       "Order": 25,
       "id": "sec-25",
-      "title": "Sputnik 1",
+      "title": "Spirit & Opportunity",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Cursa spațială",
-      "Background-id": 3
+      "year": "2004",
+      "era": "Modern era",
+      "Background-id": 1
     },
     {
       "Order": 26,
       "id": "sec-26",
-      "title": "Gagarin",
+      "title": "Curiosity",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Antichitate",
-      "Background-id": 7
+      "year": "2012",
+      "era": "Modern era",
+      "Background-id": 2
     },
     {
       "Order": 27,
       "id": "sec-27",
-      "title": "Sputnik 1",
+      "title": "New Horizons",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Antichitate",
-      "Background-id": 12
+      "year": "2015",
+      "era": "Modern era",
+      "Background-id": 3
     },
     {
       "Order": 28,
       "id": "sec-28",
-      "title": "Gagarin",
+      "title": "Crew Dragon",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Antichitate",
+      "year": "2020",
+      "era": "Modern era",
       "Background-id": 4
     },
     {
       "Order": 29,
       "id": "sec-29",
-      "title": "Sputnik 1",
+      "title": "Perseverance",
       "path": "Section1/index.html",
-      "year": "1957",
-      "era": "Antichitate",
-      "Background-id": 8
+      "year": "2021",
+      "era": "Modern era",
+      "Background-id": 5
     },
     {
       "Order": 30,
       "id": "sec-30",
-      "title": "Gagarin",
+      "title": "James Webb",
       "path": "Section2/index.html",
-      "year": "1961",
-      "era": "Antichitate",
-      "Background-id": 11
+      "year": "2022",
+      "era": "Modern era",
+      "Background-id": 6
+    },
+    {
+      "Order": 31,
+      "id": "sec-31",
+      "title": "Voyager repair",
+      "path": "Section1/index.html",
+      "year": "2024",
+      "era": "Modern era",
+      "Background-id": 7
+    },
+    {
+      "Order": 32,
+      "id": "sec-32",
+      "title": "Artemis II",
+      "path": "Section2/index.html",
+      "year": "2026",
+      "era": "Modern era",
+      "Background-id": 8
     }
   ]
 }
