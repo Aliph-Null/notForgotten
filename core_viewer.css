@@ -1,4 +1,5 @@
 @import url("global.css");
+
 html,
 body {
   margin: 0;
@@ -9,12 +10,14 @@ body {
 }
 
 .scroller-container {
+  position: relative;
+  z-index: 1;
   display: flex;
   width: 100vw;
   height: 100vh;
   scroll-behavior: smooth;
-
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
+  background: transparent; /* Must be transparent so the background shows through */
 }
 .scroller-container::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
@@ -43,4 +46,15 @@ body {
   border: none;
   display: block;
   scroll-snap-align: start;
+}
+
+.bg-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  border: none;
+  z-index: 0;
+  pointer-events: none; /* Lets all clicks/scrolls pass right through to the scroller */
 }

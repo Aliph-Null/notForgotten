@@ -1,5 +1,6 @@
 {
   "horizontal": true,
+  "background": "bg.html",
   "sections": [
     { "id": "sec-1", "title": "Blue Square", "path": "Section1/index.html" },
     { "id": "sec-2", "title": "Red Circle", "path": "Section2/index.html" }
