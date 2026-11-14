@@ -1,4 +1,4 @@
-const VISIBLE = 12;
+const VISIBLE = 9;
 
 function visibleForWidth(n) {
   const w = window.innerWidth;
@@ -50,11 +50,15 @@ async function initTimeline() {
     point.className = "timeline-point";
     point.title = sec.title;
 
+    const label = document.createElement("span");
+    label.className = "timeline-label";
+    label.textContent = sec.title;
+
     const callout = document.createElement("span");
     callout.className = "timeline-callout";
     callout.innerHTML =
-      '<svg class="timeline-callout-line" width="32" height="32" viewBox="0 0 32 32">' +
-      '<line x1="0" y1="32" x2="32" y2="0" /></svg>';
+      '<svg class="timeline-callout-line" width="34" height="34" viewBox="0 0 34 34">' +
+      '<line x1="0" y1="34" x2="34" y2="0" /></svg>';
     const title = document.createElement("span");
     title.className = "timeline-title";
     title.textContent = sec.title;
@@ -67,7 +71,7 @@ async function initTimeline() {
     year.className = "timeline-year";
     year.textContent = sec.year ?? "";
 
-    point.append(callout, dot, year);
+    point.append(label, callout, dot, year);
     point.addEventListener("click", () => goTo(i));
     track.appendChild(point);
     return point;
