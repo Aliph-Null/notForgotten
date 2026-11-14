@@ -1,0 +1,8 @@
+/*Aici definim chestiile globale, precum culorile,
+fonturile, marimile si alte standarde etc.*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

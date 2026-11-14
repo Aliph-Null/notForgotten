@@ -1,0 +1,46 @@
+@import url("global.css");
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.scroller-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none; /* Firefox */
+}
+.scroller-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Vertical Mode (Default) */
+.scroller-container.vertical {
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+}
+
+/* Horizontal Mode */
+.scroller-container.horizontal {
+  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+}
+
+.section-frame {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  border: none;
+  display: block;
+  scroll-snap-align: start;
+}
