@@ -1,0 +1,173 @@
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+}
+
+/* Background: Hubble Ultra Deep Field (NASA) with a thin navy layer on top */
+.intro-sky {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 17, 70, 0.35), rgba(0, 17, 70, 0.35)),
+    url("assets/hudf.webp") center / cover no-repeat;
+  background-color: var(--color-primary-dark, #001146);
+  transition: opacity 1s ease 1s; /* fades out 1s after the click, while the stars fly */
+}
+
+/* Image credit, bottom right */
+.intro-credit {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  margin: 0;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.45);
+  transition: opacity 0.4s ease;
+}
+
+/*Constellation*/
+
+.intro-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.intro-spiral {
+  fill: none;
+  stroke: rgba(152, 186, 237, 0.25);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+  transition: opacity 0.5s ease;
+}
+
+/* Lines connecting the stars; start hidden and "draw" themselves when .drawn is added */
+.intro-lines {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition:
+    stroke-dashoffset 2.5s ease 0.3s,
+    stroke 0.3s ease;
+}
+
+.intro-lines.drawn {
+  stroke-dashoffset: 0;
+}
+
+.intro-star {
+  fill: #ffffff;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
+  transition: opacity 0.6s ease;
+}
+
+/* First star is red */
+.intro-star.first {
+  fill: var(--color-accent, #e6193c);
+  filter: drop-shadow(0 0 8px rgba(230, 25, 60, 0.9));
+}
+
+.intro-star.shown {
+  opacity: 1;
+}
+
+/* Invisible button over the constellation */
+.intro-trigger {
+  position: absolute;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Visible outline when reached with the keyboard (Tab) */
+.intro-trigger:focus-visible {
+  outline: 2px dashed rgba(255, 255, 255, 0.5);
+  outline-offset: 8px;
+}
+
+/*the constellation lights up */
+#intro:has(.intro-trigger:hover) .intro-lines {
+  stroke: #ffffff;
+}
+
+#intro:has(.intro-trigger:hover) .intro-spiral {
+  stroke: rgba(152, 186, 237, 0.5);
+}
+
+/*constelation text*/
+.intro-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12vh;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: intro-pulse 2.4s ease-in-out infinite;
+  transition: opacity 0.4s ease;
+}
+
+@keyframes intro-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* After the click */
+
+#intro.is-leaving .intro-sky {
+  opacity: 0;
+}
+
+#intro.is-leaving .intro-spiral,
+#intro.is-leaving .intro-hint,
+#intro.is-leaving .intro-credit {
+  opacity: 0;
+  animation: none;
+}
+
+#intro.is-leaving .intro-trigger {
+  display: none;
+}
+
+/* Stars fade out once they have landed on the timeline */
+#intro.is-done .intro-svg {
+  opacity: 0;
+}
+
+/* Timeline hidden during the intro */
+
+.timeline {
+  transition: opacity 0.8s ease;
+}
+
+body.intro-open .timeline {
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .intro-hint {
+    font-size: 0.8rem;
+  }
+  .intro-credit {
+    left: 16px;
+    text-align: center;
+    font-size: 0.6rem;
+  }
+}
