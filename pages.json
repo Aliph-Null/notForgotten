@@ -2,7 +2,41 @@
   "horizontal": true,
   "background": "bg.html",
   "sections": [
-    { "id": "sec-1", "title": "Blue Square", "path": "Section1/index.html" },
-    { "id": "sec-2", "title": "Red Circle", "path": "Section2/index.html" }
+    {
+      "Order": 1,
+      "id": "sec-1",
+      "title": "Blue Square",
+      "path": "Section1/index.html",
+      "year": 2023,
+      "era": "Modern",
+      "Background-id": 1
+    },
+    {
+      "Order": 2,
+      "id": "sec-2",
+      "title": "Red Circle",
+      "path": "Section2/index.html",
+      "year": 2024,
+      "era": "Contemporary",
+      "Background-id": 3
+    },
+    {
+      "Order": 3,
+      "id": "sec-3",
+      "title": "Blue Square",
+      "path": "Section1/index.html",
+      "year": 2025,
+      "era": "Contemporary",
+      "Background-id": 5
+    },
+    {
+      "Order": 4,
+      "id": "sec-4",
+      "title": "Red Circle",
+      "path": "Section2/index.html",
+      "year": 2026,
+      "era": "Future",
+      "Background-id": 8
+    }
   ]
 }

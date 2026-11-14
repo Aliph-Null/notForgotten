@@ -45,43 +45,6 @@
       bgFrame.addEventListener("load", () => {
         sendState(currentState);
       });
-
-      // Listen for keyboard navigation (Arrow keys + Numpad prompt)
-      window.addEventListener("keydown", (e) => {
-        // ArrowRight / ArrowUp -> Next state (wraps around 11 -> 1)
-        if (e.key === "ArrowRight" || e.key === "ArrowUp") {
-          e.preventDefault();
-          const next = currentState >= MAX_STATE ? MIN_STATE : currentState + 1;
-          sendState(next);
-        }
-
-        // ArrowLeft / ArrowDown -> Previous state (wraps around 1 -> 11)
-        if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
-          e.preventDefault();
-          const prev = currentState <= MIN_STATE ? MAX_STATE : currentState - 1;
-          sendState(prev);
-        }
-
-        // Any Numpad key -> Prompt user for target state (1–11)
-        if (e.code.startsWith("Numpad")) {
-          e.preventDefault();
-          const input = window.prompt(
-            `Enter target state (${MIN_STATE} - ${MAX_STATE}):`,
-            currentState,
-          );
-
-          if (input !== null) {
-            const parsed = parseInt(input.trim(), 10);
-            if (!isNaN(parsed) && parsed >= MIN_STATE && parsed <= MAX_STATE) {
-              sendState(parsed);
-            } else {
-              alert(
-                `Please enter a valid number between ${MIN_STATE} and ${MAX_STATE}.`,
-              );
-            }
-          }
-        }
-      });
     </script>
   </body>
 </html>
