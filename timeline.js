@@ -9,10 +9,10 @@ function visibleForWidth(n) {
 async function initTimeline() {
   const response = await fetch("pages.json");
   const data = await response.json();
-  const scroller = document.getElementById("scroller");
   const timeline = document.getElementById("timeline");
-  const isHorizontal = Boolean(data.horizontal);
-  const sections = data.sections;
+
+  // Match the exact same sort order as core_viewer.js
+  const sections = [...data.sections].sort((a, b) => a.Order - b.Order);
   const n = sections.length;
   let visible = visibleForWidth(n);
   let span = Math.max(visible - 1, 1);
@@ -81,25 +81,22 @@ async function initTimeline() {
   timeline.appendChild(track);
 
   function goTo(i) {
-    if (isHorizontal) scroller.scrollTo({ left: i * scroller.clientWidth });
-    else scroller.scrollTo({ top: i * scroller.clientHeight });
+    if (window.viewerApp) {
+      window.viewerApp.goToSection(i, true); // force = true so clicking timeline dots works immediately
+    }
   }
 
   const posOf = (i, windowStart) => ((i - windowStart) / span) * 100;
-
   let lastActive = -1;
 
-  function update() {
-    const pos = isHorizontal
-      ? scroller.scrollLeft / scroller.clientWidth
-      : scroller.scrollTop / scroller.clientHeight;
-    const active = Math.min(Math.max(Math.round(pos), 0), n - 1);
+  function update(activeIndex) {
+    const active = Math.min(Math.max(activeIndex, 0), n - 1);
     if (active === lastActive) return;
     lastActive = active;
 
     const windowStart = Math.min(
       Math.max(active - Math.floor(visible / 2), 0),
-      n - visible,
+      Math.max(n - visible, 0),
     );
     const windowEnd = windowStart + visible - 1;
 
@@ -126,23 +123,35 @@ async function initTimeline() {
     });
   }
 
+  // Wheel scrolling over the timeline bar steps forward/backward
   timeline.addEventListener(
     "wheel",
     (e) => {
       e.preventDefault();
-      scroller.scrollBy(isHorizontal ? { left: e.deltaY } : { top: e.deltaY });
+      const current = window.viewerApp
+        ? window.viewerApp.getCurrentIndex()
+        : lastActive;
+      if (e.deltaY > 10) goTo(current + 1);
+      else if (e.deltaY < -10) goTo(current - 1);
     },
     { passive: false },
   );
 
-  scroller.addEventListener("scroll", update);
+  // Listen for section changes from core_viewer.js
+  window.addEventListener("sectionchange", (e) => {
+    update(e.detail.index);
+  });
+
   window.addEventListener("resize", () => {
     visible = visibleForWidth(n);
     span = Math.max(visible - 1, 1);
+    const current = lastActive;
     lastActive = -1;
-    update();
+    update(current);
   });
-  update();
+
+  // Initialize at section 0
+  update(0);
 }
 
 initTimeline();

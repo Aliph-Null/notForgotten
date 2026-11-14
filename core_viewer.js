@@ -12,7 +12,6 @@ async function initViewer() {
   const sortedSections = [...data.sections].sort((a, b) => a.Order - b.Order);
   const frames = [];
 
-  // Build stacked iframes
   sortedSections.forEach((sec) => {
     const iframe = document.createElement("iframe");
     iframe.id = sec.id;
@@ -42,12 +41,12 @@ async function initViewer() {
     }
   }
 
-  function goToSection(index) {
+  function goToSection(index, force = false) {
     if (
       index < 0 ||
       index >= frames.length ||
       index === currentIndex ||
-      isTransitioning
+      (isTransitioning && !force)
     ) {
       return;
     }
@@ -60,10 +59,22 @@ async function initViewer() {
 
     sendBgState(frames[currentIndex]);
 
+    // Notify timeline.js that the active section changed
+    window.dispatchEvent(
+      new CustomEvent("sectionchange", { detail: { index: currentIndex } }),
+    );
+
     setTimeout(() => {
       isTransitioning = false;
     }, TRANSITION_COOLDOWN);
   }
+
+  // Expose navigation globally so timeline.js can trigger it directly
+  window.viewerApp = {
+    sections: sortedSections,
+    goToSection,
+    getCurrentIndex: () => currentIndex,
+  };
 
   function handleWheelDelta(deltaX, deltaY) {
     const delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX;
@@ -74,7 +85,6 @@ async function initViewer() {
     }
   }
 
-  // Initialize first section and sync background once bg-frame loads
   if (frames.length > 0) {
     frames[0].classList.add("active");
     bgFrame.addEventListener("load", () => sendBgState(frames[0]), {
@@ -82,14 +92,12 @@ async function initViewer() {
     });
   }
 
-  // Listen for wheel events forwarded from section iframes
   window.addEventListener("message", (e) => {
     if (e.data?.type === "SECTION_WHEEL") {
       handleWheelDelta(e.data.deltaX, e.data.deltaY);
     }
   });
 
-  // Fallback wheel listener if scrolling outside an iframe
   window.addEventListener(
     "wheel",
     (e) => {
@@ -99,7 +107,6 @@ async function initViewer() {
     { passive: false },
   );
 
-  // Keyboard arrow navigation
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       goToSection(currentIndex + 1);
