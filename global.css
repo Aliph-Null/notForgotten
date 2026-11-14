@@ -1,8 +1,82 @@
 /*Aici definim chestiile globale, precum culorile,
 fonturile, marimile si alte standarde etc.*/
 
-* {
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+}
+
+root {
+  /* Color Palette */
+  --color-bg: #f2f2f2;
+  --color-accent: #e6193c; /* Active item & primary highlight */
+  --color-primary-dark: #001146; /* Deep navy / main ink */
+  --color-inactive: #98baed; /* Inactive item & secondary muted blue */
+  --color-surface: #ffffff;
+
+  /* Typography */
+  --font-display:
+    "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Space Mono", monospace;
+
+  --text-body: 1rem;
+  --text-subtitle: 1.25rem;
+  --text-title: 1.5rem;
+  --line-height-body: 1.25;
+
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --border-width: 2px;
+  --radius-sm: 4px;
+}
+
+h1,
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-title);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2,
+h3,
+.subtitle {
+  font-family: var(--font-display);
+  font-size: var(--text-subtitle);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+p,
+.body-text {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--line-height-body);
+  max-width: 48ch;
+}
+
+.date,
+.number,
+.stat-value {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.is-active,
+.active-item {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.is-inactive,
+.inactive-item {
+  color: var(--color-inactive);
+  border-color: var(--color-inactive);
 }
