@@ -2,8 +2,293 @@
   "horizontal": true,
   "background": "bg.html",
   "sections": [
-    { "id": "item-1", "title": "Luna", "path": "Section1/index.html?id=1", "Background-id": 9 },
-    { "id": "item-2", "title": "Pamant", "path": "Section1/index.html?id=2", "Background-id": 8 },
-    { "id": "item-3", "title": "Marte", "path": "Section1/index.html?id=3", "Background-id": 10 }
+    {
+      "Order": 1,
+      "id": "sec-1",
+      "title": "Skywatchers",
+      "path": "Section1/index.html",
+      "year": "32,500 BC",
+      "era": "Prehistoric age",
+      "Background-id": 1
+    },
+    {
+      "Order": 2,
+      "id": "sec-2",
+      "title": "Nebra sky disc",
+      "path": "Section2/index.html",
+      "year": "2000 BC",
+      "era": "Prehistoric age",
+      "Background-id": 2
+    },
+    {
+      "Order": 3,
+      "id": "sec-3",
+      "title": "Star catalogue",
+      "path": "Section1/index.html",
+      "year": "1200 BC",
+      "era": "Ancient astronomy",
+      "Background-id": 3
+    },
+    {
+      "Order": 4,
+      "id": "sec-4",
+      "title": "Eratosthenes",
+      "path": "Section2/index.html",
+      "year": "240 BC",
+      "era": "Ancient astronomy",
+      "Background-id": 4
+    },
+    {
+      "Order": 5,
+      "id": "sec-5",
+      "title": "Ptolemy",
+      "path": "Section1/index.html",
+      "year": "150 AD",
+      "era": "Ancient astronomy",
+      "Background-id": 5
+    },
+    {
+      "Order": 6,
+      "id": "sec-6",
+      "title": "Copernicus",
+      "path": "Section2/index.html",
+      "year": "1543",
+      "era": "The scientific revolution",
+      "Background-id": 6
+    },
+    {
+      "Order": 7,
+      "id": "sec-7",
+      "title": "Galileo",
+      "path": "Section1/index.html",
+      "year": "1610",
+      "era": "The scientific revolution",
+      "Background-id": 7
+    },
+    {
+      "Order": 8,
+      "id": "sec-8",
+      "title": "Newton",
+      "path": "Section2/index.html",
+      "year": "1687",
+      "era": "The scientific revolution",
+      "Background-id": 8
+    },
+    {
+      "Order": 9,
+      "id": "sec-9",
+      "title": "Goddard",
+      "path": "Section1/index.html",
+      "year": "1926",
+      "era": "The scientific revolution",
+      "Background-id": 9
+    },
+    {
+      "Order": 10,
+      "id": "sec-10",
+      "title": "Sputnik 1",
+      "path": "Section2/index.html",
+      "year": "1957",
+      "era": "The space race",
+      "Background-id": 10
+    },
+    {
+      "Order": 11,
+      "id": "sec-11",
+      "title": "NASA founded",
+      "path": "Section1/index.html",
+      "year": "1958",
+      "era": "The space race",
+      "Background-id": 11
+    },
+    {
+      "Order": 12,
+      "id": "sec-12",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "The space race",
+      "Background-id": 12
+    },
+    {
+      "Order": 13,
+      "id": "sec-13",
+      "title": "Tereshkova",
+      "path": "Section1/index.html",
+      "year": "1963",
+      "era": "The space race",
+      "Background-id": 1
+    },
+    {
+      "Order": 14,
+      "id": "sec-14",
+      "title": "Apollo 8",
+      "path": "Section2/index.html",
+      "year": "1968",
+      "era": "The space race",
+      "Background-id": 2
+    },
+    {
+      "Order": 15,
+      "id": "sec-15",
+      "title": "Apollo 11",
+      "path": "Section1/index.html",
+      "year": "1969",
+      "era": "The space race",
+      "Background-id": 3
+    },
+    {
+      "Order": 16,
+      "id": "sec-16",
+      "title": "Apollo 13",
+      "path": "Section2/index.html",
+      "year": "1970",
+      "era": "The space race",
+      "Background-id": 4
+    },
+    {
+      "Order": 17,
+      "id": "sec-17",
+      "title": "Apollo-Soyuz",
+      "path": "Section1/index.html",
+      "year": "1975",
+      "era": "The space race",
+      "Background-id": 5
+    },
+    {
+      "Order": 18,
+      "id": "sec-18",
+      "title": "Viking 1",
+      "path": "Section2/index.html",
+      "year": "1976",
+      "era": "The space race",
+      "Background-id": 6
+    },
+    {
+      "Order": 19,
+      "id": "sec-19",
+      "title": "Voyager",
+      "path": "Section1/index.html",
+      "year": "1977",
+      "era": "The Space Shuttle era",
+      "Background-id": 7
+    },
+    {
+      "Order": 20,
+      "id": "sec-20",
+      "title": "First Shuttle",
+      "path": "Section2/index.html",
+      "year": "1981",
+      "era": "The Space Shuttle era",
+      "Background-id": 8
+    },
+    {
+      "Order": 21,
+      "id": "sec-21",
+      "title": "Prunariu",
+      "path": "Section1/index.html",
+      "year": "1981",
+      "era": "The Space Shuttle era",
+      "Background-id": 9
+    },
+    {
+      "Order": 22,
+      "id": "sec-22",
+      "title": "Hubble",
+      "path": "Section2/index.html",
+      "year": "1990",
+      "era": "The Space Shuttle era",
+      "Background-id": 10
+    },
+    {
+      "Order": 23,
+      "id": "sec-23",
+      "title": "Sojourner",
+      "path": "Section1/index.html",
+      "year": "1997",
+      "era": "The Space Shuttle era",
+      "Background-id": 11
+    },
+    {
+      "Order": 24,
+      "id": "sec-24",
+      "title": "ISS",
+      "path": "Section2/index.html",
+      "year": "1998",
+      "era": "The Space Shuttle era",
+      "Background-id": 12
+    },
+    {
+      "Order": 25,
+      "id": "sec-25",
+      "title": "Spirit & Opportunity",
+      "path": "Section1/index.html",
+      "year": "2004",
+      "era": "Modern era",
+      "Background-id": 1
+    },
+    {
+      "Order": 26,
+      "id": "sec-26",
+      "title": "Curiosity",
+      "path": "Section2/index.html",
+      "year": "2012",
+      "era": "Modern era",
+      "Background-id": 2
+    },
+    {
+      "Order": 27,
+      "id": "sec-27",
+      "title": "New Horizons",
+      "path": "Section1/index.html",
+      "year": "2015",
+      "era": "Modern era",
+      "Background-id": 3
+    },
+    {
+      "Order": 28,
+      "id": "sec-28",
+      "title": "Crew Dragon",
+      "path": "Section2/index.html",
+      "year": "2020",
+      "era": "Modern era",
+      "Background-id": 4
+    },
+    {
+      "Order": 29,
+      "id": "sec-29",
+      "title": "Perseverance",
+      "path": "Section1/index.html",
+      "year": "2021",
+      "era": "Modern era",
+      "Background-id": 5
+    },
+    {
+      "Order": 30,
+      "id": "sec-30",
+      "title": "James Webb",
+      "path": "Section2/index.html",
+      "year": "2022",
+      "era": "Modern era",
+      "Background-id": 6
+    },
+    {
+      "Order": 31,
+      "id": "sec-31",
+      "title": "Voyager repair",
+      "path": "Section1/index.html",
+      "year": "2024",
+      "era": "Modern era",
+      "Background-id": 7
+    },
+    {
+      "Order": 32,
+      "id": "sec-32",
+      "title": "Artemis II",
+      "path": "Section2/index.html",
+      "year": "2026",
+      "era": "Modern era",
+      "Background-id": 8
+    }
   ]
 }

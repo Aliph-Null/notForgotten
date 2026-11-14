@@ -1,78 +1,25 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Viewer</title>
     <link rel="stylesheet" href="core_viewer.css" />
+    <link rel="stylesheet" href="timeline.css" />
+    <link rel="stylesheet" href="intro.css" />
   </head>
   <body>
+    <nav class="timeline" id="timeline"></nav>
+
+    <!-- Fixed Background Layer -->
     <iframe id="bg-frame" class="bg-frame" title="Animated Background"></iframe>
 
+    <!-- Foreground Section Scroller -->
     <div class="scroller-container" id="scroller"></div>
 
+    <!-- Absolute Timeline -->
+
     <script src="core_viewer.js"></script>
-
-    <script>
-      const bgFrame = document.getElementById("bg-frame");
-      const MIN_STATE = 1;
-      const MAX_STATE = 11;
-      let currentState = 1;
-
-      function sendState(targetState) {
-        const clamped = Math.max(
-          MIN_STATE,
-          Math.min(MAX_STATE, Number(targetState)),
-        );
-        if (!Number.isInteger(clamped)) return;
-
-        currentState = clamped;
-
-        if (bgFrame && bgFrame.contentWindow) {
-          bgFrame.contentWindow.postMessage(
-            { type: "SET_STATE", state: currentState },
-            "*",
-          );
-        }
-        console.log("Sent state:", currentState);
-      }
-
-      bgFrame.addEventListener("load", () => {
-        sendState(currentState);
-      });
-
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowRight" || e.key === "ArrowUp") {
-          e.preventDefault();
-          const next = currentState >= MAX_STATE ? MIN_STATE : currentState + 1;
-          sendState(next);
-        }
-
-        if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
-          e.preventDefault();
-          const prev = currentState <= MIN_STATE ? MAX_STATE : currentState - 1;
-          sendState(prev);
-        }
-
-        if (e.code.startsWith("Numpad")) {
-          e.preventDefault();
-          const input = window.prompt(
-            `Enter target state (${MIN_STATE} - ${MAX_STATE}):`,
-            currentState,
-          );
-
-          if (input !== null) {
-            const parsed = parseInt(input.trim(), 10);
-            if (!isNaN(parsed) && parsed >= MIN_STATE && parsed <= MAX_STATE) {
-              sendState(parsed);
-            } else {
-              alert(
-                `Please enter a valid number between ${MIN_STATE} and ${MAX_STATE}.`,
-              );
-            }
-          }
-        }
-      });
-    </script>
+    <script src="timeline.js"></script>
+    <script src="intro.js"></script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 @import url("global.css");
+@import url("timeline.css");
 
 html,
 body {
@@ -9,6 +10,18 @@ body {
   width: 100dvw;
   height: 100dvh;
   overflow: hidden;
+}
+
+.bg-frame {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  border: none;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .scroller-container {
@@ -52,29 +65,18 @@ body {
   border: none;
   display: block;
   scroll-snap-align: start;
+  pointer-events: none;
   opacity: 0;
   transition: opacity 500ms ease;
 }
 
 .section-frame.active {
+  pointer-events: auto;
   opacity: 1;
 }
 
 .scroller-container.vertical .section-frame {
   flex-basis: 100dvh;
-}
-
-.bg-frame {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  width: 100dvw;
-  height: 100dvh;
-  border: none;
-  z-index: 0;
-  pointer-events: none;
 }
 
 @media (max-width: 768px) {
