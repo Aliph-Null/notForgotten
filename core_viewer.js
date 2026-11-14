@@ -1,20 +1,32 @@
 async function initViewer() {
-  const response = await fetch("pages.json");
-  const data = await response.json();
-  const scroller = document.getElementById("scroller");
+  let data;
+  try {
+    const response = await fetch("pages.json");
+    if (!response.ok) {
+      throw new Error("pages.json not found");
+    }
+    data = await response.json();
+  } catch (error) {
+    console.error("Viewer config failed:", error);
+    return;
+  }
 
+  const scroller = document.getElementById("scroller");
   const isHorizontal = Boolean(data.horizontal);
   scroller.classList.add(isHorizontal ? "horizontal" : "vertical");
 
-  data.sections.forEach((sec) => {
+  (Array.isArray(data.sections) ? data.sections : []).forEach((sec) => {
+    if (!sec || !sec.path) {
+      return;
+    }
+
     const iframe = document.createElement("iframe");
     iframe.src = sec.path;
     iframe.className = "section-frame";
-    iframe.title = sec.title;
+    iframe.title = sec.title || "Section";
     scroller.appendChild(iframe);
   });
 
-  // 3. Optional: Convert vertical mouse wheel into horizontal scroll
   if (isHorizontal) {
     scroller.addEventListener(
       "wheel",

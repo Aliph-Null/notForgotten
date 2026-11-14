@@ -1,7 +1,8 @@
 {
   "horizontal": true,
   "sections": [
-    { "id": "sec-1", "title": "Blue Square", "path": "Section1/index.html" },
-    { "id": "sec-2", "title": "Red Circle", "path": "Section2/index.html" }
+    { "id": "item-1", "title": "Luna", "path": "SectionTemplate/index.html?id=1" },
+    { "id": "item-2", "title": "Pamant", "path": "SectionTemplate/index.html?id=2" },
+    { "id": "item-3", "title": "Marte", "path": "SectionTemplate/index.html?id=3" }
   ]
 }

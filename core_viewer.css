@@ -14,13 +14,12 @@ body {
   height: 100vh;
   scroll-behavior: smooth;
 
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 .scroller-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+  display: none;
 }
 
-/* Vertical Mode (Default) */
 .scroller-container.vertical {
   flex-direction: column;
   overflow-y: scroll;
@@ -28,7 +27,6 @@ body {
   scroll-snap-type: y mandatory;
 }
 
-/* Horizontal Mode */
 .scroller-container.horizontal {
   flex-direction: row;
   overflow-x: scroll;

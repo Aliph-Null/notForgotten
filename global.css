@@ -12,14 +12,12 @@ fonturile, marimile si alte standarde etc.*/
 }
 
 root {
-  /* Color Palette */
   --color-bg: #f2f2f2;
-  --color-accent: #e6193c; /* Active item & primary highlight */
-  --color-primary-dark: #001146; /* Deep navy / main ink */
-  --color-inactive: #98baed; /* Inactive item & secondary muted blue */
+  --color-accent: #e6193c;
+  --color-primary-dark: #001146;
+  --color-inactive: #98baed;
   --color-surface: #ffffff;
 
-  /* Typography */
   --font-display:
     "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: "Space Mono", monospace;

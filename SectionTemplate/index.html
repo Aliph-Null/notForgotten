@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item template</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body data-section-id="1" class="theme-default">
+    <div class="container">
+      <header class="topbar">
+        <div class="main-date">
+          <span class="label">Main date</span>
+          <strong id="mainDate">Launch</strong>
+        </div>
+        <div class="timeline" aria-label="Timeline">
+          <span class="segment"></span>
+          <span class="segment active"></span>
+          <span class="segment"></span>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="info-panel panel">
+          <div class="eyebrow">
+            <span>ITEM</span>
+            <strong id="item">-</strong>
+          </div>
+
+          <div class="meta-row">
+            <span id="id">-</span>
+            <span id="year">-</span>
+            <span id="tip">-</span>
+          </div>
+
+          <h1 id="title">-</h1>
+          <p id="body">-</p>
+
+          <div class="reference-row" aria-label="Planet references">
+            <span class="ref-item moon">Moon</span>
+            <span class="ref-item mars">Mars</span>
+            <span class="ref-item earth">Earth</span>
+          </div>
+        </section>
+
+        <section class="model-panel panel" aria-label="3D model reference">
+          <div class="model-stage" id="model"></div>
+        </section>
+
+        <aside class="details-panel panel">
+          <div class="field-row">
+            <span>MODEL</span>
+            <strong id="modelText">-</strong>
+          </div>
+          <div class="field-row">
+            <span>DATES</span>
+            <strong id="dates">-</strong>
+          </div>
+          <div class="field-row">
+            <span>BAG_ID</span>
+            <strong id="bagId">-</strong>
+          </div>
+          <div class="field-row">
+            <span>ORDER_ID</span>
+            <strong id="orderId">-</strong>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <script src="index.js"></script>
+    <script src="../wheel_event_forward.js"></script>
+  </body>
+</html>
