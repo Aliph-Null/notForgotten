@@ -5,7 +5,11 @@
   bottom: 0;
   z-index: 10;
   padding: 28px 8vw 30px;
-  background: linear-gradient(to top, var(--color-bg, #f2f2f2) calc(100% - 20px), transparent);
+  background: linear-gradient(
+    to top,
+    var(--color-bg, #f2f2f2) calc(100% - 50px),
+    transparent
+  );
   pointer-events: none;
   font-family: var(--font-display, "Space Grotesk", sans-serif);
   overflow: hidden;
@@ -39,7 +43,11 @@
   white-space: nowrap;
   overflow: hidden;
   cursor: pointer;
-  transition: left 0.5s ease, width 0.5s ease, opacity 0.3s ease, color 0.3s ease;
+  transition:
+    left 0.5s ease,
+    width 0.5s ease,
+    opacity 0.3s ease,
+    color 0.3s ease;
 }
 
 .timeline-era::before,
@@ -103,7 +111,9 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: left 0.5s ease, opacity 0.3s ease;
+  transition:
+    left 0.5s ease,
+    opacity 0.3s ease;
 }
 
 .timeline-point.hidden {
@@ -222,7 +232,9 @@
   color: var(--color-primary-dark, #00173b);
   opacity: 0;
   transform: translateY(4px);
-  transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
+  transition:
+    opacity 0.3s ease 0.2s,
+    transform 0.3s ease 0.2s;
 }
 
 .timeline-point.active .timeline-callout,

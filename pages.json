@@ -2,35 +2,275 @@
   "horizontal": true,
   "background": "bg.html",
   "sections": [
-    { "id": "sec-1", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-2", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-3", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-4", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-5", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-6", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-7", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-8", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-9", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-10", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-11", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-12", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-13", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-14", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-15", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-16", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-17", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-18", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-19", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-20", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-21", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-22", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-23", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-24", "title": "Gagarin", "year": "1961", "era": "Cursa spațială", "path": "Section2/index.html" },
-    { "id": "sec-25", "title": "Sputnik 1", "year": "1957", "era": "Cursa spațială", "path": "Section1/index.html" },
-    { "id": "sec-26", "title": "Gagarin", "year": "1961", "era": "Antichitate", "path": "Section2/index.html" },
-    { "id": "sec-27", "title": "Sputnik 1", "year": "1957", "era": "Antichitate", "path": "Section1/index.html" },
-    { "id": "sec-28", "title": "Gagarin", "year": "1961", "era": "Antichitate", "path": "Section2/index.html" },
-    { "id": "sec-29", "title": "Sputnik 1", "year": "1957", "era": "Antichitate", "path": "Section1/index.html" },
-    { "id": "sec-30", "title": "Gagarin", "year": "1961", "era": "Antichitate", "path": "Section2/index.html" }
+    {
+      "Order": 1,
+      "id": "sec-1",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 7
+    },
+    {
+      "Order": 2,
+      "id": "sec-2",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 4
+    },
+    {
+      "Order": 3,
+      "id": "sec-3",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 11
+    },
+    {
+      "Order": 4,
+      "id": "sec-4",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 1
+    },
+    {
+      "Order": 5,
+      "id": "sec-5",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 9
+    },
+    {
+      "Order": 6,
+      "id": "sec-6",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 3
+    },
+    {
+      "Order": 7,
+      "id": "sec-7",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 12
+    },
+    {
+      "Order": 8,
+      "id": "sec-8",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 6
+    },
+    {
+      "Order": 9,
+      "id": "sec-9",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 8
+    },
+    {
+      "Order": 10,
+      "id": "sec-10",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 5
+    },
+    {
+      "Order": 11,
+      "id": "sec-11",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 10
+    },
+    {
+      "Order": 12,
+      "id": "sec-12",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 1
+    },
+    {
+      "Order": 13,
+      "id": "sec-13",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 7
+    },
+    {
+      "Order": 14,
+      "id": "sec-14",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 3
+    },
+    {
+      "Order": 15,
+      "id": "sec-15",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 9
+    },
+    {
+      "Order": 16,
+      "id": "sec-16",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 12
+    },
+    {
+      "Order": 17,
+      "id": "sec-17",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 4
+    },
+    {
+      "Order": 18,
+      "id": "sec-18",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 8
+    },
+    {
+      "Order": 19,
+      "id": "sec-19",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 11
+    },
+    {
+      "Order": 20,
+      "id": "sec-20",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 6
+    },
+    {
+      "Order": 21,
+      "id": "sec-21",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 5
+    },
+    {
+      "Order": 22,
+      "id": "sec-22",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 10
+    },
+    {
+      "Order": 23,
+      "id": "sec-23",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 1
+    },
+    {
+      "Order": 24,
+      "id": "sec-24",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Cursa spațială",
+      "Background-id": 9
+    },
+    {
+      "Order": 25,
+      "id": "sec-25",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Cursa spațială",
+      "Background-id": 3
+    },
+    {
+      "Order": 26,
+      "id": "sec-26",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Antichitate",
+      "Background-id": 7
+    },
+    {
+      "Order": 27,
+      "id": "sec-27",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Antichitate",
+      "Background-id": 12
+    },
+    {
+      "Order": 28,
+      "id": "sec-28",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Antichitate",
+      "Background-id": 4
+    },
+    {
+      "Order": 29,
+      "id": "sec-29",
+      "title": "Sputnik 1",
+      "path": "Section1/index.html",
+      "year": "1957",
+      "era": "Antichitate",
+      "Background-id": 8
+    },
+    {
+      "Order": 30,
+      "id": "sec-30",
+      "title": "Gagarin",
+      "path": "Section2/index.html",
+      "year": "1961",
+      "era": "Antichitate",
+      "Background-id": 11
+    }
   ]
 }
