@@ -16,36 +16,5 @@
     <!-- Absolute Timeline -->
 
     <script src="core_viewer.js"></script>
-
-    <script>
-      const bgFrame = document.getElementById("bg-frame");
-      const MIN_STATE = 1;
-      const MAX_STATE = 11;
-      let currentState = 1;
-
-      function sendState(targetState) {
-        // Clamp between 1 and 11
-        const clamped = Math.max(
-          MIN_STATE,
-          Math.min(MAX_STATE, Number(targetState)),
-        );
-        if (!Number.isInteger(clamped)) return;
-
-        currentState = clamped;
-
-        if (bgFrame && bgFrame.contentWindow) {
-          bgFrame.contentWindow.postMessage(
-            { type: "SET_STATE", state: currentState },
-            "*",
-          );
-        }
-        console.log("Sent state:", currentState);
-      }
-
-      // Send initial state once the iframe finishes loading
-      bgFrame.addEventListener("load", () => {
-        sendState(currentState);
-      });
-    </script>
   </body>
 </html>
