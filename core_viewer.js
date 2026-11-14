@@ -15,10 +15,10 @@ async function initViewer() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && bgFrame.contentWindow) {
-          const targetState = entry.target.dataset.bgState;
-          if (targetState) {
+          const targetBgId = entry.target.dataset.bgId;
+          if (targetBgId) {
             bgFrame.contentWindow.postMessage(
-              { type: "SET_STATE", state: targetState },
+              { type: "SET_STATE", state: Number(targetBgId) },
               "*",
             );
           }
@@ -31,19 +31,25 @@ async function initViewer() {
     },
   );
 
-  // 4. Build sections and register them with the observer
-  data.sections.forEach((sec) => {
+  // Sort sections by "Order" before rendering
+  const sortedSections = [...data.sections].sort((a, b) => a.Order - b.Order);
+
+  sortedSections.forEach((sec) => {
     const iframe = document.createElement("iframe");
+    iframe.id = sec.id;
     iframe.src = sec.path;
     iframe.className = "section-frame";
     iframe.title = sec.title;
-    iframe.dataset.bgState = sec.bgState || "";
+
+    // Store the Background-id on the iframe dataset
+    if (sec["Background-id"] !== undefined) {
+      iframe.dataset.bgId = sec["Background-id"];
+    }
 
     scroller.appendChild(iframe);
     observer.observe(iframe);
   });
 
-  // 5. Horizontal mouse wheel helper
   if (isHorizontal) {
     scroller.addEventListener(
       "wheel",
