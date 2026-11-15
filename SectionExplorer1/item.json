@@ -21,7 +21,7 @@
   "Title": "NASA is founded, Explorer 1",
   "Body-Text": "Sputnik's launch came as a profound shock to the United States. On 31 January 1958, a Jupiter-C rocket carried Explorer 1, America's first satellite, into orbit. Its Geiger counter, built by physicist James Van Allen, revealed the radiation belts that now bear his name. Months later, NASA was born.",
   "Path": "",
-  "ModelPath": "Explorer_1.usdz",
+  "ModelPath": "Explorer1.glb",
   "ModelFacts": [
     "",
     "",
