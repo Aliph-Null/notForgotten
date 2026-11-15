@@ -1,0 +1,23 @@
+{
+  "Year": "1977",
+  "Dates": [
+    {
+      "date": "1977-08-20",
+      "text": "Voyager 2 successfully launched toward outer planets."
+    },
+    {
+      "date": "1977-09-05",
+      "text": "Voyager 1 launched to explore Jupiter and Saturn."
+    }
+  ],
+  "Title": "Voyager 1 and 2, the Grand Tour",
+  "Body-Text": "In 1977, NASA launched twin spacecraft, Voyager 1 and Voyager 2, on a Grand Tour of the outer solar system. Originally designed to study Jupiter and Saturn, their astonishing durability and trajectory allowed them to reveal unprecedented details about gas giants and eventually venture beyond our solar system.",
+  "Path": "voyager1_idle.html",
+  "ModelPath": "voyager1.glb",
+  "ModelFacts": [
+    "Both spacecraft carry a Golden Record containing sounds and images of Earth.",
+    "Voyager 1 is currently the most distant human-made object in space.",
+    "Radio signals from Voyager 1 take over 22 hours to reach Earth."
+  ],
+  "Bottom %": 8
+}
