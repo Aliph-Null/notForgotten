@@ -1,6 +1,30 @@
 @import url("global.css");
 @import url("timeline.css");
 
+.source-code-link {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 201;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  background: rgba(0, 17, 70, 0.8);
+  color: #fff;
+  font: 600 0.875rem var(--font-display, system-ui, sans-serif);
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+}
+
+.source-code-link:hover {
+  background: rgba(0, 17, 70, 1);
+}
+
+.source-code-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
 html,
 body {
   overscroll-behavior: none; /* stops the browser's swipe-to-go-back */
