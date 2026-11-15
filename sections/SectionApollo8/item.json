@@ -1,0 +1,35 @@
+{
+  "Year": "1968",
+  "Dates": [
+    {
+      "date": "1968-12-21",
+      "text": "Apollo 8 launches on a Saturn V rocket."
+    },
+    {
+      "date": "1968-12-24",
+      "text": "The crew enters lunar orbit, photographs Earthrise and broadcasts on Christmas Eve."
+    },
+    {
+      "date": "1968-12-27",
+      "text": "Apollo 8 splashes down safely in the Pacific Ocean."
+    }
+  ],
+  "Title": "Apollo 8",
+  "Body-Text": "Apollo 8 was the first crewed spacecraft to leave Earth's gravity and orbit the Moon. Frank Borman, James Lovell and William Anders tested the spacecraft's systems in lunar orbit, photographed both the near and far sides of the Moon, and shared the view with the world in live broadcasts.",
+  "Path": "earthrise.jpg",
+  "Gallery": [
+    "apollo8.jpg"
+  ],
+  "Captions": {
+    "earthrise.jpg": "Earthrise: Earth rising above the Moon, photographed by Bill Anders on 24 December 1968",
+    "apollo8.jpg": "The Saturn V rocket for Apollo 8 on its way to the launch pad"
+  },
+  "ModelPath": "apollo-command-module.glb",
+  "ModelFacts": [
+    "Crew: 3 astronauts",
+    "Command module height: about 3.2 m",
+    "Base diameter: about 3.9 m"
+  ],
+  "Bottom %": 8,
+  "Credit": "Earthrise: NASA/William Anders (AS08-14-2383); launch photo: NASA"
+}

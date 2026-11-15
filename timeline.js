@@ -2,7 +2,7 @@ const VISIBLE = 9;
 
 function visibleForWidth(n) {
   const w = window.innerWidth;
-  const max = w < 600 ? 5 : w < 1000 ? 8 : VISIBLE;
+  const max = w <= 700 ? 3 : w < 1100 ? 6 : VISIBLE;
   return Math.min(max, n);
 }
 
@@ -57,8 +57,8 @@ async function initTimeline() {
     const callout = document.createElement("span");
     callout.className = "timeline-callout";
     callout.innerHTML =
-      '<svg class="timeline-callout-line" width="34" height="34" viewBox="0 0 34 34">' +
-      '<line x1="0" y1="34" x2="34" y2="0" /></svg>';
+      '<svg class="timeline-callout-line" width="26" height="26" viewBox="0 0 26 26">' +
+      '<line x1="0" y1="26" x2="26" y2="0" /></svg>';
     const title = document.createElement("span");
     title.className = "timeline-title";
     title.textContent = sec.title;
@@ -77,8 +77,13 @@ async function initTimeline() {
     return point;
   });
 
+  // Title of the active event, centred above the line (only visible on phones)
+  const current = document.createElement("div");
+  current.className = "timeline-current";
+  current.setAttribute("aria-live", "polite");
+
   if (eras.length) timeline.appendChild(erasRow);
-  timeline.appendChild(track);
+  timeline.append(current, track);
 
   function goTo(i) {
     if (window.viewerApp) {
@@ -107,7 +112,11 @@ async function initTimeline() {
       p.classList.toggle("active", i === active);
       p.classList.toggle("passed", i < active);
       p.classList.toggle("flip", left > 75);
+      p.classList.toggle("edge-left", left < 1);
+      p.classList.toggle("edge-right", left > 99);
     });
+
+    current.textContent = sections[active]?.title ?? "";
 
     progress.style.width = Math.max(posOf(active, windowStart), 0) + "%";
 
