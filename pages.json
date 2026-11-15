@@ -12,6 +12,51 @@
       "Background-id": 1
     },
     {
+      "Order": 2,
+      "id": "sec-2",
+      "title": "Nebra sky disc",
+      "path": "sections/SectionNebra/index.html",
+      "year": "2000 BC",
+      "era": "Prehistoric age",
+      "Background-id": 7
+    },
+    {
+      "Order": 4,
+      "id": "sec-4",
+      "title": "Eratosthenes measures the Earth",
+      "path": "sections/SectionEratosthenes/index.html",
+      "year": "240 BC",
+      "era": "Ancient astronomy`  ",
+      "Background-id": 8
+    },
+    {
+      "Order": 5,
+      "id": "sec-5",
+      "title": "Ptolemy's geocentric model",
+      "path": "sections/SectionPtolemy/index.html",
+      "year": "150 AD",
+      "era": "Ancient astronomy",
+      "Background-id": 6
+    },
+    {
+      "Order": 6,
+      "id": "sec-6",
+      "title": "Copernicus' heliocentric model",
+      "path": "sections/SectionCopernicus/index.html",
+      "year": "1543",
+      "era": "The scientific revolution",
+      "Background-id": 6
+    },
+    {
+      "Order": 7,
+      "id": "sec-7",
+      "title": "Galileo discovers Jupiter's moons",
+      "path": "sections/SectionGalileo/index.html",
+      "year": "1610",
+      "era": "The scientific revolution",
+      "Background-id": 12
+    },
+    {
       "Order": 8,
       "id": "sec-8",
       "title": "Newton's law of gravitation",
