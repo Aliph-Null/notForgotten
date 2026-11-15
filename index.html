@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio Viewer</title>
+    <title>notForgotten</title>
     <link rel="stylesheet" href="core_viewer.css" />
     <link rel="stylesheet" href="timeline.css" />
     <link rel="stylesheet" href="intro.css" />
@@ -17,6 +17,19 @@
     <div class="scroller-container" id="scroller"></div>
 
     <!-- Absolute Timeline -->
+
+    <div class="video-intro" id="video-intro" role="dialog" aria-modal="true" aria-label="Intro video">
+      <video class="video-intro-media" id="video-intro-media" preload="auto" playsinline>
+        <source src="IntroWatermark.mp4" type="video/mp4" />
+      </video>
+      <button class="video-intro-start" id="video-intro-start" type="button">
+        Click to play intro
+      </button>
+      <p class="video-intro-status" id="video-intro-status" role="status" aria-live="polite"></p>
+      <button class="video-intro-skip" id="video-intro-skip" type="button">
+        Skip intro
+      </button>
+    </div>
 
     <script src="core_viewer.js"></script>
     <script src="timeline.js"></script>

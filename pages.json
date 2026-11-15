@@ -162,7 +162,7 @@
       "path": "sections/SectionISS/index.html",
       "year": "1998",
       "era": "Modern era",
-      "Background-id": 1
+      "Background-id": 8
     },
     {
       "Order": 28,
@@ -217,6 +217,15 @@
       "year": "2026",
       "era": "Modern era",
       "Background-id": 9
+    },
+    {
+      "Order": 35,
+      "id": "sec-35",
+      "title": "Credits",
+      "path": "sections/Credits/index.html",
+      "year": "Tomorrow",
+      "era": "Tomorrow",
+      "Background-id": 1
     }
   ]
 }

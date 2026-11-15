@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credits</title>
+<style>
+  :root {
+    --text: #f2f2f5;
+    --muted: rgba(242, 242, 245, .55);
+    --accent: #8ab4ff;
+    --fade: 14%;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .credits {
+    position: relative;
+    width: 100dvw;
+    height: 87dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: transparent;
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    scrollbar-color: rgba(242, 242, 245, .3) transparent;
+    scrollbar-width: thin;
+  }
+
+  .track {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.2rem, 3dvh, 2rem);
+    min-height: 100%;
+    padding: 4dvh 6dvw 7rem;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .title {
+    margin: 0;
+    font-size: clamp(.7rem, 1.6dvh, .85rem);
+    font-weight: 600;
+    letter-spacing: .38em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .section { width: 100%; }
+
+  .heading {
+    margin: 0 0 1rem;
+    font-size: clamp(.7rem, 1.6dvh, .85rem);
+    font-weight: 600;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: .75rem;
+    width: 100%;
+  }
+
+  .domain-group + .domain-group,
+  .items-grid + .domain-group { margin-top: 1.25rem; }
+
+  .domain {
+    margin: 0 0 .65rem;
+    color: var(--muted);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .25rem;
+    min-width: 0;
+    min-height: 3.5rem;
+    padding: .8rem;
+    box-sizing: border-box;
+    border: 1px solid rgba(242, 242, 245, .12);
+    border-radius: .6rem;
+    background: rgba(0, 0, 0, .12);
+  }
+
+  .role {
+    font-size: clamp(.68rem, 1.5dvh, .8rem);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .item a {
+    position: relative;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: clamp(.9rem, 2dvh, 1.15rem);
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--text);
+    text-decoration: none;
+    transition: color .25s ease, transform .25s ease;
+  }
+
+  .item a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -.15em;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform .3s ease;
+  }
+
+  .item a:hover,
+  .item a:focus-visible { color: var(--accent); transform: translateY(-1px); outline: none; }
+  .item a:hover::after,
+  .item a:focus-visible::after { transform: scaleX(1); }
+
+  .item .name {
+    font-size: clamp(.9rem, 2dvh, 1.15rem);
+    font-weight: 500;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .watermark {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: .8rem 1rem;
+    background: rgba(0, 0, 0, .72);
+    color: var(--muted);
+    font-size: clamp(.62rem, 1.2dvh, .75rem);
+    line-height: 1.5;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .status { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem; }
+
+  @media (max-width: 30rem) {
+    .track { padding-right: 1rem; padding-left: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<main class="credits" id="credits" aria-label="Credits">
+  <div class="track" id="track"></div>
+  <aside class="watermark" aria-label="AI and media disclosure">
+    Some code was generated with AI. Audio voiceover was generated using ElevenLabs.
+    All other media are used in accordance with CC licenses and were not generated using diffusion models.
+  </aside>
+</main>
+
+<script>
+(() => {
+  const SRC = 'credits.json';
+  const TITLE = 'Credits';
+
+  const root  = document.getElementById('credits');
+  const track = document.getElementById('track');
+
+  // Accepts:
+  //   "https://example.com"
+  //   { "name": "Jane Doe", "url": "https://...", "role": "Music" }
+  //   { "heading": "Special thanks" }
+  function titleFromUrl(value) {
+    try {
+      const url = new URL(value);
+      const slug = url.pathname.split('/').filter(Boolean).pop();
+      return slug
+        ? decodeURIComponent(slug).replace(/_/g, ' ')
+        : url.hostname.replace(/^www\./, '');
+    } catch { return value; }
+  }
+
+  function normalize(entry) {
+    if (typeof entry === 'string') {
+      return { url: entry, name: titleFromUrl(entry) };
+    }
+    if (entry && typeof entry === 'object') {
+      if (entry.heading) return { heading: String(entry.heading) };
+      if (entry.url) {
+        let name = entry.name || entry.title;
+        if (!name) name = titleFromUrl(entry.url);
+        return { url: entry.url, name, role: entry.role };
+      }
+      if (entry.name) return { name: String(entry.name), role: entry.role };
+    }
+    return null;
+  }
+
+  function safeUrl(u) {
+    try {
+      const p = new URL(u, location.href).protocol;
+      return (p === 'http:' || p === 'https:' || p === 'mailto:') ? u : null;
+    } catch { return null; }
+  }
+
+  function render(list) {
+    track.replaceChildren();
+    if (TITLE) {
+      const h = document.createElement('h1');
+      h.className = 'title';
+      h.textContent = TITLE;
+      track.append(h);
+    }
+
+    let section = null;
+    let plainGrid = null;
+    const domainGroups = new Map();
+    for (const raw of list) {
+      const c = normalize(raw);
+      if (!c) continue;
+      if (c.heading) {
+        section = document.createElement('section');
+        section.className = 'section';
+        const h = document.createElement('h2');
+        h.className = 'heading';
+        h.textContent = c.heading;
+        section.append(h);
+        track.append(section);
+        plainGrid = null;
+        domainGroups.clear();
+        continue;
+      }
+
+      if (!section) {
+        section = document.createElement('section');
+        section.className = 'section';
+        track.append(section);
+      }
+
+      let destination = plainGrid;
+      if (c.url) {
+        const href = safeUrl(c.url);
+        if (!href) continue;
+        let domain = 'Other sources';
+        try { domain = new URL(href, location.href).hostname.replace(/^www\./, ''); } catch {}
+        let group = domainGroups.get(domain);
+        if (!group) {
+          group = document.createElement('div');
+          group.className = 'domain-group';
+          const label = document.createElement('h3');
+          label.className = 'domain';
+          label.textContent = domain;
+          const grid = document.createElement('div');
+          grid.className = 'items-grid';
+          group.append(label, grid);
+          section.append(group);
+          domainGroups.set(domain, group);
+        }
+        destination = group.querySelector('.items-grid');
+      } else {
+        if (!plainGrid) {
+          plainGrid = document.createElement('div');
+          plainGrid.className = 'items-grid';
+          section.append(plainGrid);
+        }
+        destination = plainGrid;
+      }
+
+      const wrap = document.createElement('div');
+      wrap.className = 'item';
+      if (c.role) {
+        const r = document.createElement('span');
+        r.className = 'role';
+        r.textContent = c.role;
+        wrap.append(r);
+      }
+      if (c.url) {
+        const a = document.createElement('a');
+        a.href = safeUrl(c.url);
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = c.name;
+        wrap.append(a);
+      } else {
+        const name = document.createElement('span');
+        name.className = 'name';
+        name.textContent = c.name;
+        wrap.append(name);
+      }
+      destination.append(wrap);
+    }
+  }
+
+  function message(text) {
+    const s = document.createElement('div');
+    s.className = 'status';
+    s.textContent = text;
+    root.append(s);
+  }
+
+  fetch(SRC, { cache: 'no-cache' })
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(list => {
+      if (!Array.isArray(list) || !list.length) throw new Error('empty');
+      render(list);
+    })
+    .catch(() => message('Could not load credits.json'));
+})();
+</script>
+</body>
+</html>
