@@ -16,7 +16,7 @@
 .timeline-eras {
   position: relative;
   height: 20px;
-  margin-bottom: 59px;
+  margin-bottom: 65px; /* room between the era row and the active title */
   pointer-events: auto;
 }
 
@@ -128,11 +128,6 @@
   transition: all 0.3s ease;
 }
 
-.timeline-point:hover .timeline-dot {
-  border-color: var(--color-primary-dark, #00173b);
-  transform: scale(1.2);
-}
-
 .timeline-point.passed .timeline-dot {
   background: var(--timeline-passed);
   border-color: var(--timeline-passed);
@@ -187,8 +182,7 @@
   color: var(--timeline-passed);
 }
 
-.timeline-point.active .timeline-label,
-.timeline-point:hover .timeline-label {
+.timeline-point.active .timeline-label {
   opacity: 0;
 }
 
@@ -218,8 +212,8 @@
 
 .timeline-title {
   position: absolute;
-  left: 34px;
-  bottom: 34px;
+  left: 26px;
+  bottom: 26px;
   padding: 0 6px 4px 2px;
   border-bottom: 1.5px solid var(--timeline-upcoming);
   white-space: nowrap;
@@ -233,18 +227,15 @@
     transform 0.3s ease 0.2s;
 }
 
-.timeline-point.active .timeline-callout,
-.timeline-point:hover .timeline-callout {
+.timeline-point.active .timeline-callout {
   opacity: 1;
 }
 
-.timeline-point.active .timeline-callout-line line,
-.timeline-point:hover .timeline-callout-line line {
+.timeline-point.active .timeline-callout-line line {
   stroke-dashoffset: 0;
 }
 
-.timeline-point.active .timeline-title,
-.timeline-point:hover .timeline-title {
+.timeline-point.active .timeline-title {
   opacity: 1;
   transform: translateY(0);
 }
@@ -258,6 +249,7 @@
   font-weight: 700;
   color: var(--color-accent, #b12d43);
   border-bottom-color: var(--color-accent, #b12d43);
+  font-size: 1.1rem;
 }
 
 .timeline-point.flip .timeline-callout {
@@ -273,29 +265,105 @@
 
 .timeline-point.flip .timeline-title {
   left: auto;
-  right: 34px;
+  right: 26px;
   padding: 0 2px 4px 6px;
 }
 
-@media (max-width: 600px) {
+/* First and last visible labels are aligned inwards so they are not cut off */
+.timeline-point.edge-left .timeline-label {
+  left: 0;
+  transform: none;
+  text-align: left;
+}
+
+.timeline-point.edge-right .timeline-label {
+  right: 0;
+  left: auto;
+  transform: none;
+  text-align: right;
+}
+
+/* Hover effects only on devices with a mouse (a tap on a phone would "stick") */
+@media (hover: hover) {
+  .timeline-point:hover .timeline-dot {
+    border-color: var(--color-primary-dark, #00173b);
+    transform: scale(1.2);
+  }
+
+  .timeline-point:hover .timeline-label {
+    opacity: 0;
+  }
+
+  .timeline-point:hover .timeline-callout {
+    opacity: 1;
+  }
+
+  .timeline-point:hover .timeline-callout-line line {
+    stroke-dashoffset: 0;
+  }
+
+  .timeline-point:hover .timeline-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Only one big title at a time: hovering another point hides the active one */
+  .timeline-track:has(.timeline-point:not(.active):hover)
+    .timeline-point.active
+    .timeline-callout {
+    opacity: 0;
+  }
+
+  .timeline-track:has(.timeline-point:not(.active):hover)
+    .timeline-point.active
+    .timeline-label {
+    opacity: 1;
+  }
+}
+
+/* Title of the current event, shown centred above the line on phones only */
+.timeline-current {
+  display: none;
+}
+
+@media (max-width: 700px) {
   .timeline {
-    padding: 22px 6vw 28px;
+    padding: 18px 8vw 30px;
   }
   .timeline-eras {
-    margin-bottom: 52px;
+    height: 22px;
+    margin-bottom: 10px;
   }
   .timeline-era {
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
   }
-  .timeline-point.active .timeline-title {
-    font-size: var(--text-body, 1rem);
+
+  /* No diagonal callouts on phones: the active title sits centred above the line */
+  .timeline-callout {
+    display: none;
+  }
+  .timeline-current {
+    display: block;
+    height: 1.6rem;
+    margin-bottom: 30px;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-accent, #b12d43);
+  }
+
+  .timeline-label {
+    max-width: 26vw;
+    font-size: 0.875rem;
   }
   .timeline-year {
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
-  .timeline-label {
-    max-width: 14vw;
-    font-size: 0.625rem;
+  .timeline-point.active .timeline-year {
+    font-size: 1.125rem;
   }
 }

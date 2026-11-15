@@ -125,3 +125,37 @@ core_viewer_test/
 ## Rulare
 
 Fără build — se deschide direct `index.html` în browser, sau cu un server local (recomandat, ca să nu dea probleme `fetch`-ul de `pages.json` pe `file://`):
+---
+
+## Secțiuni: structura nouă
+
+Toate secțiunile stau în folderul `sections/`, fiecare în folderul ei:
+
+```
+sections/
+├── SectionTemplateGol/      # template: stilul și logica comune tuturor secțiunilor
+│   ├── section.css          # stilul comun (nu se copiază)
+│   ├── section.js           # logica comună (nu se copiază)
+│   ├── index.html           # se copiază în secțiunea nouă
+│   └── item.json            # se copiază și se completează
+├── SectionGagarin/
+│   ├── index.html
+│   ├── item.json
+│   └── gagarin.png
+└── ...
+```
+
+**Secțiune nouă:** creezi `sections/SectionNume/`, copiezi în el **doar** `index.html` și `item.json` din `SectionTemplateGol`, completezi `item.json` și pui media lângă ele. În `pages.json`, `path` începe cu `sections/`, de ex. `"path": "sections/SectionGagarin/index.html"`.
+
+O modificare în `section.css` sau `section.js` se aplică automat tuturor secțiunilor care folosesc template-ul. Cine vrea o secțiune specială își face propriul `index.html`/CSS/JS în folderul lui (căile către fișierele comune sunt `../../global.css` și `../../wheel_event_forward.js`).
+
+### `item.json`: galerie și model 3D
+
+- `"Gallery": ["img2.jpg", "img3.jpg"]` (opțional): imagini în plus pe lângă `Path`. În casetă apar ca un teanc de cartonașe; la hover (sau tap pe telefon) se întind una lângă alta, iar click pe una o aduce în față. Merge doar când `Path` e o imagine.
+- `"Captions": { "poza.jpg": "text" }` (opțional): textul afișat sub fiecare imagine (cheia e numele fișierului din `Path` / `Gallery`). E folosit și ca descriere (`alt`) a imaginii.
+- `"ModelPath": "model.glb"`: dacă există, în casetă apare doar modelul 3D (se rotește singur; click → viewer interactiv cu `ModelFacts`). Dacă fișierul lipsește sau e stricat, se afișează automat imaginea din `Path`.
+- Viewer-ul acceptă doar `.glb` / `.gltf`.
+
+### Navigare
+
+Secțiunile sunt suprapuse și trecerea între ele e un **fade** (`core_viewer.css` / `core_viewer.js`). Rotița, săgețile, swipe-ul și timeline-ul schimbă secțiunea; `wheel_event_forward.js` trimite gesturile din secțiune către pagina principală.

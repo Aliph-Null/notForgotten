@@ -6,7 +6,7 @@
       "Order": 1,
       "id": "sec-1",
       "title": "Skywatchers",
-      "path": "Section1/index.html",
+      "path": "sections/Section1/index.html",
       "year": "32,500 BC",
       "era": "Prehistoric age",
       "Background-id": 1
@@ -24,7 +24,7 @@
       "Order": 8,
       "id": "sec-8",
       "title": "Newton's law of gravitation",
-      "path": "SectionNewton/index.html",
+      "path": "sections/SectionNewton/index.html",
       "year": "1687",
       "era": "The scientific revolution",
       "Background-id": 12
@@ -33,7 +33,7 @@
       "Order": 9,
       "id": "sec-9",
       "title": "Sputnik 1, first satellite",
-      "path": "SectionSputnik1/index.html",
+      "path": "sections/SectionSputnik1/index.html",
       "year": "1957",
       "era": "The scientific revolution",
       "Background-id": 8
@@ -42,7 +42,7 @@
       "Order": 10,
       "id": "sec-10",
       "title": "NASA is founded, Explorer 1",
-      "path": "SectionExplorer1/index.html",
+      "path": "sections/SectionExplorer1/index.html",
       "year": "1958",
       "era": "The space race",
       "Background-id": 8
@@ -51,7 +51,7 @@
       "Order": 11,
       "id": "sec-11",
       "title": "Gagarin, first human in space",
-      "path": "SectionGagarin/index.html",
+      "path": "sections/SectionGagarin/index.html",
       "year": "1961",
       "era": "The space race",
       "Background-id": 1
@@ -60,7 +60,7 @@
       "Order": 12,
       "id": "sec-12",
       "title": "Tereshkova, first woman in space",
-      "path": "SectionTereshkova/index.html",
+      "path": "sections/SectionTereshkova/index.html",
       "year": "1963",
       "era": "The space race",
       "Background-id": 1
@@ -69,7 +69,7 @@
       "Order": 13,
       "id": "sec-13",
       "title": "Surveyor 3",
-      "path": "SectionSurveyor3/index.html",
+      "path": "sections/SectionSurveyor3/index.html",
       "year": "1967",
       "era": "The space race",
       "Background-id": 9
@@ -78,7 +78,7 @@
       "Order": 14,
       "id": "sec-14",
       "title": "Apollo 8",
-      "path": "SectionApollo8/index.html",
+      "path": "sections/SectionApollo8/index.html",
       "year": "1968",
       "era": "The space race",
       "Background-id": 9
@@ -87,7 +87,7 @@
       "Order": 24,
       "id": "sec-24",
       "title": "Hubble launched",
-      "path": "SectionHubble/index.html",
+      "path": "sections/SectionHubble/index.html",
       "year": "1990",
       "era": "The Space Shuttle era",
       "Background-id": 1
@@ -96,7 +96,7 @@
       "Order": 27,
       "id": "sec-27",
       "title": "ISS construction begins",
-      "path": "SectionISS/index.html",
+      "path": "sections/SectionISS/index.html",
       "year": "1998",
       "era": "Modern era",
       "Background-id": 1
@@ -105,7 +105,7 @@
       "Order": 28,
       "id": "sec-28",
       "title": "Spirit and Opportunity",
-      "path": "SectionSpiritOpportunity/index.html",
+      "path": "sections/SectionSpiritOpportunity/index.html",
       "year": "2004",
       "era": "Modern era",
       "Background-id": 11
@@ -114,7 +114,7 @@
       "Order": 34,
       "id": "sec-34",
       "title": "Artemis II, return to the Moon",
-      "path": "SectionArtemisII/index.html",
+      "path": "sections/SectionArtemisII/index.html",
       "year": "2026",
       "era": "Modern era",
       "Background-id": 9

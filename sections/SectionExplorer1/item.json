@@ -1,0 +1,39 @@
+{
+  "Year": "1958",
+  "Dates": [
+    {
+      "date": "1957-10-04",
+      "text": "Sputnik 1 reaches orbit, shocking the United States into action."
+    },
+    {
+      "date": "1958-01-31",
+      "text": "A Jupiter-C rocket lifts off from Cape Canaveral and places Explorer 1 in orbit."
+    },
+    {
+      "date": "1958-07-29",
+      "text": "President Eisenhower signs the National Aeronautics and Space Act."
+    },
+    {
+      "date": "1958-10-01",
+      "text": "NASA officially begins operations."
+    }
+  ],
+  "Title": "NASA is founded, Explorer 1",
+  "Body-Text": "Sputnik's launch came as a profound shock to the United States. On 31 January 1958, a Jupiter-C rocket carried Explorer 1, America's first satellite, into orbit. Its Geiger counter, built by physicist James Van Allen, revealed the radiation belts that now bear his name. Months later, NASA was born.",
+  "Path": "explorer1.jpg",
+  "Gallery": [
+    "explorer1_launch.jpg",
+    "explorer1_team.jpg",
+    "jupiter_c_assembly.jpg"
+  ],
+  "Captions": {
+    "explorer1.jpg": "Explorer 1, America's first satellite, in orbit (illustration)",
+    "explorer1_launch.jpg": "A Jupiter-C rocket lifts off from Cape Canaveral with Explorer 1, 31 January 1958",
+    "explorer1_team.jpg": "Pickering, Van Allen and von Braun hold up a model of Explorer 1 after the launch",
+    "jupiter_c_assembly.jpg": "Jupiter-C rockets being assembled at the Army Ballistic Missile Agency in Huntsville"
+  },
+  "ModelPath": "Explorer1.glb",
+  "ModelFacts": [],
+  "Bottom %": 8,
+  "Credit": "Images: NASA (Explorer 1, launch MSFC-0100074, Jupiter-C assembly MSFC-5700940); NASA/JPL-Caltech (Pickering, Van Allen and von Braun)"
+}
