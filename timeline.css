@@ -4,19 +4,19 @@
   right: 0;
   bottom: 0;
   z-index: 10;
-  padding: 28px 8vw 30px;
-  background: linear-gradient(to top, #f2f2f2b8 calc(100% - 30px), transparent);
+  padding: 14px 8vw 30px;
+  background: linear-gradient(to top, #222 0%, transparent);
   pointer-events: none;
   font-family: var(--font-display, "Space Grotesk", sans-serif);
   overflow: hidden;
-  --timeline-passed: #00173b;
+  --timeline-passed: #92add4c4;
   --timeline-upcoming: #8fa2dc;
 }
 
 .timeline-eras {
   position: relative;
   height: 20px;
-  margin-bottom: 65px; /* room between the era row and the active title */
+  margin-bottom: 60px; /* room between the era row and the active title */
   pointer-events: auto;
 }
 
@@ -26,15 +26,15 @@
   height: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   padding: 0;
   background: none;
   border: none;
   color: var(--timeline-upcoming);
   font: inherit;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
@@ -49,15 +49,21 @@
 .timeline-era::before,
 .timeline-era::after {
   content: "";
-  flex: 1;
-  min-width: 8px;
+  flex: 1 1 0;
+  min-width: 0; /* the side lines give way first so the era name has room */
   height: 1px;
   background: currentColor;
   opacity: 0.6;
 }
 
+.timeline-era-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .timeline-era:hover {
-  color: var(--color-primary-dark, #00173b);
+  color: #fdfdfded;
 }
 
 .timeline-era.active {
@@ -84,6 +90,18 @@
   pointer-events: auto;
 }
 
+/* Line extension on both sides, as long as the era row (--half is set in timeline.js) */
+.timeline-track::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * var(--half, 0%));
+  right: calc(-1 * var(--half, 0%));
+  background: var(--timeline-upcoming);
+  border-radius: 2px;
+}
+
 .timeline-progress {
   position: absolute;
   left: 0;
@@ -92,7 +110,9 @@
   width: 0;
   background: var(--timeline-passed);
   border-radius: 2px;
-  transition: width 0.5s ease;
+  transition:
+    width 0.5s ease,
+    left 0.5s ease;
 }
 
 .timeline-point {
@@ -166,13 +186,13 @@
 .timeline-label {
   position: absolute;
   left: 50%;
-  bottom: calc(50% + 12px);
+  bottom: calc(50% + 10px);
   transform: translateX(-50%);
-  max-width: 7vw;
+  max-width: 9vw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--timeline-upcoming);
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -212,14 +232,16 @@
 
 .timeline-title {
   position: absolute;
-  left: 26px;
-  bottom: 26px;
-  padding: 0 6px 4px 2px;
+  /* bottom: 30px keeps the title above the row of small labels, so they never overlap */
+  left: 30px;
+  bottom: 30px;
+  padding: 0 6px 3px 2px;
+  line-height: 1.1;
   border-bottom: 1.5px solid var(--timeline-upcoming);
   white-space: nowrap;
   font-size: var(--text-body, 1rem);
   font-weight: 600;
-  color: var(--color-primary-dark, #00173b);
+  color: #e8f1ff;
   opacity: 0;
   transform: translateY(4px);
   transition:
@@ -249,7 +271,7 @@
   font-weight: 700;
   color: var(--color-accent, #b12d43);
   border-bottom-color: var(--color-accent, #b12d43);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .timeline-point.flip .timeline-callout {
@@ -265,22 +287,8 @@
 
 .timeline-point.flip .timeline-title {
   left: auto;
-  right: 26px;
-  padding: 0 2px 4px 6px;
-}
-
-/* First and last visible labels are aligned inwards so they are not cut off */
-.timeline-point.edge-left .timeline-label {
-  left: 0;
-  transform: none;
-  text-align: left;
-}
-
-.timeline-point.edge-right .timeline-label {
-  right: 0;
-  left: auto;
-  transform: none;
-  text-align: right;
+  right: 30px;
+  padding: 0 2px 3px 6px;
 }
 
 /* Hover effects only on devices with a mouse (a tap on a phone would "stick") */
@@ -308,11 +316,15 @@
   }
 
   /* Only one big title at a time: hovering another point hides the active one */
-  .timeline-track:has(.timeline-point:not(.active):hover) .timeline-point.active .timeline-callout {
+  .timeline-track:has(.timeline-point:not(.active):hover)
+    .timeline-point.active
+    .timeline-callout {
     opacity: 0;
   }
 
-  .timeline-track:has(.timeline-point:not(.active):hover) .timeline-point.active .timeline-label {
+  .timeline-track:has(.timeline-point:not(.active):hover)
+    .timeline-point.active
+    .timeline-label {
     opacity: 1;
   }
 }
@@ -355,6 +367,19 @@
   .timeline-label {
     max-width: 26vw;
     font-size: 0.875rem;
+  }
+
+  /* Wide phone labels: first and last are aligned inwards so they are not cut off */
+  .timeline-point.edge-left .timeline-label {
+    left: 0;
+    transform: none;
+    text-align: left;
+  }
+  .timeline-point.edge-right .timeline-label {
+    right: 0;
+    left: auto;
+    transform: none;
+    text-align: right;
   }
   .timeline-year {
     font-size: 1rem;

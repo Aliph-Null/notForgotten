@@ -3,10 +3,10 @@
 :root {
   color-scheme: light;
   --ink: hsl(210, 6%, 99%);
-  --muted: hsl(210, 10%, 70%);
+  --muted: hsl(210, 10%, 85%);
   --line: rgba(23, 26, 29, 0.18);
   --accent: #df3d3d;
-  --panel: rgba(255, 255, 255, 0.72);
+  --panel: rgba(255, 255, 255, 0.33);
   --bottom-clearance: 0dvh;
 }
 
@@ -28,7 +28,7 @@ body {
   width: 100dvw;
   height: 100dvh;
   overflow: hidden;
-  background: linear-gradient(to top, #f7f7f400 0%, #e8eef300 100%);
+  background: #22222266;
 }
 
 .container {
@@ -75,12 +75,14 @@ body {
 }
 
 .year {
-  color: var(--accent);
+  color: transparent;
+  -webkit-text-fill-color: transparent; /* Ensures transparency across all browsers */
+  -webkit-text-stroke: 2px var(--accent); /* Adjust the '2px' to make the outline thinner or thicker */
   font-size: clamp(2.5rem, 5vw, 5rem);
   font-weight: 700;
   letter-spacing: -0.09em;
   line-height: 0.85;
-  text-shadow: 0 2px 18px rgba(247, 247, 244, 0.75);
+  text-shadow: none;
 }
 
 .content {
@@ -369,8 +371,11 @@ h1 {
 }
 
 .model-dialog {
+  /* Centred in the space above the timeline (global.css sets margin: 0 on everything) */
+  inset: 0 0 130px;
+  margin: auto;
   width: min(94dvw, 76rem);
-  height: min(90dvh, 52rem);
+  height: min(calc(100dvh - 150px), 52rem);
   max-width: none;
   max-height: none;
   padding: 0;
@@ -392,8 +397,8 @@ h1 {
   grid-template-columns: minmax(0, 1fr);
   place-items: center;
   width: 100%;
-  height: calc(100% - var(--bottom-clearance));
-  margin: 0 auto var(--bottom-clearance);
+  height: 100%; /* the window already sits above the timeline */
+  margin: 0;
   overflow: hidden;
   border-radius: inherit;
   background: #111a22;
@@ -442,6 +447,40 @@ h1 {
   width: 100%;
   height: 100%;
   --poster-color: transparent;
+}
+
+/* Image window: same window as the 3D model, showing a clicked image large */
+.preview-stage img.zoomable,
+.preview-stage.has-gallery .gallery-card {
+  cursor: zoom-in;
+}
+
+.model-dialog.is-image .model-viewer-frame {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 7rem);
+  height: calc(100% - 3.5rem);
+  background: #0b1118;
+}
+
+.model-dialog.is-image .model-viewer-frame img {
+  display: block;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  object-fit: contain;
+}
+
+.image-dialog-caption {
+  flex: 0 0 auto;
+  max-width: none;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-align: center;
 }
 
 .model-error {
@@ -602,18 +641,28 @@ h1 {
   }
 
   .model-dialog {
+    inset: 0 0 140px;
     width: 96dvw;
-    height: 88dvh;
+    height: calc(100dvh - 160px);
   }
 
   .dialog-content {
-    margin: 0 0 var(--bottom-clearance);
+    margin: 0;
     padding: 0;
   }
 
   .model-viewer-frame {
     width: 82%;
     height: 70%;
+  }
+
+  .model-dialog.is-image .model-viewer-frame {
+    width: 92%;
+    height: 80%;
+  }
+
+  .image-dialog-caption {
+    font-size: 0.8rem;
   }
 
   .model-facts {

@@ -31,7 +31,12 @@ async function initTimeline() {
     const el = document.createElement("button");
     el.type = "button";
     el.className = "timeline-era";
-    el.textContent = era.name;
+    el.title = era.name;
+    // Name in its own span so a long era name ends in "…" instead of being cut
+    const name = document.createElement("span");
+    name.className = "timeline-era-name";
+    name.textContent = era.name;
+    el.appendChild(name);
     el.addEventListener("click", () => goTo(era.start));
     erasRow.appendChild(el);
     return el;
@@ -57,8 +62,8 @@ async function initTimeline() {
     const callout = document.createElement("span");
     callout.className = "timeline-callout";
     callout.innerHTML =
-      '<svg class="timeline-callout-line" width="26" height="26" viewBox="0 0 26 26">' +
-      '<line x1="0" y1="26" x2="26" y2="0" /></svg>';
+      '<svg class="timeline-callout-line" width="30" height="30" viewBox="0 0 30 30">' +
+      '<line x1="0" y1="30" x2="30" y2="0" /></svg>';
     const title = document.createElement("span");
     title.className = "timeline-title";
     title.textContent = sec.title;
@@ -92,6 +97,9 @@ async function initTimeline() {
   }
 
   const posOf = (i, windowStart) => ((i - windowStart) / span) * 100;
+  // The line continues half a step past the first and last visible points,
+  // as far as the era row (at most 9%, which is inside the side padding)
+  const halfStep = () => Math.min(50 / span, 9);
   let lastActive = -1;
 
   function update(activeIndex) {
@@ -118,12 +126,17 @@ async function initTimeline() {
 
     current.textContent = sections[active]?.title ?? "";
 
-    progress.style.width = Math.max(posOf(active, windowStart), 0) + "%";
+    const half = halfStep();
+    track.style.setProperty("--half", half + "%");
+    // Earlier sections are hidden on the left: the passed colour starts at the line's edge
+    const extra = windowStart > 0 ? half : 0;
+    progress.style.left = -extra + "%";
+    progress.style.width = Math.max(posOf(active, windowStart), 0) + extra + "%";
 
     eraEls.forEach((el, k) => {
       const era = eras[k];
-      const from = Math.max(posOf(era.start - 0.5, windowStart), -5);
-      const to = Math.min(posOf(era.end + 0.5, windowStart), 105);
+      const from = Math.max(posOf(era.start - 0.5, windowStart), -halfStep());
+      const to = Math.min(posOf(era.end + 0.5, windowStart), 100 + halfStep());
       const outside = era.end < windowStart || era.start > windowEnd;
       el.style.left = `calc(${from}% + 4px)`;
       el.style.width = `calc(${Math.max(to - from, 0)}% - 8px)`;
