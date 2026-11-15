@@ -22,11 +22,13 @@
   "Body-Text": "Not long after Gagarin's flight, the USSR launched Vostok 6 on 16 June 1963. On board was Valentina Tereshkova, the first woman in space. She orbited Earth 48 times, spent almost three days in space, and remains the only woman to have flown a solo space mission.",
   "Path": "tereshkova_portrait.jpg",
   "Gallery": [
-    "tereshkova_stamp.png"
+    "tereshkova_stamp.png",
+    "Vostok_6.jpg"
   ],
   "Captions": {
     "tereshkova_portrait.jpg": "Valentina Tereshkova, the first woman in space",
-    "tereshkova_stamp.png": "A 1963 Soviet stamp celebrating the first female cosmonaut"
+    "tereshkova_stamp.png": "A 1963 Soviet stamp celebrating the first female cosmonaut",
+    "Vostok_6.jpg": "Vostok 6 capsule on temporary display in the Science Museum, London in 2016"
   },
   "ModelPath": "",
   "ModelFacts": [],

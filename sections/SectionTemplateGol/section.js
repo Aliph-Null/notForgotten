@@ -167,6 +167,9 @@ function renderMedia(preview, path, title, gallery) {
     media = document.createElement("img");
     media.src = path;
     media.alt = captionFor(path) || title;
+    // Click opens the image large, in the same window as the 3D model
+    media.classList.add("zoomable");
+    media.addEventListener("click", () => openImageDialog(path, title));
     addCaption(preview, captionFor(path));
   } else if (VIDEO_FILE.test(file)) {
     media = document.createElement("video");
@@ -193,7 +196,7 @@ function renderMedia(preview, path, title, gallery) {
 }
 
 // Gallery: the images are stacked like cards; on hover (or tap on touch screens)
-// they spread out side by side. Clicking a card brings it to the front.
+// they spread out side by side. Clicking a card opens it large in a window.
 function renderGallery(preview, images, title) {
   preview.classList.add("has-gallery");
   preview.style.setProperty("--count", images.length);
@@ -224,15 +227,7 @@ function renderGallery(preview, images, title) {
         preview.classList.add("is-expanded");
         return;
       }
-      const reordered = [src, ...images.filter((_, other) => other !== index)];
-      preview
-        .querySelectorAll(".gallery-card")
-        .forEach((oldElement) => oldElement.remove());
-      setBackdrop(preview, src);
-      renderGallery(preview, reordered, title);
-      if (!canHover) {
-        preview.classList.remove("is-expanded");
-      }
+      openImageDialog(src, title);
     });
 
     preview.appendChild(card);
@@ -303,8 +298,36 @@ function renderModelFacts(facts) {
   });
 }
 
+// Image window: reuses the 3D model window (#modelDialog) to show one image large
+function openImageDialog(src, title) {
+  const dialog = document.getElementById("modelDialog");
+  const viewerFrame = document.getElementById("modelViewer");
+  document.getElementById("modelFacts").replaceChildren();
+  viewerFrame.replaceChildren();
+
+  const image = document.createElement("img");
+  image.src = src;
+  image.alt = captionFor(src) || title;
+  viewerFrame.appendChild(image);
+
+  const caption = captionFor(src);
+  if (caption) {
+    const text = document.createElement("p");
+    text.className = "image-dialog-caption";
+    text.textContent = caption;
+    viewerFrame.appendChild(text);
+  }
+
+  dialog.classList.add("is-image");
+  dialog.setAttribute("aria-label", "Image viewer");
+  dialog.showModal();
+}
+
 function openModelDialog() {
   const modelPath = currentModelPath;
+  const modelDialog = document.getElementById("modelDialog");
+  modelDialog.classList.remove("is-image");
+  modelDialog.setAttribute("aria-label", "3D model viewer");
   const viewerFrame = document.getElementById("modelViewer");
   viewerFrame.replaceChildren();
 
@@ -352,7 +375,7 @@ function addCaption(preview, text) {
 
 window.addEventListener("resize", () => {
   const dialog = document.getElementById("modelDialog");
-  if (dialog.open) {
+  if (dialog.open && !dialog.classList.contains("is-image")) {
     renderModelFacts(currentModelFacts);
   }
 });

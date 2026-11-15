@@ -1,0 +1,38 @@
+{
+  "Year": "2009",
+  "Dates": [
+    {
+      "date": "2009-03-06",
+      "text": "Kepler launches from Cape Canaveral on a Delta II rocket."
+    },
+    {
+      "date": "2009-04-08",
+      "text": "Kepler takes its first image of the star field it will watch in Cygnus and Lyra."
+    },
+    {
+      "date": "2018-10-30",
+      "text": "NASA retires Kepler after it runs out of fuel."
+    }
+  ],
+  "Title": "Kepler Space Telescope",
+  "Body-Text": "Kepler was NASA's first planet-hunting mission. It stared at one patch of the Milky Way, watching stars dim slightly as planets passed in front of them. Over nine years, including its second mission K2, it showed that our galaxy holds billions of hidden exoplanets, more planets than there are stars.",
+  "Path": "kepler_k2.jpg",
+  "Gallery": [
+    "kepler_first_light.webp",
+    "kepler_launch.webp"
+  ],
+  "Captions": {
+    "kepler_k2.jpg": "Artist's view of Kepler during its K2 mission",
+    "kepler_first_light.webp": "Kepler's first light: its full field of view, taken on 8 April 2009",
+    "kepler_launch.webp": "A Delta II rocket lifts off with Kepler, 6 March 2009"
+  },
+  "ModelPath": "Kepler (A).glb",
+  "ModelFacts": [
+    "Primary mirror: 1.4 m",
+    "Camera: 95 megapixels",
+    "Watched about 100,000 stars",
+    "Launched: 6 March 2009"
+  ],
+  "Bottom %": 8,
+  "Credit": "3D model: NASA Visualization Technology Applications and Development (VTAD). Images: NASA/Ames/JPL-Caltech; launch: NASA"
+}
