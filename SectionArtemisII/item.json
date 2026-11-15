@@ -1,0 +1,27 @@
+{
+  "Year": "2026",
+  "Dates": [
+    {
+      "date": "2026-04-01",
+      "text": "Artemis II launches from Kennedy Space Center."
+    },
+    {
+      "date": "2026-04-06",
+      "text": "The crew flies around the far side of the Moon."
+    },
+    {
+      "date": "2026-04-10",
+      "text": "Orion splashes down in the Pacific Ocean."
+    }
+  ],
+  "Title": "Artemis II, return to the Moon",
+  "Body-Text": "For the first time since Apollo 17 in 1972, humans travelled beyond low Earth orbit. Reid Wiseman, Victor Glover, Christina Koch and Jeremy Hansen flew Orion around the far side of the Moon, setting a new record for the farthest humans have ever been from Earth.",
+  "Path": "artemis2.png",
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8
+}

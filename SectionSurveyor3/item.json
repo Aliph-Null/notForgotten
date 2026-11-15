@@ -1,0 +1,27 @@
+{
+  "Year": "1967",
+  "Dates": [
+    {
+      "date": "1967-04-17",
+      "text": "Surveyor 3 launches from Cape Kennedy."
+    },
+    {
+      "date": "1967-04-20",
+      "text": "It lands in the Ocean of Storms, bouncing twice before settling."
+    },
+    {
+      "date": "1969-11-20",
+      "text": "Apollo 12 astronauts visit Surveyor 3 and bring parts of it back to Earth."
+    }
+  ],
+  "Title": "Surveyor 3",
+  "Body-Text": "Surveyor 3 was the third lander of its series, but the first to carry a surface sampler. Its scoop could reach 1.5 m from the lander and dig 18 cm into the lunar soil. Two years later, the Apollo 12 crew landed nearby and returned pieces of it to Earth.",
+  "Path": "surveyor3.png",
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8
+}

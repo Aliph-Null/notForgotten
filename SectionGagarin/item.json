@@ -1,0 +1,27 @@
+{
+  "Year": "1961",
+  "Dates": [
+    {
+      "date": "1934-03-09",
+      "text": "Yuri Gagarin is born in the village of Klushino."
+    },
+    {
+      "date": "1961-04-12",
+      "text": "Vostok 1 launches from Baikonur; Gagarin orbits Earth once in 108 minutes."
+    },
+    {
+      "date": "1968-03-27",
+      "text": "Gagarin dies in a training flight crash."
+    }
+  ],
+  "Title": "Gagarin, first human in space",
+  "Body-Text": "Born in the village of Klushino, Yuri Gagarin worked as a foundryman at a steel plant before he learned to fly. On 12 April 1961 he launched from the Baikonur Cosmodrome aboard Vostok 1 and completed one orbit of Earth in 108 minutes, becoming the first human to leave our planet.",
+  "Path": "gagarin.png",
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8
+}
