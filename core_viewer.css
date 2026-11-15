@@ -15,87 +15,60 @@ body {
 .bg-frame {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
-  width: 100dvw;
-  height: 100dvh;
+  width: 100%;
+  height: 100%;
   border: none;
   z-index: 0;
   pointer-events: none;
 }
 
-.scroller-container {
+.scroller-container,
+.scroller-container.horizontal,
+.scroller-container.vertical {
   position: relative;
   z-index: 1;
-  display: flex;
+  display: block;
   width: 100vw;
   height: 100vh;
   width: 100dvw;
   height: 100dvh;
-  scroll-behavior: smooth;
-
-  scrollbar-width: none;
+  overflow: hidden;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
   background: transparent;
-}
-.scroller-container::-webkit-scrollbar {
-  display: none;
-}
-
-.scroller-container.vertical {
-  flex-direction: column;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-}
-
-.scroller-container.horizontal {
-  flex-direction: row;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  isolation: isolate;
 }
 
 .section-frame {
-  flex: 0 0 100vw;
-  width: 100vw;
-  height: 100vh;
-  flex-basis: 100dvw;
-  width: 100dvw;
-  height: 100dvh;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   border: none;
   display: block;
-  scroll-snap-align: start;
-  pointer-events: none;
+  z-index: 0;
   opacity: 0;
-  transition: opacity 500ms ease;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 500ms ease,
+    visibility 0s linear 500ms;
 }
 
 .section-frame.active {
-  pointer-events: auto;
+  z-index: 1;
   opacity: 1;
-}
-
-.scroller-container.vertical .section-frame {
-  flex-basis: 100dvh;
-}
-
-@media (max-width: 768px) {
-  .scroller-container,
-  .scroller-container.horizontal {
-    flex-direction: column;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    height: 100dvh;
-  }
-
-  .scroller-container.horizontal .section-frame {
-    flex-basis: 100dvh;
-  }
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 500ms ease,
+    visibility 0s linear 0s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .section-frame {
+  .section-frame,
+  .section-frame.active {
     transition: none;
   }
 }
