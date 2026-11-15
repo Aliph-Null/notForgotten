@@ -16,13 +16,13 @@
   ],
   "Title": "Artemis II, return to the Moon",
   "Body-Text": "For the first time since Apollo 17 in 1972, humans travelled beyond low Earth orbit. Reid Wiseman, Victor Glover, Christina Koch and Jeremy Hansen flew Orion around the far side of the Moon, setting a new record for the farthest humans have ever been from Earth.",
-  "Path": "artemis_earthset2.jpg",
+  "Path": "artemis2_image.jpg",
   "Gallery": [
-    "artemis2.jpg"
+    "artemis_earthset2.jpg"
   ],
   "Captions": {
     "artemis_earthset2.jpg": "Earth sets behind the Moon's far side, photographed by the Artemis II crew on 6 April 2026",
-    "artemis2.jpg": "Earthset seen through Orion's window during the lunar flyby"
+    "artemis2_image.jpg": "Artemis II lifts off from Launch Complex 39B at Kennedy Space Center, 1 April 2026"
   },
   "ModelPath": "orion.glb",
   "ModelFacts": [

@@ -75,6 +75,15 @@
       "Background-id": 9
     },
     {
+      "Order": 23,
+      "id": "sec-23",
+      "title": "STS-1 First space shuttle flight",
+      "path": "sections/SectionSTS1/index.html",
+      "year": "1981",
+      "era": "The Space Shuttle era",
+      "Background-id": 1
+    },
+    {
       "Order": 24,
       "id": "sec-24",
       "title": "Hubble launched",
@@ -100,6 +109,24 @@
       "year": "2004",
       "era": "Modern era",
       "Background-id": 11
+    },
+    {
+      "Order": 29,
+      "id": "sec-29",
+      "title": "Dawn Spaceship",
+      "path": "sections/SectionDawn/index.html",
+      "year": "2007",
+      "era": "Modern era",
+      "Background-id": 1
+    },
+    {
+      "Order": 30,
+      "id": "sec-30",
+      "title": "Kepler Space Telescope",
+      "path": "sections/SectionKepler/index.html",
+      "year": "2009",
+      "era": "Modern era",
+      "Background-id": 1
     },
     {
       "Order": 34,
