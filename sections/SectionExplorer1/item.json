@@ -32,7 +32,7 @@
     "explorer1_team.jpg": "Pickering, Van Allen and von Braun hold up a model of Explorer 1 after the launch",
     "jupiter_c_assembly.jpg": "Jupiter-C rockets being assembled at the Army Ballistic Missile Agency in Huntsville"
   },
-  "ModelPath": "",
+  "ModelPath": "Explorer1.glb",
   "ModelFacts": [],
   "Bottom %": 8,
   "Credit": "Images: NASA (Explorer 1, launch MSFC-0100074, Jupiter-C assembly MSFC-5700940); NASA/JPL-Caltech (Pickering, Van Allen and von Braun)"
