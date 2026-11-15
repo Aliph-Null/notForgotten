@@ -50,14 +50,14 @@
 .timeline-era::after {
   content: "";
   flex: 1;
-  min-width: 8px;
+  min-width: 12px;
   height: 1px;
   background: currentColor;
   opacity: 0.6;
 }
 
 .timeline-era:hover {
-  color: var(--color-primary-dark, #00173b);
+  color: #fdfdfded;
 }
 
 .timeline-era.active {
@@ -225,7 +225,7 @@
   white-space: nowrap;
   font-size: var(--text-body, 1rem);
   font-weight: 600;
-  color: var(--color-primary-dark, #00173b);
+  color: #e8f1ff;
   opacity: 0;
   transform: translateY(4px);
   transition:
