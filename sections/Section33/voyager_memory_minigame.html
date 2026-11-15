@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Learn how to probe Voyager 1's memory blocks and restore a clean signal."
+    />
+    <title>Voyager 1: Memory Recovery</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #e8f0eb;
+        --muted: #a4b7aa;
+        --panel: #13211b;
+        --line: #30453a;
+        --accent: #8fe0aa;
+        --space: #0a110e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        margin-bottom: 17vh;
+        padding: 32px 18px;
+        color: var(--ink);
+        background:
+          radial-gradient(ellipse at 85% 5%, #1a3b2b 0, transparent 38%),
+          var(--space);
+        font:
+          16px/1.65 system-ui,
+          sans-serif;
+      }
+      main {
+        width: min(760px, 100%);
+        margin: 0 auto;
+      }
+      .eyebrow {
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      h1 {
+        max-width: 650px;
+        margin: 8px 0 12px;
+        font-size: clamp(2rem, 7vw, 3.5rem);
+        line-height: 1.08;
+      }
+      h2 {
+        margin: 0 0 8px;
+        font-size: 1.15rem;
+      }
+      p {
+        margin: 0 0 14px;
+      }
+      .intro {
+        max-width: 650px;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .card {
+        margin-top: 20px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #101b16ef;
+      }
+      ol {
+        margin: 0;
+        padding-left: 1.35rem;
+      }
+      li {
+        padding-left: 5px;
+      }
+      li + li {
+        margin-top: 10px;
+      }
+      strong {
+        color: #f5faf6;
+      }
+      .note {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px;
+        margin-top: 24px;
+      }
+      .play {
+        display: inline-block;
+        padding: 12px 19px;
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        color: #08130d;
+        background: var(--accent);
+        font-weight: 800;
+        text-decoration: none;
+      }
+      .play:hover {
+        background: #b1f0c2;
+      }
+      .play:focus-visible,
+      a:focus-visible {
+        outline: 3px solid white;
+        outline-offset: 3px;
+      }
+      .back {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .back:hover {
+        color: var(--ink);
+      }
+      @media (max-width: 520px) {
+        body {
+          padding: 24px 14px;
+        }
+        .card {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="eyebrow">Deep-space systems · Mission briefing</div>
+        <h1>Bring Voyager 1’s signal back</h1>
+        <p class="intro">
+          Probe the memory blocks, identify what they do, and rebuild a clean,
+          working layout. The puzzle is inspired by Voyager 1’s 2024 recovery:
+          engineers worked around a fault in its flight data system by moving
+          affected code in memory.
+        </p>
+      </header>
+
+      <section class="card" aria-labelledby="rules-heading">
+        <h2 id="rules-heading">How to play</h2>
+        <ol>
+          <li>
+            Choose a mission tier, then
+            <strong>probe blocks</strong>
+            to inspect their source, telemetry, and reference notes. Use that
+            evidence to identify each block.
+          </li>
+          <li>
+            In
+            <strong>Move</strong>
+            mode, drag blocks to rearrange memory. Keep them inside the grid,
+            with no overlaps and no occupied dead or reserved pages. Drop a
+            block on the
+            <strong>OFF rack</strong>
+            to retire it.
+          </li>
+          <li>
+            In
+            <strong>Slice</strong>
+            mode, cut a block along an inside edge. Click a glowing seam cell to
+            stitch the fragments’ pointer back together; on harder tiers, you
+            may need to enter the other fragment’s address.
+          </li>
+          <li>
+            Watch the power budget and signal score. A clean layout boots
+            Voyager; Medium and Hard also require a power-down and any
+            in-progress stitch to be completed.
+          </li>
+        </ol>
+      </section>
+
+      <section class="card" aria-labelledby="history-heading">
+        <h2 id="history-heading">A note on the history</h2>
+        <p>
+          The 2024 recovery is the inspiration for this memory-repair puzzle,
+          not a literal simulation of NASA’s commands. The game’s separate
+          <strong>Truth check</strong>
+          is about instrument power-downs: it awards its badge for retiring
+          Camera, Plasma, and Cosmic Ray blocks, while recognizing that MAG and
+          PWS remain valuable measurements.
+        </p>
+        <p class="note">
+          Tip: Probe before retiring a block, and use the mission log and status
+          indicators to see what the layout still needs.
+        </p>
+      </section>
+
+      <nav class="actions" aria-label="Mission navigation">
+        <a class="play" href="voyager-minigame/index.html">
+          Enter the minigame
+        </a>
+        <a class="back" href="index.html">Back to Section 33</a>
+      </nav>
+    </main>
+  </body>
+</html>

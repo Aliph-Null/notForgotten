@@ -1,0 +1,34 @@
+{
+  "Year": "240 BC",
+  "Dates": [
+    {
+      "date": "276 BC",
+      "text": "Born in Cyrene, in present-day Libya."
+    },
+    {
+      "date": "245 BC",
+      "text": "Ptolemy III invites Eratosthenes to Alexandria to tutor his son."
+    },
+    {
+      "date": "c. 240 BC",
+      "text": "Compares the Sun's angle at Alexandria with its position at Syene to estimate Earth's circumference."
+    }
+  ],
+  "Title": "Eratosthenes measures the Earth",
+  "Body-Text": "At noon on the summer solstice, the Sun cast no shadow at Syene but did in Alexandria. Eratosthenes measured the shadow's angle there—about 7.2°, or 1/50 of a circle—then used the 5,000-stadia distance between the cities, measured by surveyors, to estimate Earth's circumference at 250,000 stadia. The result was remarkably close, though the exact length of a stadion is uncertain.",
+  "Path": "eratosthenes.jpg",
+  "Gallery": [
+    "eratosthenes-circumference.jpg"
+  ],
+  "Captions": {
+    "eratosthenes.jpg": "Eratosthenes teaching a student.",
+    "eratosthenes-circumference.jpg": "Diagram of Eratosthenes' method: comparing the Sun's 7.2° angle in Alexandria with its nearly overhead position at Syene."
+  },
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8
+}

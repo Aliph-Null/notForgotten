@@ -1,0 +1,36 @@
+{
+  "Year": "150 AD",
+  "Dates": [
+    {
+      "date": "0127-03-26",
+      "text": "Ptolemy records his earliest precisely dated astronomical observation in Alexandria."
+    },
+    {
+      "date": "0141-02-02",
+      "text": "His latest precisely dated astronomical observation is recorded in Alexandria."
+    },
+    {
+      "date": "0150",
+      "text": "Around this time, the Almagest sets out Ptolemy's mathematical, Earth-centered model of the heavens."
+    }
+  ],
+  "Title": "Ptolemy's geocentric model",
+  "Body-Text": "Working in Alexandria, Claudius Ptolemy organized observations into a mathematical, Earth-centered account of the heavens. In the Almagest, he described the motions of the Sun, Moon, planets, and fixed stars using combinations of circles, including epicycles. His model shaped astronomy for more than a millennium.",
+  "Path": "ptolemy-geocentric.jpg",
+  "Gallery": [
+    "ptolemy-ilustration.png",
+    "ptolemy-astronomy.svg"
+  ],
+  "Captions": {
+    "ptolemy-geocentric.jpg": "A Renaissance diagram of the geocentric cosmos, with Earth at the center of the planetary spheres.",
+    "ptolemy-ilustration.png": "A schematic of epicycles used to account for planetary motion in an Earth-centered model.",
+    "ptolemy-astronomy.svg": "Diagram of a Ptolemaic planet's epicycle, eccentric deferent, and equant point."
+  },
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8
+}

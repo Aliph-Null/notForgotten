@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mars Old Friends</title>
+<style>
+  :root {
+    --bubble-a: #ffd9c2;   /* Perseverance */
+    --bubble-b: #cfe8ff;   /* Ingenuity */
+    --ink: #2b2230;
+    --ring-a: #ff8a4c;
+    --ring-b: #4ca6ff;
+    --avatar: clamp(110px, min(34dvh, 22dvw), 260px);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;            /* the page itself never scrolls */
+  }
+
+  .stage {
+    position: relative;
+    width: 100dvw;
+    height: 87dvh;
+    overflow: hidden;
+    background: transparent;
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 1.7fr) 1fr;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    padding: 2dvh 2dvw;
+    font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+  }
+
+  /* ---------- Avatars ---------- */
+  .actor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5dvh;
+    z-index: 2;
+  }
+
+  .avatar {
+    position: relative;
+    width: var(--avatar);
+    height: var(--avatar);
+    border-radius: 50%;
+    overflow: hidden;
+    background: transparent;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.35), 0 10px 30px rgba(0,0,0,0.25);
+    transition: box-shadow .3s ease, transform .3s ease;
+  }
+  .avatar iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    display: block;
+  }
+
+  .actor.a.speaking .avatar { box-shadow: 0 0 0 5px var(--ring-a), 0 0 40px rgba(255,138,76,.55); transform: scale(1.05); }
+  .actor.b.speaking .avatar { box-shadow: 0 0 0 5px var(--ring-b), 0 0 40px rgba(76,166,255,.55); transform: scale(1.05); }
+
+  .name {
+    font-weight: 700;
+    font-size: clamp(11px, 1.9dvh, 18px);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .35em .9em;
+    border-radius: 999px;
+    background: rgba(255,255,255,.75);
+    backdrop-filter: blur(4px);
+    text-align: center;
+  }
+  .name small { display: block; font-weight: 500; opacity: .7; text-transform: none; letter-spacing: 0; }
+
+  /* ---------- Scrollable conversation ---------- */
+  .chat {
+    align-self: stretch;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2dvh;
+    padding: 3dvh 1.2dvw 1dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120,120,140,.5) transparent;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 3dvh);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 3dvh);
+  }
+  .chat::-webkit-scrollbar { width: 6px; }
+  .chat::-webkit-scrollbar-thumb { background: rgba(120,120,140,.5); border-radius: 3px; }
+  .chat > :first-child { margin-top: auto; }   /* sit at the bottom while short, still scrollable when long */
+
+  .bubble {
+    position: relative;
+    flex: none;
+    max-width: 88%;
+    padding: 1.4dvh 1.4dvw;
+    min-height: 6dvh;
+    border-radius: 22px;
+    font-size: clamp(13px, 2.3dvh, 22px);
+    line-height: 1.38;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    opacity: 0;
+    transform: translateY(14px) scale(.92);
+    transition: opacity .4s ease, transform .4s cubic-bezier(.2,1.4,.4,1);
+    overflow-wrap: anywhere;
+  }
+  .bubble.show { opacity: 1; transform: none; }
+  .bubble.old  { opacity: .82; }
+
+  .bubble.a { background: var(--bubble-a); align-self: flex-start; border-bottom-left-radius: 6px; margin-left: 12px; }
+  .bubble.b { background: var(--bubble-b); align-self: flex-end;   border-bottom-right-radius: 6px; margin-right: 12px; }
+
+  .bubble::after {
+    content: "";
+    position: absolute;
+    bottom: 14px;
+    width: 0; height: 0;
+    border: 11px solid transparent;
+  }
+  .bubble.a::after { left: -20px;  border-right-color: var(--bubble-a); border-left: 0; }
+  .bubble.b::after { right: -20px; border-left-color: var(--bubble-b);  border-right: 0; }
+
+  .dots { display: inline-flex; gap: 5px; align-items: center; height: 1.2em; }
+  .dots i {
+    width: .55em; height: .55em; border-radius: 50%;
+    background: currentColor; opacity: .4;
+    animation: bounce 1s infinite ease-in-out;
+  }
+  .dots i:nth-child(2) { animation-delay: .15s; }
+  .dots i:nth-child(3) { animation-delay: .3s; }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: .35; }
+    40% { transform: translateY(-.35em); opacity: 1; }
+  }
+
+  .replay {
+    flex: none;
+    align-self: center;
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+    font-size: clamp(12px, 2dvh, 18px);
+    padding: .5em 1.2em;
+    border-radius: 999px;
+    background: rgba(255,255,255,.8);
+    color: var(--ink);
+    box-shadow: 0 4px 12px rgba(0,0,0,.18);
+  }
+  .replay:hover { background: #fff; }
+
+  .float {
+    position: absolute;
+    font-size: clamp(16px, 3dvh, 32px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    animation: drift 3.2s ease-out forwards;
+  }
+  @keyframes drift {
+    0%   { opacity: 0; transform: translateY(10px) scale(.6) rotate(-8deg); }
+    20%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-9dvh) scale(1.15) rotate(8deg); }
+  }
+
+  /* tall / narrow screens: avatars on top, chat below */
+  @media (max-aspect-ratio: 4/5) {
+    .stage { grid-template-columns: 1fr 1fr; grid-template-rows: auto minmax(0, 1fr); gap: 1dvh; align-items: start; }
+    .chat  { grid-column: 1 / -1; grid-row: 2; }
+    .actor.a { grid-column: 1; grid-row: 1; }
+    .actor.b { grid-column: 2; grid-row: 1; }
+    :root { --avatar: clamp(70px, min(16dvh, 34dvw), 180px); }
+    .bubble { max-width: 94%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bubble, .avatar { transition: none; }
+    .float { display: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="stage" id="stage">
+    <section class="actor a" id="actorA">
+      <div class="avatar">
+        <iframe src="perseverance-idle.html" title="Perseverance" scrolling="no" loading="eager" allowtransparency="true"></iframe>
+      </div>
+      <div class="name">Perseverance <small>the phone</small></div>
+    </section>
+
+    <section class="chat" id="chat" aria-live="polite" tabindex="0"></section>
+
+    <section class="actor b" id="actorB">
+      <div class="avatar">
+        <iframe src="ingenuity_mars.html" title="Ingenuity" scrolling="no" loading="eager" allowtransparency="true"></iframe>
+      </div>
+      <div class="name">Ingenuity <small>the weather station</small></div>
+    </section>
+  </main>
+
+<script>
+  const script = [
+    { who: 'a', text: "Remember when you rode under my belly for weeks, like a little koala? 🐨", fx: '🐨' },
+    { who: 'b', text: "Best seat on Mars. And look at us now: I'm the weather station, and you're my phone with the big antennas. 📡", fx: '📡' },
+    { who: 'a', text: "Somebody has to relay your forecasts. Today: dusty. Tomorrow: also dusty. 🌪️", fx: '🌪️' },
+    { who: 'b', text: "They only planned FIVE flights for me. Five. In 30 days.", fx: '🖐️' },
+    { who: 'a', text: "And you flew 72. Over two hours in the air, about 17 km. Not bad for a \"tech demo\".", fx: '🚁' },
+    { who: 'b', text: "Flight 12 was my longest: almost 170 seconds. Flight 61 was my highest, 24 meters. I got nosebleeds. 🎈", fx: '🎈' },
+    { who: 'a', text: "I recorded you on flight 4, the first sound from a vehicle on another planet. You sounded like an angry bumblebee. 🐝", fx: '🐝' },
+    { who: 'b', text: "Hey, I scouted your parachute and backshell too. You're welcome. 🪂", fx: '🪂' },
+    { who: 'a', text: "Then came flight 6. You started wobbling in mid-air and I thought, oh no, he's tipsy. 😅", fx: '😅' },
+    { who: 'b', text: "One dropped camera image confused my navigation. NASA sent a software patch and I flew 66 more times. Take that. 💪", fx: '💪' },
+    { who: 'a', text: "Funny, your brain is a Snapdragon, a phone chip. And your motion sensors come from the phone world too.", fx: '📱' },
+    { who: 'b', text: "I'm basically a flying phone. And you're the phone for the weather station. A phone talking to a phone! 📱📱", fx: '📱' },
+    { who: 'a', text: "Welcome to Mars, where every phone has bad signal. Speaking of lucky fixes... remember InSight? 🔧", fx: '🔧' },
+    { who: 'b', text: "When NASA told it to hit itself with a shovel? Percussive maintenance, on Mars. 🔨", fx: '🔨' },
+    { who: 'a', text: "Whack-a-mole, except the mole was a heat probe. Honestly, a legend.", fx: '🥇' },
+    { who: 'b', text: "72 flights, one cozy sand ripple, and I'm still giving you the weather. 🌅", fx: '🌅' },
+    { who: 'a', text: "And I'll keep listening, old friend. Forecast for tonight: clear skies, 100% chance of us. 🧡", fx: '🧡' }
+  ];
+
+  const chat   = document.getElementById('chat');
+  const stage  = document.getElementById('stage');
+  const actors = { a: document.getElementById('actorA'), b: document.getElementById('actorB') };
+  const sleep  = ms => new Promise(r => setTimeout(r, ms));
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Auto-follow the conversation, but let the reader scroll up freely.
+  let stick = true;
+  chat.addEventListener('scroll', () => {
+    stick = chat.scrollHeight - chat.scrollTop - chat.clientHeight < 60;
+  }, { passive: true });
+  function follow() {
+    if (!stick) return;
+    chat.scrollTo({ top: chat.scrollHeight, behavior: reduced ? 'auto' : 'smooth' });
+  }
+
+  function spawnFx(who, emoji) {
+    if (reduced) return;
+    const rect  = actors[who].getBoundingClientRect();
+    const srect = stage.getBoundingClientRect();
+    const el = document.createElement('span');
+    el.className = 'float';
+    el.textContent = emoji;
+    el.style.left = (rect.left - srect.left + rect.width / 2 + (Math.random() * 60 - 30)) + 'px';
+    el.style.top  = (rect.top  - srect.top  + rect.height * 0.15) + 'px';
+    stage.appendChild(el);
+    setTimeout(() => el.remove(), 3400);
+  }
+
+  const readTime = text => Math.max(2200, text.length * 48);
+
+  let run = 0;
+  async function play() {
+    const my = ++run;
+    chat.innerHTML = '';
+    stick = true;
+    const bubbles = [];
+
+    for (const line of script) {
+      if (my !== run) return;
+
+      bubbles.slice(0, -2).forEach(b => b.classList.add('old'));
+      actors[line.who].classList.add('speaking');
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble ' + line.who;
+      bubble.innerHTML = '<span class="dots"><i></i><i></i><i></i></span>';
+      chat.appendChild(bubble);
+      bubbles.push(bubble);
+      requestAnimationFrame(() => requestAnimationFrame(() => { bubble.classList.add('show'); follow(); }));
+
+      await sleep(900);
+      bubble.textContent = line.text;
+      follow();
+      spawnFx(line.who, line.fx);
+
+      await sleep(readTime(line.text));
+      actors[line.who].classList.remove('speaking');
+      await sleep(300);
+    }
+
+    const btn = document.createElement('button');
+    btn.className = 'replay';
+    btn.textContent = '↻ Replay';
+    btn.addEventListener('click', play);
+    chat.appendChild(btn);
+    follow();
+  }
+
+  play();
+</script>
+</body>
+</html>

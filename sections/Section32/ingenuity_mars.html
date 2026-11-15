@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ingenuity – Idle Hover</title>
+<style>
+  html,body{margin:0;height:100%;background:#2a1612;overflow:hidden}
+  svg{display:block;width:100vw;height:100vh}
+</style>
+</head>
+<body>
+<svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- Mars daytime sky: butterscotch, paler at the horizon -->
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0"    stop-color="#7d4a40"/>
+    <stop offset="0.38" stop-color="#bf7f5f"/>
+    <stop offset="0.78" stop-color="#e4b08a"/>
+    <stop offset="1"    stop-color="#f1cfaa"/>
+  </linearGradient>
+  <!-- the famous blue halo around the Martian sun (forward scattering by dust) -->
+  <radialGradient id="sunHalo" cx="330" cy="170" r="560" gradientUnits="userSpaceOnUse">
+    <stop offset="0"    stop-color="#c9dcea" stop-opacity="0.98"/>
+    <stop offset="0.10" stop-color="#abc4d6" stop-opacity="0.85"/>
+    <stop offset="0.30" stop-color="#b7a9a6" stop-opacity="0.40"/>
+    <stop offset="1"    stop-color="#d9a07a" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="sunGlow">
+    <stop offset="0" stop-color="#fffaf0" stop-opacity="0.9"/>
+    <stop offset="1" stop-color="#fffaf0" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f0d2b4" stop-opacity="0"/>
+    <stop offset="1" stop-color="#f0d2b4" stop-opacity="0.7"/>
+  </linearGradient>
+  <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.75">
+    <stop offset="0.55" stop-color="#2a0f12" stop-opacity="0"/>
+    <stop offset="1"    stop-color="#2a0f12" stop-opacity="0.55"/>
+  </radialGradient>
+  <linearGradient id="devilGrad" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0" stop-color="#d9a37f" stop-opacity="0.55"/>
+    <stop offset="1" stop-color="#d9a37f" stop-opacity="0"/>
+  </linearGradient>
+
+  <!-- drone materials -->
+  <linearGradient id="silver" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#fbfbfd"/>
+    <stop offset="0.45" stop-color="#bfc3cd"/>
+    <stop offset="1" stop-color="#6b7083"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffe06a"/>
+    <stop offset="0.55" stop-color="#f0b71e"/>
+    <stop offset="1" stop-color="#c88a0c"/>
+  </linearGradient>
+  <linearGradient id="goldShade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0.5" stop-color="#5a2f00" stop-opacity="0"/>
+    <stop offset="1"   stop-color="#5a2f00" stop-opacity="0.35"/>
+  </linearGradient>
+  <linearGradient id="panel" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#46508a"/>
+    <stop offset="1" stop-color="#1c2140"/>
+  </linearGradient>
+  <pattern id="carbon" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <rect width="12" height="12" fill="#16161b"/>
+    <rect width="6" height="6" fill="#2a2a31"/>
+    <rect x="6" y="6" width="6" height="6" fill="#2a2a31"/>
+  </pattern>
+  <g id="foot">
+    <path d="M-7,-10 L7,-10 L24,9 Q0,20 -24,9 Z" fill="url(#silver)"/>
+    <ellipse cx="0" cy="9" rx="24" ry="5" fill="#8e93a2"/>
+    <path d="M-7,-10 L-3,-10 L-12,10 L-24,9 Z" fill="#fff" opacity="0.35"/>
+  </g>
+
+  <filter id="blur6" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="7"/></filter>
+  <filter id="blur3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+  <filter id="blur10" x="-50%" y="-100%" width="200%" height="300%"><feGaussianBlur stdDeviation="10"/></filter>
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="table" tableValues="0 0.55"/></feComponentTransfer>
+  </filter>
+</defs>
+
+<!-- SKY -->
+<rect x="-10" y="-10" width="1620" height="580" fill="url(#sky)"/>
+<rect x="-10" y="-10" width="1620" height="580" fill="url(#sunHalo)"/>
+<g id="sun">
+  <circle cx="330" cy="170" r="90" fill="url(#sunGlow)" opacity="0.55"/>
+  <circle cx="330" cy="170" r="42" fill="url(#sunGlow)"/>
+  <circle cx="330" cy="170" r="19" fill="#fffbf0"/>
+</g>
+<g id="clouds" filter="url(#blur10)"></g>
+<rect x="-10" y="400" width="1620" height="160" fill="url(#haze)"/>
+
+<!-- far terrain (hazy) -->
+<g id="L0"></g>
+<g id="devilWrap"><path id="devil" fill="url(#devilGrad)" filter="url(#blur3)"/></g>
+<g id="L1"></g>
+<g id="L2"></g>
+<g id="L3"></g>
+<g id="L4"></g>
+
+<!-- ground shadow -->
+<g id="shadow" filter="url(#blur6)">
+  <ellipse id="shRotor" cx="0" cy="0" rx="290" ry="30" fill="#2e130f" opacity="0.22"/>
+  <ellipse id="shBody"  cx="0" cy="0" rx="70"  ry="12" fill="#2e130f" opacity="0.4"/>
+</g>
+<g id="L5"></g>
+<g id="downwash"></g>
+
+<!-- ===================== INGENUITY ===================== -->
+<g id="drone">
+  <g id="legsBack"></g>
+
+  <!-- fuselage: gold Kapton-wrapped avionics box -->
+  <g id="box">
+    <rect x="-82" y="0" width="130" height="150" rx="6" fill="url(#gold)"/>
+    <polygon points="48,0 82,-5 82,143 48,150" fill="#b57e0a"/>
+    <polygon points="-82,0 -30,0 -62,62 -82,42" fill="#fff" opacity="0.28"/>
+    <polygon points="8,0 48,0 48,82 22,52" fill="#7a4a00" opacity="0.18"/>
+    <polygon points="-58,150 12,150 -8,102 -50,112" fill="#7a4a00" opacity="0.18"/>
+    <polygon points="-22,38 30,72 10,122 -30,92" fill="#fff" opacity="0.16"/>
+    <polygon points="22,104 48,96 48,150 4,150" fill="#7a4a00" opacity="0.15"/>
+    <polygon points="-82,100 -60,86 -66,150 -82,150" fill="#fff" opacity="0.12"/>
+    <polygon points="-40,10 -4,16 -14,34 -44,28" fill="#fff" opacity="0.14"/>
+    <rect x="-82" y="0" width="130" height="150" rx="6" fill="url(#goldShade)"/>
+    <rect x="-84" y="-6" width="134" height="11" rx="3" fill="#1d1d26"/>
+    <polygon points="50,-6 84,-11 84,-2 50,5" fill="#12121a"/>
+  </g>
+  <g id="legsFront"></g>
+
+  <!-- mast -->
+  <rect x="-5" y="-132" width="10" height="132" fill="url(#silver)"/>
+  <rect x="-10" y="-82" width="20" height="36" rx="2" fill="url(#silver)"/>
+  <rect x="-13" y="-14" width="26" height="14" rx="2" fill="url(#silver)"/>
+  <rect x="-5" y="-238" width="10" height="110" fill="url(#silver)"/>
+  <!-- swashplate mechanisms -->
+  <g>
+    <rect x="-15" y="-208" width="30" height="14" rx="2" fill="url(#silver)"/>
+    <rect x="-9"  y="-194" width="18" height="30" rx="2" fill="#8d92a2"/>
+    <rect x="-17" y="-164" width="34" height="8" rx="2" fill="url(#silver)"/>
+    <circle cx="-14" cy="-200" r="3" fill="#2b2d38"/><circle cx="14" cy="-200" r="3" fill="#2b2d38"/>
+  </g>
+
+  <!-- LOWER ROTOR -->
+  <g id="lowerRotor" transform="translate(0,-105)">
+    <ellipse id="lowerBlur" cx="0" cy="0" rx="288" ry="26" fill="#17171b" opacity="0.10"/>
+    <g id="lowerBack"></g>
+    <!-- grips pointing up-and-out -->
+    <polygon points="-16,-4 -66,-52 -50,-56 -8,-10" fill="#14141a"/>
+    <polygon points="16,-4 66,-52 50,-56 8,-10" fill="#14141a"/>
+    <rect x="-30" y="-9" width="60" height="16" rx="5" fill="#14141a"/>
+    <rect x="-25" y="-24" width="50" height="16" rx="3" fill="url(#silver)"/>
+    <ellipse cx="0" cy="-24" rx="25" ry="4" fill="#f4f5f9"/>
+    <g id="lowerFront"></g>
+  </g>
+
+  <!-- UPPER ROTOR -->
+  <g id="upperRotor" transform="translate(0,-235)">
+    <ellipse id="upperBlur" cx="0" cy="0" rx="288" ry="26" fill="#17171b" opacity="0.10"/>
+    <g id="upperBack"></g>
+    <!-- grips pointing down-and-out -->
+    <polygon points="-16,4 -62,50 -46,54 -8,10" fill="#14141a"/>
+    <polygon points="16,4 62,50 46,54 8,10" fill="#14141a"/>
+    <rect x="-30" y="-8" width="60" height="16" rx="5" fill="#14141a"/>
+    <rect x="-25" y="-24" width="50" height="16" rx="3" fill="url(#silver)"/>
+    <ellipse cx="0" cy="-24" rx="25" ry="4" fill="#f4f5f9"/>
+    <rect x="-14" y="-44" width="28" height="20" rx="3" fill="url(#silver)"/>
+    <ellipse cx="0" cy="-44" rx="14" ry="3" fill="#f4f5f9"/>
+    <g id="upperFront"></g>
+  </g>
+
+  <!-- solar panel & antenna -->
+  <rect x="-3" y="-318" width="6" height="40" fill="url(#silver)"/>
+  <ellipse cx="0" cy="-308" rx="108" ry="8" fill="#0f1226"/>
+  <ellipse cx="0" cy="-312" rx="108" ry="8" fill="url(#panel)"/>
+  <g stroke="#7d88c4" stroke-width="1" opacity="0.4">
+    <line x1="-72" y1="-316" x2="-72" y2="-308"/><line x1="-36" y1="-318" x2="-36" y2="-306"/>
+    <line x1="0" y1="-319" x2="0" y2="-305"/><line x1="36" y1="-318" x2="36" y2="-306"/><line x1="72" y1="-316" x2="72" y2="-308"/>
+  </g>
+  <ellipse cx="-14" cy="-318" rx="9" ry="2.5" fill="#fff" opacity="0.18"/>
+  <ellipse cx="48" cy="-312" rx="6" ry="2.4" fill="#f4c20d"/>
+  <line x1="0" y1="-320" x2="0" y2="-420" stroke="#d6d8e0" stroke-width="2"/>
+  <path d="M0,-345 q-8,-3 0,-6 q8,-3 0,-6 q-8,-3 0,-6 q8,-3 0,-6" fill="none" stroke="#d6d8e0" stroke-width="1.6"/>
+</g>
+
+<g id="fgDust" filter="url(#blur3)"></g>
+
+<!-- grading -->
+<rect width="1600" height="900" fill="url(#vignette)"/>
+<rect width="1600" height="900" filter="url(#grain)" opacity="0.13" style="mix-blend-mode:overlay"/>
+</svg>
+
+<script>
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+let seed=11;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646;}
+const R=(a,b)=>a+(b-a)*rnd();
+const defs=document.querySelector('defs');
+const poly=(g,pts,fill,extra)=>el('polygon',Object.assign({points:pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' '),fill},extra||{}),g);
+
+/* ---------- terrain ---------- */
+function ridge(g,baseY,n,hMin,hMax,wMin,wMax,lit,shade,mesa){
+  el('rect',{x:-300,y:baseY+20,width:2300,height:260,fill:shade},g);
+  for(let i=0;i<n;i++){
+    const x=-250+2200*i/(n-1)+R(-40,40),h=R(hMin,hMax),w=R(wMin,wMax),a=mesa?R(8,w*.55):R(0,4);
+    const lf=[x-w,baseY+30],rf=[x+w,baseY+30],tl=[x-a,baseY-h],tr=[x+a,baseY-h],mid=[x+w*.18,baseY+30];
+    poly(g,[lf,tl,tr,mid],lit);poly(g,[tr,rf,mid],shade);
+  }
+}
+let gid=0;
+function dune(g,base,a1,f1,a2,f2,c1,c2,crest){
+  const id='dg'+(gid++);
+  const lg=el('linearGradient',{id,x1:0,y1:0,x2:0,y2:1},defs);
+  el('stop',{offset:0,'stop-color':c1},lg);el('stop',{offset:1,'stop-color':c2},lg);
+  const ph=gid*1.7;let pts='';let top='';
+  for(let x=-300;x<=1900;x+=25){
+    const y=base+Math.sin(x*f1+ph)*a1+Math.sin(x*f2+ph*2.3)*a2;
+    pts+=` L${x},${y.toFixed(1)}`;top+=(top?' L':'M')+`${x},${y.toFixed(1)}`;
+  }
+  el('path',{d:`M-300,900${pts} L1900,900 Z`,fill:`url(#${id})`},g);
+  if(crest)el('path',{d:top,fill:'none',stroke:crest,'stroke-width':3,opacity:.55,'stroke-linecap':'round'},g);
+}
+function rock(g,cx,cy,w,h){
+  el('ellipse',{cx:cx+w*.7,cy:cy+3,rx:w*1.2,ry:Math.max(4,h*.14),fill:'#2e130f',opacity:.4},g);
+  const P=(a,b)=>[cx+w*a,cy-h*b];
+  poly(g,[P(-1,0),P(-.8,.5),P(-.3,1),P(.4,.85),P(.9,.3),P(1,0)],'#6b3426');
+  poly(g,[P(-1,0),P(-.8,.5),P(-.3,1),P(0,.3)],'#a35f43');
+  poly(g,[P(-.3,1),P(.4,.85),P(.2,.55),P(0,.3)],'#8a4b36');
+  poly(g,[P(0,.3),P(.2,.55),P(.4,.85),P(.9,.3),P(1,0),P(.1,0)],'#4a2219');
+}
+ridge($('L0'),520,12,60,140,90,190,'#dcae8e','#ca9a7c',true);
+ridge($('L1'),545,16,40,95,70,150,'#cb8f6c','#b57a59',false);
+dune($('L2'),585,10,.006,6,.017,'#c2825d','#a96744','#e7ae88');
+dune($('L3'),640,14,.005,8,.013,'#b06c48','#8d5033','#d9996f');
+dune($('L4'),715,16,.004,9,.011,'#97543a','#6c3424','#c27a55');
+// ground ripples
+const rip=el('g',{fill:'none',stroke:'#4d2417','stroke-opacity':.12,'stroke-width':2},$('L4'));
+for(let i=0;i<22;i++){el('ellipse',{cx:R(-100,1700),cy:R(740,890),rx:R(50,220),ry:R(3,10)},rip);}
+// foreground rocks
+const L5=$('L5');
+[[170,835,70,52],[1400,812,88,62],[1520,872,46,34],[30,880,96,62],[430,768,24,17],[1130,778,28,19],[985,838,17,12],[640,860,34,22],[1280,852,18,12]]
+  .forEach(r=>rock(L5,r[0],r[1],r[2],r[3]));
+
+/* ---------- thin Martian water-ice clouds ---------- */
+const clouds=[];
+for(let i=0;i<7;i++){
+  const e=el('ellipse',{cx:0,cy:0,rx:R(110,260),ry:R(5,11),fill:'#f6e9e2',opacity:R(.12,.22)},$('clouds'));
+  clouds.push({e,x:R(-100,1700),y:R(60,360),v:R(2,6)});
+}
+
+/* ---------- ambient dust ---------- */
+const amb=[];
+for(let i=0;i<70;i++){
+  const r=R(.8,3.2);
+  amb.push({e:el('circle',{r,fill:'#ffe6c8'},$('scene')),x:R(0,1600),y:R(60,880),r,v:R(8,30)*(r/2),ph:R(0,6.28)});
+}
+// move ambient dust below the drone layer visually by inserting before drone
+amb.forEach(a=>$('scene').insertBefore(a.e,$('drone')));
+const fg=[];
+for(let i=0;i<9;i++){
+  const r=R(5,12);
+  fg.push({e:el('circle',{r,fill:'#f2cfae'},$('fgDust')),x:R(0,1600),y:R(100,860),r,v:R(40,90),ph:R(0,6.28)});
+}
+
+/* ---------- drone build ---------- */
+const legs=[
+  {x1:-40,y1:8,x2:-126,y2:170,back:1},
+  {x1:42, y1:8,x2:130, y2:166,back:1},
+  {x1:-72,y1:4,x2:-250,y2:214,back:0},
+  {x1:72, y1:6,x2:234, y2:208,back:0}];
+legs.forEach(L=>{
+  const g=$(L.back?'legsBack':'legsFront');
+  const dx=L.x2-L.x1,dy=L.y2-L.y1,len=Math.hypot(dx,dy);
+  const col=L.back?'#25252e':'#14141b';
+  el('line',{x1:L.x1,y1:L.y1,x2:L.x2,y2:L.y2,stroke:col,'stroke-width':11,'stroke-linecap':'round'},g);
+  el('line',{x1:L.x1-2.5,y1:L.y1+len*.0+8,x2:L.x2-2.5,y2:L.y2-10,stroke:'#5a5b70','stroke-width':2.4,opacity:.8,'stroke-linecap':'round'},g);
+  const p=t=>[L.x1+dx*t,L.y1+dy*t];
+  const a=p(.14),b=p(.22);
+  el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:'#d3d6df','stroke-width':14,'stroke-linecap':'butt'},g);
+  el('circle',{cx:L.x1,cy:L.y1,r:9,fill:'#0f0f15'},g);
+  const ang=Math.atan2(-dx,dy)*180/Math.PI;
+  const s=L.back?.88:1;
+  el('use',{href:'#foot',transform:`translate(${L.x2},${L.y2+2}) rotate(${ang}) scale(${s})`},g);
+});
+
+/* rotor blades */
+const BLADE='M24,-5 C70,-12 150,-15 215,-10 C250,-8 275,-4 288,0 C275,3 250,5 215,6 C150,8 70,7 24,5 Z';
+function mkSet(parent,backOp){
+  return [0.14,0.30,1].map((op,i)=>el('path',{d:BLADE,fill:'url(#carbon)',opacity:op*backOp},parent));
+}
+function mkRotor(name){
+  return {back:mkSet($(name+'Back'),.88),front:mkSet($(name+'Front'),1)};
+}
+const rotors={upper:mkRotor('upper'),lower:mkRotor('lower')};
+const K=.11, LAGS=[.62,.31,0];
+function applyRotor(r,theta,dir){
+  const s=Math.sin(theta);
+  const near=s>=0?theta:theta+Math.PI, far=near+Math.PI;
+  [['front',near],['back',far]].forEach(([k,ang])=>{
+    r[k].forEach((p,i)=>{
+      const a=ang-dir*LAGS[i];
+      p.setAttribute('transform',`matrix(${Math.cos(a).toFixed(4)},${(K*Math.sin(a)).toFixed(4)},0,1,0,0)`);
+    });
+  });
+}
+
+/* ---------- downwash dust ---------- */
+const dw=$('downwash'),pool=[];
+for(let i=0;i<80;i++)pool.push({e:el('ellipse',{fill:'#e3a77f',opacity:0,rx:1,ry:1},dw),alive:false});
+function spawn(x,gy){
+  const p=pool.find(q=>!q.alive);if(!p)return;
+  const dir=rnd()<.5?-1:1;
+  Object.assign(p,{alive:true,x:x+R(-80,80),y:gy+R(-8,12),vx:dir*R(50,200),vy:-R(2,22),life:0,max:R(1.4,2.6),r0:R(4,9),r1:R(22,44)});
+}
+
+/* ---------- loop ---------- */
+const droneEl=$('drone'),shRotor=$('shRotor'),shBody=$('shBody'),devil=$('devil');
+const layers=[$('L0'),$('L1'),$('L2'),$('L3'),$('L4'),$('L5')],par=[.15,.3,.5,.8,1.2,1.5];
+const GROUND_Y=805,OMEGA=27;
+let last=performance.now(),acc=0;
+function frame(now){
+  const t=now/1000,dt=Math.min(.05,(now-last)/1000);last=now;
+
+  // camera sway (parallax)
+  const cam=Math.sin(t*.14)*16+Math.sin(t*.37)*4;
+  layers.forEach((l,i)=>l.setAttribute('transform',`translate(${(cam*par[i]).toFixed(2)},0)`));
+
+  // hover: slow drift + small controller jitter
+  const dx=Math.sin(t*.55)*17+Math.sin(t*1.7)*3.5+Math.sin(t*3.1)*1.2;
+  const dy=Math.sin(t*.8)*11+Math.sin(t*2.3)*2.5;
+  const tilt=Math.sin(t*.6+1)*1.7+Math.sin(t*1.9)*.55;
+  const X=800+dx,Y=452+dy;
+  droneEl.setAttribute('transform',`translate(${X.toFixed(2)},${Y.toFixed(2)}) rotate(${tilt.toFixed(3)})`);
+
+  // counter-rotating coaxial rotors
+  applyRotor(rotors.upper,t*OMEGA,1);
+  applyRotor(rotors.lower,-t*OMEGA*.97+1.1,-1);
+  const flick=.09+Math.sin(t*OMEGA*2)*.012;
+  $('upperBlur').setAttribute('opacity',flick);$('lowerBlur').setAttribute('opacity',flick);
+
+  // shadow on the ground (sun is up-left so it falls right)
+  const hs=1-dy*.004;
+  $('shadow').setAttribute('transform',`translate(${(X+130+cam).toFixed(1)},${GROUND_Y})`);
+  shRotor.setAttribute('rx',(290*hs).toFixed(1));shRotor.setAttribute('opacity',(.2+Math.sin(t*OMEGA*2)*.03).toFixed(3));
+  shBody.setAttribute('rx',(70*hs).toFixed(1));
+
+  // downwash dust
+  acc+=dt*40;while(acc>1){spawn(X+cam*1.2,GROUND_Y);acc--;}
+  pool.forEach(p=>{
+    if(!p.alive)return;
+    p.life+=dt;if(p.life>=p.max){p.alive=false;p.e.setAttribute('opacity',0);return;}
+    p.x+=p.vx*dt;p.vx*=1-.55*dt;p.y+=p.vy*dt;
+    const u=p.life/p.max,r=p.r0+(p.r1-p.r0)*u;
+    const a=.36*(1-u)*(u<.1?u/.1:1);
+    p.e.setAttribute('cx',p.x.toFixed(1));p.e.setAttribute('cy',p.y.toFixed(1));
+    p.e.setAttribute('rx',r.toFixed(1));p.e.setAttribute('ry',(r*.5).toFixed(1));p.e.setAttribute('opacity',a.toFixed(3));
+  });
+
+  // ambient dust
+  amb.forEach(a=>{
+    a.x+=a.v*dt;a.y+=Math.sin(t*.7+a.ph)*4*dt;if(a.x>1620)a.x=-20;
+    a.e.setAttribute('cx',a.x.toFixed(1));a.e.setAttribute('cy',a.y.toFixed(1));
+    a.e.setAttribute('opacity',(.22+.2*Math.sin(t*1.3+a.ph)).toFixed(3));
+  });
+  fg.forEach(a=>{
+    a.x+=a.v*dt;if(a.x>1650)a.x=-40;
+    a.e.setAttribute('cx',a.x.toFixed(1));a.e.setAttribute('cy',(a.y+Math.sin(t*.5+a.ph)*14).toFixed(1));
+    a.e.setAttribute('opacity',(.08+.07*Math.sin(t*.9+a.ph)).toFixed(3));
+  });
+
+  // clouds
+  clouds.forEach(c=>{c.x+=c.v*dt;if(c.x>1900)c.x=-300;c.e.setAttribute('cx',c.x.toFixed(1));c.e.setAttribute('cy',c.y);});
+
+  // distant dust devil
+  const L=[],Rr=[];
+  for(let i=0;i<=12;i++){
+    const u=i/12,h=u*140,w=3+u*u*38+u*8;
+    const cx=1245+cam*.3+Math.sin(t*.9+u*3.2)*u*16+t*0;
+    L.push([cx-w,548-h]);Rr.push([cx+w,548-h]);
+  }
+  Rr.reverse();
+  devil.setAttribute('d','M'+L.concat(Rr).map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L')+' Z');
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
