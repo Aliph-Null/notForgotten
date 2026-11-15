@@ -1,0 +1,37 @@
+{
+  "Year": "1687",
+  "Dates": [
+    {
+      "date": "1643-01-04",
+      "text": "Isaac Newton is born in Woolsthorpe, England."
+    },
+    {
+      "date": "1686-04-28",
+      "text": "The first book of the Principia is presented to the Royal Society."
+    },
+    {
+      "date": "1687-07-05",
+      "text": "Philosophiae Naturalis Principia Mathematica is published."
+    },
+    {
+      "date": "1727-03-31",
+      "text": "Newton dies in London."
+    }
+  ],
+  "Title": "Newton's law of gravitation",
+  "Body-Text": "In his 1687 masterwork, the Principia, Isaac Newton united earthly physics and celestial mechanics under a single universal force: gravity. Attraction grows with mass and weakens with the square of distance. From this, Newton derived Kepler's planetary laws and revealed a cosmos governed by predictable natural laws.",
+  "Path": "newton_portrait.jpg",
+  "Gallery": [
+    "principia_title.jpg",
+    "newton_figures.png"
+  ],
+  "Captions": {
+    "newton_portrait.jpg": "Isaac Newton, painted by Godfrey Kneller in 1689",
+    "principia_title.jpg": "Title page of the first edition of the Principia, London, 1687",
+    "newton_figures.png": "Geometric figures added by Newton to Varenius' geography textbook"
+  },
+  "ModelPath": "",
+  "ModelFacts": [],
+  "Bottom %": 8,
+  "Credit": "Portrait of Isaac Newton by Godfrey Kneller, 1689 (public domain); Principia title page, 1687 (public domain); Newton's figures for Varenius' Geographia Generalis (public domain)"
+}

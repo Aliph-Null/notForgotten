@@ -3,6 +3,7 @@
 
 html,
 body {
+  overscroll-behavior: none; /* stops the browser's swipe-to-go-back */
   margin: 0;
   padding: 0;
   width: 100vw;
@@ -15,60 +16,46 @@ body {
 .bg-frame {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   border: none;
   z-index: 0;
   pointer-events: none;
 }
 
-.scroller-container,
-.scroller-container.horizontal,
-.scroller-container.vertical {
+.scroller-container {
   position: relative;
   z-index: 1;
-  display: block;
   width: 100vw;
   height: 100vh;
   width: 100dvw;
   height: 100dvh;
   overflow: hidden;
-  scroll-behavior: auto;
-  scroll-snap-type: none;
   background: transparent;
-  isolation: isolate;
 }
 
+/* Sections are stacked; only the active one is visible, the change is a fade */
 .section-frame {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  margin: 0;
   border: none;
   display: block;
-  z-index: 0;
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-  transition:
-    opacity 500ms ease,
-    visibility 0s linear 500ms;
+  opacity: 0;
+  transition: opacity 500ms ease;
 }
 
 .section-frame.active {
-  z-index: 1;
-  opacity: 1;
-  visibility: visible;
   pointer-events: auto;
-  transition:
-    opacity 500ms ease,
-    visibility 0s linear 0s;
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .section-frame,
-  .section-frame.active {
+  .section-frame {
     transition: none;
   }
 }

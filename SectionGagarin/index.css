@@ -1,4 +1,4 @@
-@import url("../global.css");
+@import url("../../global.css");
 
 :root {
   color-scheme: light;
@@ -16,6 +16,7 @@
 
 html,
 body {
+  overscroll-behavior: none; /* stops the browser's swipe-to-go-back */
   width: 100%;
   height: 100%;
   margin: 0;

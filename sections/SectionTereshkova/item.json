@@ -1,0 +1,35 @@
+{
+  "Year": "1963",
+  "Dates": [
+    {
+      "date": "1937-03-06",
+      "text": "Valentina Tereshkova is born near Yaroslavl."
+    },
+    {
+      "date": "1963-06-14",
+      "text": "Vostok 5 launches with Valery Bykovsky, Vostok 6's partner flight."
+    },
+    {
+      "date": "1963-06-16",
+      "text": "Vostok 6 launches, carrying the first woman into space."
+    },
+    {
+      "date": "1963-06-19",
+      "text": "Tereshkova lands after 48 orbits and almost three days in space."
+    }
+  ],
+  "Title": "Tereshkova, first woman in space",
+  "Body-Text": "Not long after Gagarin's flight, the USSR launched Vostok 6 on 16 June 1963. On board was Valentina Tereshkova, the first woman in space. She orbited Earth 48 times, spent almost three days in space, and remains the only woman to have flown a solo space mission.",
+  "Path": "tereshkova_portrait.jpg",
+  "Gallery": [
+    "tereshkova_stamp.png"
+  ],
+  "Captions": {
+    "tereshkova_portrait.jpg": "Valentina Tereshkova, the first woman in space",
+    "tereshkova_stamp.png": "A 1963 Soviet stamp celebrating the first female cosmonaut"
+  },
+  "ModelPath": "",
+  "ModelFacts": [],
+  "Bottom %": 8,
+  "Credit": "Portrait: RIA Novosti archive #612748 / Alexander Mokletsov, CC BY-SA 3.0, via Wikimedia Commons; 1963 Soviet stamp, public domain"
+}
