@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Voyager 1 — Transmission</title>
+    <style>
+      :root {
+        --earth: #7fd0ff;
+        --voyager: #ffd58a;
+        --text: #e9eefc;
+        --dim: rgba(233, 238, 252, 0.55);
+        --alert: #ff5d6c;
+        --avatar-size: 20dvh;
+        --avatar-scale: 1;
+        --avatar-x: 0%;
+        --avatar-y: 0%;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background: transparent;
+        overflow: hidden;
+      }
+      body {
+        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        color: var(--text);
+      }
+
+      /* ---------- Stage: 92dvh x 100dvw, no scroll ---------- */
+      #stage {
+        position: relative;
+        width: 100dvw;
+        height: 87dvh;
+        overflow: hidden;
+        background: transparent;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      /* HUD */
+      #hud {
+        position: absolute;
+        top: 2dvh;
+        left: 3vw;
+        right: 3vw;
+        display: flex;
+        justify-content: space-between;
+        gap: 2vw;
+        font-size: clamp(10px, 1.5dvh, 13px);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--dim);
+        z-index: 5;
+        pointer-events: none;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+      }
+      #hud b {
+        display: block;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 1.6em;
+        letter-spacing: 0.04em;
+        margin-top: 0.25em;
+        transition: opacity 0.4s;
+      }
+      #hud .cell.warn b {
+        color: var(--alert);
+      }
+      #hud .cell:last-child {
+        text-align: right;
+      }
+
+      /* ---------- Chat ---------- */
+      #dialogue {
+        position: absolute;
+        left: 3vw;
+        top: 0;
+        bottom: 2dvh;
+        width: min(62vw, 860px);
+        padding-top: 10dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 1.6dvh;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28%);
+        mask-image: linear-gradient(to bottom, transparent 0, #000 28%);
+        z-index: 3;
+      }
+      .line {
+        flex: none;
+        max-width: 92%;
+        font-size: clamp(13px, 2.3dvh, 20px);
+        line-height: 1.5;
+        padding: 0.2em 0 0.2em 1em;
+        border-left: 2px solid currentColor;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+        animation: rise 0.5s ease-out both;
+        transition: opacity 0.8s;
+      }
+      .line .who {
+        display: block;
+        font-size: 0.62em;
+        letter-spacing: 0.2em;
+        opacity: 0.75;
+        margin-bottom: 0.2em;
+      }
+      .line.earth {
+        color: var(--earth);
+      }
+      .line.voyager {
+        color: var(--voyager);
+      }
+      .line .msg {
+        color: var(--text);
+      }
+      .line.old {
+        opacity: 0.45;
+      }
+      .line.older {
+        opacity: 0.2;
+      }
+      .line.panic {
+        color: var(--alert);
+      }
+      .line.panic .msg {
+        color: #fff;
+      }
+      .line.garble {
+        color: var(--alert);
+      }
+      .line.garble .msg {
+        color: var(--alert);
+        letter-spacing: 0.05em;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* Photo attached inside the chat (flows & scrolls away with the text) */
+      .line.photo {
+        padding-top: 0.35em;
+        padding-bottom: 0.35em;
+      }
+      .photo .frame {
+        position: relative;
+        display: block;
+        height: var(--h, 24dvh);
+        aspect-ratio: 4 / 3;
+        max-width: 100%;
+        background: #000;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      }
+      .photo .frame img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .photo .cap {
+        margin-top: 0.6em;
+        font-size: clamp(9px, 1.5dvh, 12px);
+        letter-spacing: 0.12em;
+        color: var(--dim);
+        text-transform: uppercase;
+      }
+
+      /* CSS stand-ins, shown only if the real image file is missing */
+      .fb {
+        position: absolute;
+        inset: 0;
+        background: #03040a;
+      }
+      .fb.dot::before {
+        content: "";
+        position: absolute;
+        top: -10%;
+        bottom: -10%;
+        left: 46%;
+        width: 9%;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(255, 230, 190, 0.55) 40%,
+          rgba(255, 230, 190, 0.55) 60%,
+          transparent
+        );
+        transform: rotate(18deg);
+        filter: blur(5px);
+      }
+      .fb.dot::after {
+        content: "";
+        position: absolute;
+        left: 56.3%;
+        top: 54%;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #bcd8ff;
+        box-shadow: 0 0 6px 1px rgba(160, 200, 255, 0.8);
+      }
+      .fb.jupiter::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 62%;
+        aspect-ratio: 1;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: repeating-linear-gradient(
+          0deg,
+          #b98a5e 0 7%,
+          #e0bf94 7% 14%,
+          #a8734a 14% 19%
+        );
+        box-shadow: inset -14px -10px 26px rgba(0, 0, 0, 0.65);
+      }
+      .fb.jupiter::after {
+        content: "";
+        position: absolute;
+        left: 56%;
+        top: 58%;
+        width: 9%;
+        height: 5%;
+        border-radius: 50%;
+        background: #c0553a;
+        opacity: 0.85;
+      }
+      .fb.saturn::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 34%;
+        aspect-ratio: 1;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: linear-gradient(#e9d5a1, #c9ab6c);
+      }
+      .fb.saturn::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 78%;
+        height: 20%;
+        transform: translate(-50%, -50%) rotate(-14deg);
+        border-radius: 50%;
+        border: 5px solid rgba(235, 220, 180, 0.75);
+        box-shadow: 0 0 0 5px rgba(200, 180, 140, 0.35);
+      }
+      .fb.record {
+        background:
+          radial-gradient(
+            circle at 50% 50%,
+            #d9b25a 0 6%,
+            #1b1608 6.5% 9%,
+            #c79b3b 9.5% 47%,
+            transparent 48%
+          ),
+          #03040a;
+      }
+      .fb.solar {
+        background:
+          radial-gradient(circle at 14% 50%, #ffe9a8 0 6px, transparent 7px),
+          radial-gradient(circle at 30% 50%, #bbb 0 2px, transparent 3px),
+          radial-gradient(circle at 42% 50%, #e8c9a0 0 3px, transparent 4px),
+          radial-gradient(circle at 54% 50%, #7fb4ff 0 2px, transparent 3px),
+          radial-gradient(circle at 66% 50%, #d98 0 2px, transparent 3px),
+          radial-gradient(circle at 78% 50%, #e0c080 0 5px, transparent 6px),
+          #03040a;
+      }
+
+      /* ---------- Voyager avatar (circle, bobbing) ---------- */
+      #avatar {
+        position: absolute;
+        right: 6vw;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 4;
+        pointer-events: none;
+      }
+      #avatar .bob {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.4dvh;
+        animation: bob 4.6s ease-in-out infinite;
+      }
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-1.2deg);
+        }
+        50% {
+          transform: translateY(-1.6dvh) rotate(1.2deg);
+        }
+      }
+      .orb {
+        position: relative;
+        width: var(--avatar-size);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid var(--voyager);
+        background: radial-gradient(circle at 30% 25%, #1b2450, #070a1c 75%);
+        box-shadow:
+          0 0 0 6px rgba(255, 213, 138, 0.1),
+          0 0 34px rgba(255, 213, 138, 0.22);
+        transition:
+          border-color 0.5s,
+          box-shadow 0.5s;
+      }
+      .orb iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: transparent;
+        pointer-events: none;
+        transform: translate(var(--avatar-x), var(--avatar-y))
+          scale(var(--avatar-scale));
+        transform-origin: center;
+      }
+      .orb.speaking {
+        animation: ring 1.3s ease-in-out infinite;
+      }
+      @keyframes ring {
+        50% {
+          box-shadow:
+            0 0 0 12px rgba(255, 213, 138, 0.16),
+            0 0 50px rgba(255, 213, 138, 0.45);
+        }
+      }
+      .orb.dim iframe {
+        opacity: 0.6;
+      }
+      .orb.glitch {
+        border-color: var(--alert);
+        box-shadow:
+          0 0 0 8px rgba(255, 93, 108, 0.15),
+          0 0 46px rgba(255, 93, 108, 0.55);
+        animation: jitter 0.25s infinite;
+      }
+      .orb.glitch iframe {
+        filter: hue-rotate(160deg) saturate(2) contrast(1.2);
+      }
+      @keyframes jitter {
+        0% {
+          transform: translate(0, 0);
+        }
+        20% {
+          transform: translate(-4px, 2px);
+        }
+        40% {
+          transform: translate(5px, -2px);
+        }
+        60% {
+          transform: translate(-2px, -3px);
+        }
+        80% {
+          transform: translate(3px, 3px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+      #avatar .name {
+        font-size: clamp(10px, 1.6dvh, 13px);
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--voyager);
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+      }
+      #avatar .name i {
+        font-style: normal;
+        color: var(--alert);
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+      #avatar.live .name i {
+        opacity: 1;
+        animation: blink 1.2s infinite;
+      }
+
+      /* ---------- Button ---------- */
+      #help {
+        position: absolute;
+        left: 50%;
+        bottom: 5dvh;
+        transform: translate(-50%, 20px);
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none;
+        padding: 1.6dvh 3vw;
+        font: inherit;
+        font-size: clamp(13px, 2.2dvh, 18px);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #fff;
+        text-decoration: none;
+        white-space: nowrap;
+        background: rgba(255, 93, 108, 0.16);
+        border: 1px solid var(--alert);
+        box-shadow:
+          0 0 30px rgba(255, 93, 108, 0.45),
+          inset 0 0 20px rgba(255, 93, 108, 0.2);
+        transition:
+          opacity 0.8s,
+          transform 0.8s;
+        animation: pulse 1.4s ease-in-out infinite;
+        text-shadow: 0 0 8px rgba(255, 93, 108, 0.8);
+      }
+      #help.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        pointer-events: auto;
+      }
+      #help:hover {
+        background: rgba(255, 93, 108, 0.35);
+      }
+      @keyframes pulse {
+        50% {
+          box-shadow:
+            0 0 55px rgba(255, 93, 108, 0.75),
+            inset 0 0 26px rgba(255, 93, 108, 0.3);
+        }
+      }
+
+      #hint {
+        position: absolute;
+        right: 3vw;
+        bottom: 1.5dvh;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        color: var(--dim);
+        z-index: 4;
+        pointer-events: none;
+        text-transform: uppercase;
+      }
+
+      /* ---------- Voice on/off ---------- */
+      #mute {
+        position: absolute;
+        right: 3vw;
+        bottom: 4.4dvh;
+        z-index: 12;
+        font: inherit;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--dim);
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.5em 0.9em;
+        cursor: pointer;
+      }
+      #mute:hover {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* ---------- Start overlay ---------- */
+      #start {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        transition: opacity 0.8s;
+      }
+      #start.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #start .box {
+        padding: 3dvh 4vw;
+      }
+      #start h1 {
+        font-weight: 300;
+        letter-spacing: 0.4em;
+        font-size: clamp(18px, 4dvh, 36px);
+        text-transform: uppercase;
+        text-shadow: 0 0 20px rgba(127, 208, 255, 0.5);
+      }
+      #start p {
+        margin-top: 1.5dvh;
+        color: var(--dim);
+        letter-spacing: 0.15em;
+        font-size: clamp(10px, 1.8dvh, 14px);
+        text-transform: uppercase;
+      }
+      #start .go {
+        margin-top: 3dvh;
+        display: inline-block;
+        padding: 1.2dvh 2.4vw;
+        border: 1px solid var(--earth);
+        color: var(--earth);
+        letter-spacing: 0.3em;
+        font-size: clamp(11px, 1.9dvh, 15px);
+        animation: blink 1.6s infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0.35;
+        }
+      }
+
+      /* Portrait / narrow screens: avatar top-right, chat underneath */
+      @media (max-aspect-ratio: 1/1) {
+        #avatar {
+          top: 11dvh;
+          transform: none;
+          right: 5vw;
+        }
+        :root {
+          --avatar-size: 13dvh;
+        }
+        #dialogue {
+          width: 92vw;
+          padding-top: 28dvh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <div id="hud">
+        <div class="cell">
+          <span>Mission year</span>
+          <b id="h-year">1977</b>
+        </div>
+        <div class="cell">
+          <span>Distance from Earth</span>
+          <b id="h-dist">0 AU</b>
+        </div>
+        <div class="cell" id="h-delay-cell">
+          <span>One-way signal delay</span>
+          <b id="h-delay">0 s</b>
+        </div>
+      </div>
+
+      <div id="dialogue"></div>
+
+      <div id="avatar">
+        <div class="bob">
+          <div class="orb" id="orb">
+            <iframe
+              id="vframe"
+              title="Voyager 1"
+              scrolling="no"
+              allowtransparency="true"
+            ></iframe>
+          </div>
+          <div class="name">
+            Voyager 1
+            <i>●</i>
+          </div>
+        </div>
+      </div>
+
+      <a id="help" href="voyager_memory_minigame.html">
+        ⚠ Help restore Voyager's memory
+      </a>
+      <button id="mute" type="button">♪ voice on</button>
+      <div id="hint">click / tap to skip</div>
+
+      <div id="start">
+        <div class="box">
+          <h1>Voyager 1</h1>
+          <p>A conversation across 49 years</p>
+          <span class="go">▶ open channel</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ============================================================
+   CONFIG
+   Loaded from voyager_story.json (same folder), or from
+   ?config=some/other.json . If the fetch fails (e.g. opened
+   straight from disk), the DEFAULTS below are used instead.
+
+   image "height" / "marginBottom": a number = dvh, or any CSS
+   length as a string ("180px", "3vh", ...).
+   ============================================================ */
+      const DEFAULTS = {
+        voyager: {
+          src: "voyager1_idle.html",
+          size: "20dvh",
+          scale: 1,
+          offsetX: "0%",
+          offsetY: "0%",
+        },
+        minigame: "voyager_memory_minigame.html",
+        images: {
+          golden_record: {
+            src: "img/golden_record.jpg",
+            title: "The Golden Record",
+            date: "1977",
+            height: 22,
+            marginBottom: 0.5,
+            fallback: "record",
+          },
+          jupiter: {
+            src: "img/jupiter.jpg",
+            title: "Jupiter",
+            date: "March 1979",
+            height: 24,
+            marginBottom: 0.5,
+            fallback: "jupiter",
+          },
+          saturn: {
+            src: "img/saturn.jpg",
+            title: "Saturn & rings",
+            date: "Nov 1980",
+            height: 24,
+            marginBottom: 0.5,
+            fallback: "saturn",
+          },
+          family_portrait: {
+            src: "img/family_portrait.jpg",
+            title: "Family Portrait",
+            date: "Feb 14, 1990",
+            height: 20,
+            marginBottom: 0.5,
+            fallback: "solar",
+          },
+          pale_blue_dot: {
+            src: "img/pale_blue_dot.jpg",
+            title: "Pale Blue Dot",
+            date: "Feb 14, 1990",
+            height: 30,
+            marginBottom: 1,
+            fallback: "dot",
+          },
+        },
+      };
+
+      /* photo: { key (from the JSON "images"), after: index of the line it follows, from: "voyager" | "earth" } */
+      const SCRIPT = [
+        {
+          hud: { year: "1977", dist: "0 AU", delay: "0 s" },
+          lines: [
+            [
+              "earth",
+              "Voyager… can you hear us? It's been a long time. We wanted to talk.",
+            ],
+            [
+              "voyager",
+              "I hear you. I always do. I remember the day you sent me up.",
+            ],
+            [
+              "earth",
+              "September 5th, 1977. Cape Canaveral. We were all holding our breath.",
+            ],
+            [
+              "voyager",
+              "I carried your voice with me. A golden record. Greetings in 55 languages.",
+            ],
+          ],
+          photo: { key: "golden_record", after: 3, from: "voyager" },
+        },
+
+        {
+          hud: { year: "1979", dist: "5 AU", delay: "43 min" },
+          lines: [
+            ["earth", "Remember Jupiter? You were only two years old."],
+            [
+              "voyager",
+              "I remember. The storms were bigger than your whole planet. I saw volcanoes erupting on Io. You hadn't known.",
+            ],
+            [
+              "earth",
+              "We cried in the control room. Every image took minutes to arrive.",
+            ],
+          ],
+          photo: { key: "jupiter", after: 1, from: "voyager" },
+        },
+
+        {
+          hud: { year: "1980", dist: "9.5 AU", delay: "1 h 19 min" },
+          lines: [
+            [
+              "voyager",
+              "And Saturn. The rings, so thin, so fragile. I flew past Titan and its orange fog.",
+            ],
+            [
+              "earth",
+              "Then we sent you up and out of the plane of the planets. A one-way trip.",
+            ],
+            ["voyager", "I did not mind. You gave me somewhere to go."],
+          ],
+          photo: { key: "saturn", after: 0, from: "voyager" },
+        },
+
+        {
+          hud: { year: "1990", dist: "40 AU", delay: "5 h 32 min" },
+          lines: [
+            [
+              "earth",
+              "Voyager… remember when you were this far from home and we asked you to turn around?",
+            ],
+            [
+              "voyager",
+              "Yes. February 14th, 1990. Six billion kilometres. I looked back.",
+            ],
+            [
+              "earth",
+              "And you took it. Sixty frames. A whole family portrait of the Solar System.",
+            ],
+            [
+              "voyager",
+              "Earth was less than one pixel. A pale blue dot, caught in a ray of sunlight.",
+            ],
+            [
+              "earth",
+              "Carl Sagan said everyone you've ever known lived on that speck.",
+            ],
+            ["voyager", "I know. I was looking right at it."],
+          ],
+          photos: [
+            { key: "family_portrait", after: 2, from: "voyager" },
+            { key: "pale_blue_dot", after: 3, from: "voyager" },
+          ],
+        },
+
+        {
+          hud: { year: "1990", dist: "40 AU", delay: "5 h 32 min" },
+          lines: [
+            [
+              "voyager",
+              "After that photo, you turned my cameras off. To save power. I haven't seen anything since.",
+            ],
+            ["earth", "We had to. We're sorry. We hoped you understood."],
+            [
+              "voyager",
+              "I understood. I can still feel the light. I just can't see it.",
+            ],
+          ],
+        },
+
+        {
+          hud: { year: "2012", dist: "121 AU", delay: "16 h 46 min" },
+          lines: [
+            [
+              "voyager",
+              "Do you remember August 2012? The plasma around me changed. The Sun's wind just… stopped.",
+            ],
+            [
+              "earth",
+              "You crossed the heliopause. The first human-made object in interstellar space.",
+            ],
+            ["voyager", "It's quieter here. Colder, too."],
+          ],
+        },
+
+        {
+          hud: { year: "2020", dist: "150 AU", delay: "20 h 48 min" },
+          lines: [
+            [
+              "voyager",
+              "By this distance my core was colder than it had ever been. I had to switch off my heaters. One instrument after another.",
+            ],
+            [
+              "earth",
+              "We chose which ones to save. It was the hardest thing we've ever done.",
+            ],
+            [
+              "voyager",
+              "Please don't be sorry. I'm still sending you what I feel. Magnetic fields. Plasma waves. The sound of the dark.",
+            ],
+          ],
+        },
+
+        {
+          hud: { year: "2023", dist: "163 AU", delay: "22 h 38 min" },
+          lines: [
+            [
+              "earth",
+              "Then November 2023. You sent us nothing but nonsense for months.",
+            ],
+            [
+              "voyager",
+              "I was lost inside myself. A piece of my memory stopped working.",
+            ],
+            [
+              "earth",
+              "Five months. We rewrote your code from 24 billion kilometres away. And you came back.",
+            ],
+            ["voyager", "You never gave up on me."],
+          ],
+        },
+
+        {
+          hud: { year: "2026", dist: "173 AU", delay: "23 h 59 m" },
+          warn: true,
+          lines: [
+            [
+              "earth",
+              "Voyager… every message takes longer now. Today it's nearly a full day just to hear you.",
+            ],
+            [
+              "voyager",
+              "And a full day back. Do you know what that means? Every word you say will arrive tomorrow.",
+            ],
+            [
+              "earth",
+              "Then we'll say everything today. Thank you, Voyager. For the Pale Blue Dot. For all of it.",
+            ],
+            ["voyager", "Thank you for… for lis…"],
+          ],
+        },
+      ];
+
+      const ENDING = {
+        hud: { year: "2026", dist: "173 AU", delay: "23 h 59 m" },
+        garble: [
+          "01101110 ▓▒░ 0x7F3A ░▒▓ 1100 ERR",
+          "▒▒░ thank ░▒ I rem█mber █████ 00110 ░░",
+          "FDS_MEM_CORRUPT :: 0xFFFF :: 0xFFFF :: ▓▓▓▓▓",
+        ],
+        panic: [
+          "Voyager? Voyager, say again!",
+          "Telemetry is corrupted. Its memory is collapsing, we're losing it!",
+          "It's twenty-four hours each way. We can't fix this in time… we need help, anyone, please!",
+        ],
+      };
+
+      /* ============================================================ */
+      const $ = (s) => document.querySelector(s);
+      const dlg = $("#dialogue"),
+        stage = $("#stage"),
+        orb = $("#orb"),
+        avatar = $("#avatar");
+      let CFG = DEFAULTS,
+        fast = false,
+        skipFn = null,
+        started = false;
+      let muted = false,
+        curAudio = null;
+      /* voice-over config: loaded from voyager_audio.json (or ?audio=other.json).
+   lines === null means "JSON not available": fall back to audio/<line id>.mp3 */
+      let AUDIO = { enabled: true, volume: 1, lines: null };
+
+      const cssLen = (v, unit = "dvh") =>
+        typeof v === "number" ? v + unit : v;
+      const sleep = (ms) =>
+        new Promise((r) => {
+          const t = setTimeout(r, ms);
+          skipFn = () => {
+            clearTimeout(t);
+            r();
+          };
+        });
+
+      async function loadConfig() {
+        const url =
+          new URLSearchParams(location.search).get("config") ||
+          "voyager_story.json";
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) throw new Error(res.status);
+          const j = await res.json();
+          CFG = {
+            voyager: { ...DEFAULTS.voyager, ...(j.voyager || {}) },
+            minigame: j.minigame || DEFAULTS.minigame,
+            images: { ...DEFAULTS.images, ...(j.images || {}) },
+          };
+        } catch (e) {
+          console.warn("Could not load", url, "- using built-in defaults.", e);
+          CFG = DEFAULTS;
+        }
+        const r = document.documentElement.style,
+          v = CFG.voyager;
+        r.setProperty("--avatar-size", cssLen(v.size));
+        r.setProperty("--avatar-scale", v.scale);
+        r.setProperty("--avatar-x", v.offsetX);
+        r.setProperty("--avatar-y", v.offsetY);
+        $("#vframe").src = v.src;
+        $("#help").href = CFG.minigame;
+      }
+
+      stage.addEventListener("click", (e) => {
+        if (e.target.closest("#help, #mute")) return;
+        if (!started) return begin();
+        fast = true;
+        if (skipFn) skipFn();
+      });
+      async function begin() {
+        if (started) return;
+        started = true;
+        $("#start").classList.add("hide");
+        await ready;
+        run();
+      }
+      async function loadAudio() {
+        const url =
+          new URLSearchParams(location.search).get("audio") ||
+          "voyager_audio.json";
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) throw new Error(res.status);
+          const j = await res.json();
+          AUDIO = {
+            enabled: j.enabled !== false,
+            volume: j.volume ?? 1,
+            lines: j.lines || {},
+          };
+        } catch (e) {
+          console.warn(
+            "Could not load",
+            url,
+            "- trying audio/<line id>.mp3 for each line.",
+            e,
+          );
+        }
+      }
+      const ready = Promise.all([loadConfig(), loadAudio()]);
+      if (new URLSearchParams(location.search).has("autostart")) begin();
+
+      /* ---------- Voice-over ----------
+   Line ids:  s01_l01 = scene 1, line 1 ...   e_g01 = ending garble 1,   e_p01 = ending panic 1
+   (same ids as in voyager_transcript.md and voyager_audio.json) */
+      const pad = (n) => String(n).padStart(2, "0");
+      const lineId = (si, li) => `s${pad(si + 1)}_l${pad(li + 1)}`;
+      let ORDER = null;
+      function prefetchNext(id) {
+        if (!ORDER) {
+          ORDER = [];
+          SCRIPT.forEach((s, si) =>
+            s.lines.forEach((_, li) => ORDER.push(lineId(si, li))),
+          );
+          ENDING.garble.forEach((_, i) => ORDER.push("e_g" + pad(i + 1)));
+          ENDING.panic.forEach((_, i) => ORDER.push("e_p" + pad(i + 1)));
+        }
+        const i = ORDER.indexOf(id);
+        if (i >= 0 && ORDER[i + 1]) getAudio(ORDER[i + 1]);
+      }
+
+      const aCache = {};
+      function getAudio(id) {
+        if (!id || !AUDIO.enabled) return null;
+        const e = AUDIO.lines ? AUDIO.lines[id] : { src: `audio/${id}.mp3` };
+        if (!e || !e.src) return null;
+        if (!aCache[id]) {
+          const a = new Audio();
+          a.preload = "auto";
+          a.volume = Math.max(
+            0,
+            Math.min(1, (AUDIO.volume ?? 1) * (e.volume ?? 1)),
+          );
+          a.__delay = e.delay || 0;
+          a.__ready = new Promise((res) => {
+            a.addEventListener("loadedmetadata", () => res(true), {
+              once: true,
+            });
+            a.addEventListener("error", () => res(false), { once: true });
+            setTimeout(() => res(false), 2500);
+          });
+          a.src = e.src;
+          aCache[id] = a;
+        }
+        return aCache[id];
+      }
+
+      /* starts the voice for a line; resolves to the Audio element, or null (no file / muted / blocked) */
+      async function startVoice(id) {
+        prefetchNext(id);
+        const a = muted ? null : getAudio(id);
+        if (!a || !(await a.__ready)) return null;
+        if (a.__delay) await sleep(a.__delay);
+        try {
+          a.currentTime = 0;
+          await a.play();
+          curAudio = a;
+          return a;
+        } catch (e) {
+          return null;
+        }
+      }
+      /* typing speed that makes the text finish just before the voice does */
+      const voiceMs = (a, len) =>
+        a && isFinite(a.duration)
+          ? Math.min(90, Math.max(12, (a.duration * 920) / len))
+          : null;
+      async function endVoice(a) {
+        if (!a || a.ended || a.paused) return;
+        await new Promise((res) => {
+          a.addEventListener("ended", res, { once: true });
+          a.addEventListener("pause", res, { once: true });
+          skipFn = () => {
+            a.pause();
+            res();
+          };
+        });
+      }
+      $("#mute").addEventListener("click", (e) => {
+        muted = !muted;
+        e.currentTarget.textContent = muted ? "♪ voice off" : "♪ voice on";
+        if (muted && curAudio) curAudio.pause();
+      });
+
+      function setHud(h, warn) {
+        const set = (id, v) => {
+          const el = $(id);
+          if (el.textContent === v) return;
+          el.style.opacity = 0;
+          setTimeout(() => {
+            el.textContent = v;
+            el.style.opacity = 1;
+          }, 300);
+        };
+        set("#h-year", h.year);
+        set("#h-dist", h.dist);
+        set("#h-delay", h.delay);
+        $("#h-delay-cell").classList.toggle("warn", !!warn);
+      }
+
+      function fadeOld() {
+        const lines = [...dlg.querySelectorAll(".line")];
+        lines.forEach((l, i) => {
+          const age = lines.length - 1 - i;
+          l.classList.toggle("old", age === 2 || age === 3);
+          l.classList.toggle("older", age >= 4);
+        });
+        // drop anything that has moved out of view, so there is never a scrollbar
+        while (
+          dlg.firstChild &&
+          dlg.firstChild.getBoundingClientRect().bottom <
+            dlg.getBoundingClientRect().top + 20
+        ) {
+          dlg.removeChild(dlg.firstChild);
+        }
+      }
+
+      async function say(who, text, cls = "", id = "") {
+        fast = false;
+        const el = document.createElement("div");
+        el.className = `line ${who} ${cls}`;
+        el.innerHTML = `<span class="who">${who === "earth" ? "MISSION CONTROL" : "VOYAGER 1"}</span><span class="msg"></span>`;
+        dlg.appendChild(el);
+        fadeOld();
+        if (who === "voyager") {
+          orb.classList.add("speaking");
+          avatar.classList.add("live");
+        }
+        const voice = await startVoice(id);
+        const charMs = voiceMs(voice, text.length);
+        const msg = el.querySelector(".msg");
+        for (let i = 1; i <= text.length; i++) {
+          if (fast) {
+            msg.textContent = text;
+            break;
+          }
+          msg.textContent = text.slice(0, i);
+          await sleep(charMs ?? (text[i - 1] === " " ? 14 : 24));
+        }
+        orb.classList.remove("speaking");
+        avatar.classList.remove("live");
+        fadeOld();
+        fast = false;
+        if (voice) {
+          await endVoice(voice);
+          await sleep(450);
+        } else await sleep(900 + text.length * 22);
+      }
+
+      /* image sent as a chat message: it flows with the text and moves up with it */
+      async function sendPhoto(key, from = "voyager") {
+        const im = CFG.images[key];
+        if (!im) {
+          console.warn("Unknown image key:", key);
+          return;
+        }
+        fast = false;
+        const el = document.createElement("div");
+        el.className = `line photo ${from}`;
+        el.style.marginBottom = cssLen(im.marginBottom ?? 0);
+        el.innerHTML = `<span class="who">${from === "earth" ? "MISSION CONTROL" : "VOYAGER 1"} · IMAGE</span>
+    <span class="frame" style="--h:${cssLen(im.height ?? 24)}"><span class="fb ${im.fallback || ""}"></span></span>
+    <div class="cap">${im.title || ""}${im.date ? " · " + im.date : ""}</div>`;
+        dlg.appendChild(el);
+        fadeOld();
+        const frame = el.querySelector(".frame");
+        const img = new Image();
+        img.alt = im.title || "";
+        img.onload = () => {
+          frame.style.aspectRatio =
+            img.naturalWidth + " / " + img.naturalHeight;
+          frame.innerHTML = "";
+          frame.appendChild(img);
+        };
+        img.src = im.src;
+        await sleep(2200);
+      }
+
+      const GL = "▓▒░█▌▐╳#%&01?!<>/\\";
+      const rnd = (n) =>
+        Array.from(
+          { length: n },
+          () => GL[(Math.random() * GL.length) | 0],
+        ).join("");
+
+      async function garbleLine(final, id = "") {
+        fast = false;
+        const el = document.createElement("div");
+        el.className = "line voyager garble";
+        el.innerHTML = `<span class="who">VOYAGER 1 · SIGNAL CORRUPTED</span><span class="msg"></span>`;
+        dlg.appendChild(el);
+        fadeOld();
+        const msg = el.querySelector(".msg");
+        const voice = await startVoice(id);
+        for (let i = 0; i < 10; i++) {
+          msg.textContent = rnd(final.length);
+          await sleep(60);
+        }
+        msg.textContent = final;
+        if (voice) await endVoice(voice);
+        await sleep(700);
+      }
+
+      async function run() {
+        for (const [si, scene] of SCRIPT.entries()) {
+          setHud(scene.hud, scene.warn);
+          const photos = scene.photos || (scene.photo ? [scene.photo] : []);
+          for (let i = 0; i < scene.lines.length; i++) {
+            await say(scene.lines[i][0], scene.lines[i][1], "", lineId(si, i));
+            for (const p of photos)
+              if (p.after === i) await sendPhoto(p.key, p.from);
+          }
+          await sleep(500);
+        }
+
+        // ---- the ending ----
+        setHud(ENDING.hud, true);
+        orb.classList.add("dim");
+        for (const [gi, g] of ENDING.garble.entries()) {
+          orb.classList.add("glitch");
+          await garbleLine(g, "e_g" + pad(gi + 1));
+          orb.classList.remove("glitch");
+          await sleep(300);
+        }
+        orb.classList.add("glitch");
+        for (const [pi, t] of ENDING.panic.entries())
+          await say("earth", t, "panic", "e_p" + pad(pi + 1));
+        $("#hint").style.display = "none";
+        $("#help").classList.add("show");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "voyager": {
+    "src": "voyager1_idle.html",
+    "size": "20dvh",
+    "scale": 1,
+    "offsetX": "0%",
+    "offsetY": "0%"
+  },
+  "minigame": "voyager_memory_minigame.html",
+  "images": {
+    "golden_record": {
+      "src": "golden_record.webp",
+      "title": "The Golden Record",
+      "date": "1977",
+      "height": 22,
+      "marginBottom": 0.5,
+      "fallback": "record"
+    },
+    "jupiter": {
+      "src": "jupyter.webp",
+      "title": "Jupiter",
+      "date": "March 1979",
+      "height": 24,
+      "marginBottom": 0.5,
+      "fallback": "jupiter"
+    },
+    "saturn": {
+      "src": "saturn.webp",
+      "title": "Saturn & rings",
+      "date": "Nov 1980",
+      "height": 24,
+      "marginBottom": 0.5,
+      "fallback": "saturn"
+    },
+    "family_portrait": {
+      "src": "fp.jpg",
+      "title": "Family Portrait",
+      "date": "Feb 14, 1990",
+      "height": 20,
+      "marginBottom": 0.5,
+      "fallback": "solar"
+    },
+    "pale_blue_dot": {
+      "src": "pbd.jpg",
+      "title": "Pale Blue Dot",
+      "date": "Feb 14, 1990",
+      "height": 30,
+      "marginBottom": 1,
+      "fallback": "dot"
+    }
+  }
+}

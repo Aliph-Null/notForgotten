@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Memory Graveyard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game">
+      <section class="board-side">
+        <div class="board-wrap">
+          <div id="grid" class="grid" aria-label="Voyager memory pages"></div>
+        </div>
+        <footer class="legend">
+          <span>
+            <i class="legend-cell good"></i>
+            good page
+          </span>
+          <span>
+            <i class="legend-cell dead"></i>
+            dead F3
+          </span>
+          <span>
+            <i class="legend-cell reserved"></i>
+            reserved DTR
+          </span>
+        </footer>
+      </section>
+
+      <aside class="control-panel">
+        <section class="panel-section tier-section">
+          <div class="eyebrow">Mission tier</div>
+          <div class="tier-buttons">
+            <button data-tier="easy" type="button">Easy</button>
+            <button data-tier="medium" class="active" type="button">
+              Medium
+            </button>
+            <button data-tier="hard" type="button">Hard</button>
+          </div>
+        </section>
+
+        <section class="panel-section audit-section">
+          <div class="section-row">
+            <span>Science budget</span>
+            <strong>
+              <span id="power-used">0</span>
+              /
+              <span id="power-limit">38</span>
+              W
+            </strong>
+          </div>
+          <div class="meter"><span id="power-meter"></span></div>
+          <div id="power-message" class="small-copy">
+            Probe blocks to identify their load.
+          </div>
+          <div class="score-row">
+            <span>
+              SIGNAL
+              <strong id="signal-score">0%</strong>
+            </span>
+            <span>
+              cuts
+              <strong id="cut-score">0</strong>
+            </span>
+          </div>
+        </section>
+
+        <section class="panel-section status-section">
+          <div class="state-line">
+            <i id="overlap-dot" class="state-dot clear"></i>
+            <span id="overlap-text">No overlap.</span>
+          </div>
+          <div class="state-line">
+            <i id="dead-dot" class="state-dot clear"></i>
+            <span id="dead-text">Dead F3 is untouched.</span>
+          </div>
+        </section>
+
+        <section class="panel-section tools-section">
+          <div class="eyebrow">Action</div>
+          <div class="action-buttons">
+            <button class="action-button active" data-mode="move" type="button">
+              MOVE
+            </button>
+            <button class="action-button" data-mode="slice" type="button">
+              SLICE
+            </button>
+          </div>
+          <div id="tool-message" class="tool-message">
+            Move blocks into surviving memory. Drop one on OFF to retire it.
+          </div>
+        </section>
+
+        <section class="panel-section blocks-section">
+          <div class="eyebrow">Block tray</div>
+          <div id="shape-list" class="shape-list"></div>
+        </section>
+
+        <section class="panel-section probe-section">
+          <div class="section-row">
+            <span>Probe console</span>
+            <span id="probe-status">idle</span>
+          </div>
+          <button
+            id="see-console"
+            class="small-button see-console"
+            type="button"
+          >
+            OPEN PROBE CONSOLE
+          </button>
+        </section>
+
+        <section class="panel-section pointer-section">
+          <div class="section-row">
+            <span>Fragment link</span>
+            <span id="pointer-status">empty</span>
+          </div>
+          <div id="pointer-tray" class="pointer-tray">
+            After a slice, click a glowing seam cell to stitch the pointer.
+          </div>
+        </section>
+
+        <section class="panel-section off-section">
+          <div class="section-row">
+            <span>OFF rack</span>
+            <span id="retired-count">0 retired</span>
+          </div>
+          <div id="off-rack" class="off-rack">
+            Drag a block here to retire it.
+          </div>
+        </section>
+
+        <section class="panel-section log-section">
+          <div class="eyebrow">Mission log</div>
+          <div id="mission-log">FDS WAITING FOR LAYOUT</div>
+        </section>
+
+        <section class="panel-section truth-section">
+          <div class="section-row">
+            <span>Truth check</span>
+            <span id="truth-badge">unverified</span>
+          </div>
+          <button id="truth-check" class="small-button" type="button">
+            VERIFY NASA POWER-DOWN
+          </button>
+          <div id="truth-card" class="small-copy">
+            MAG and PWS remain on; the documented shutdown sequence is in the
+            mission data.
+          </div>
+        </section>
+
+        <section class="panel-section signal-section">
+          <button
+            id="signal-button"
+            class="scene-button"
+            type="button"
+            aria-label="Continue to the faint signal scene"
+          ></button>
+        </section>
+      </aside>
+    </main>
+
+    <div id="probe-overlay" class="probe-overlay" hidden>
+      <div id="overlay-backdrop" class="overlay-backdrop"></div>
+      <div
+        class="overlay-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Probe console"
+      >
+        <header class="overlay-header">
+          <div class="overlay-title">
+            <span class="eyebrow">Probe console</span>
+            <h2 id="overlay-name">UNKNOWN BLOCK</h2>
+          </div>
+          <span id="overlay-status" class="overlay-status">
+            awaiting answer
+          </span>
+          <button id="overlay-close" class="small-button" type="button">
+            CLOSE ✕
+          </button>
+        </header>
+        <div class="overlay-grid">
+          <section class="overlay-pane code-pane">
+            <div class="pane-title">SOURCE</div>
+            <div id="overlay-code" class="overlay-console"></div>
+          </section>
+          <section class="overlay-pane tlm-pane">
+            <div class="pane-title">TELEMETRY · MDS 115.2 KBPS</div>
+            <div
+              id="overlay-telemetry"
+              class="telemetry"
+              aria-label="Live telemetry bytes"
+            ></div>
+          </section>
+          <section class="overlay-pane book-pane">
+            <div class="pane-title">FDS REFERENCE</div>
+            <div id="overlay-book" class="book"></div>
+          </section>
+        </div>
+        <footer class="overlay-footer">
+          <div class="pane-title">IDENTIFY THIS BLOCK</div>
+          <div id="overlay-choices" class="probe-choices overlay-choices"></div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
