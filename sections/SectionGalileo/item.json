@@ -17,6 +17,13 @@
   "Title": "Galileo discovers Jupiter's moons",
   "Body-Text": "In 1609, Galileo turned his improved telescope toward the night sky. He saw mountains and craters on the Moon, showing it was not a perfect sphere, and resolved the Milky Way into countless stars. In 1610, he discovered four moons orbiting Jupiter and observed the phases of Venus. Together, these findings challenged the belief that everything in the heavens revolved around Earth and helped transform our understanding of the Solar System.",
   "Path": "galileo.webp",
+  "Gallery": [
+    "galileo_moons.webp"
+  ],
+  "Captions": {
+    "galileo.webp": "Galileo demonstrates his telescope to the Doge of Venice.",
+    "galileo_moons.webp": "Jupiter and the four Galilean moons: Io, Europa, Ganymede, and Callisto."
+  },
   "ModelPath": "",
   "ModelFacts": [
     "",

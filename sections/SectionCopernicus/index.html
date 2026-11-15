@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission item</title>
+    <link rel="stylesheet" href="../SectionTemplateGol/section.css" />
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <p class="load-error" id="loadError" role="alert" hidden></p>
+      <header class="topbar">
+        <strong id="year" class="year">-</strong>
+      </header>
+
+      <main class="content">
+        <section class="info-panel" aria-labelledby="title">
+          <h1 id="title">-</h1>
+          <p id="body" class="body-text">-</p>
+        </section>
+
+        <section class="visual-column" aria-label="Media and timeline">
+          <div class="preview-section">
+            <div class="preview-stage" id="preview"></div>
+            <p class="model-hint" id="modelHint" hidden>
+              Click the preview to explore this model in 3D
+            </p>
+          </div>
+
+          <section class="timeline-panel" aria-labelledby="timelineTitle">
+            <h2 id="timelineTitle">Dates</h2>
+            <ol class="timeline-list" id="timeline"></ol>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="model-dialog" id="modelDialog" aria-label="3D model viewer">
+      <div class="dialog-content">
+        <button
+          class="dialog-close"
+          id="closeModel"
+          type="button"
+          aria-label="Close 3D model viewer"
+        >
+          ×
+        </button>
+        <div class="model-facts" id="modelFacts" aria-label="Model facts"></div>
+        <div class="model-viewer-frame" id="modelViewer"></div>
+      </div>
+    </dialog>
+
+    <script src="../SectionTemplateGol/section.js"></script>
+    <script src="../../wheel_event_forward.js"></script>
+  </body>
+</html>

@@ -12,10 +12,19 @@
       "Background-id": 1
     },
     {
+      "Order": 6,
+      "id": "sec-6",
+      "title": "Copernicus' heliocentric model",
+      "path": "sections/SectionCopernicus/index.html",
+      "year": "1543",
+      "era": "The scientific revolution",
+      "Background-id": 6
+    },
+    {
       "Order": 7,
       "id": "sec-7",
       "title": "Galileo discovers Jupiter's moons",
-      "path": "SectionGalileo/index.html",
+      "path": "sections/SectionGalileo/index.html",
       "year": "1610",
       "era": "The scientific revolution",
       "Background-id": 12
