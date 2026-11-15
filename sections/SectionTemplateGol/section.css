@@ -196,6 +196,7 @@ h1 {
   --poster-color: transparent;
 }
 
+/* [AI-GENERATED] The gallery styles below (.gallery-card rules and their @media (hover: hover) block) were generated with the help of Claude (Anthropic). */
 /* ---------- Gallery: stacked cards that spread out on hover ---------- */
 
 .preview-stage.has-gallery .gallery-card {
@@ -460,6 +461,7 @@ h1 {
   --poster-color: transparent;
 }
 
+/* [AI-POLISHED] The image window styles below (.zoomable, .is-image, .image-dialog-caption) were written by us and polished with the help of Claude (Anthropic). */
 /* Image window: same window as the 3D model, showing a clicked image large */
 .preview-stage img.zoomable,
 .preview-stage.has-gallery .gallery-card {
@@ -500,6 +502,7 @@ h1 {
   text-align: center;
 }
 
+/* [AI-GENERATED] The 3D model facts styles below (.model-facts, .model-leaders, .model-leader, .model-fact) were generated with the help of Claude (Anthropic). */
 .model-facts {
   position: absolute;
   z-index: 2;

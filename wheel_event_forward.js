@@ -10,6 +10,7 @@
 
   const post = (message) => parentWindow.postMessage(message, "*");
 
+  // [AI-GENERATED] The edge-detection helpers below (EDGE_PAUSE, ownsGestures, findScrollableElement, edges) were generated with the help of Claude (Anthropic).
   // How long the page must rest at its top/bottom edge before the wheel can change
   // section (so the end of a scroll, or its momentum, never jumps to the next section)
   const EDGE_PAUSE = 500;
@@ -55,10 +56,7 @@
   window.addEventListener(
     "wheel",
     (event) => {
-      if (
-        ownsGestures(event.target) ||
-        canScrollInside(event.target, event.deltaY)
-      ) {
+      if (ownsGestures(event.target)) {
         return;
       }
       const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
@@ -74,11 +72,7 @@
         // Horizontal trackpad swipes would otherwise trigger the browser's "Back"
         event.preventDefault();
       }
-      post({
-        type: "SECTION_WHEEL",
-        deltaX: event.deltaX,
-        deltaY: event.deltaY,
-      });
+      post({ type: "SECTION_WHEEL", deltaX: event.deltaX, deltaY: event.deltaY });
     },
     { passive: false },
   );

@@ -56,6 +56,7 @@
   document.body.appendChild(overlay);
 
 
+  // [AI-GENERATED] The function below, spiralLayout(), was generated with the help of Claude (Anthropic).
   // Golden spiral: the radius grows by PHI every quarter turn
 
   function spiralLayout() {
@@ -189,6 +190,7 @@
     return stars.map((_, i) => [x1 + ((x2 - x1) * i) / (STAR_COUNT - 1), y]);
   }
 
+  // [AI-POLISHED] The functions ease(), play() and finish() below were written by us and polished with the help of Claude (Anthropic).
   const ease = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
 
   let playing = false;

@@ -17,6 +17,7 @@ async function loadItem() {
   const captions = item.Captions === undefined ? {} : item.Captions;
   const bottomPercent = Number(item["Bottom %"] ?? 0);
 
+  // [AI-POLISHED] START: The item.json validation checks below were written by us and polished with the help of Claude (Anthropic).
   if (!Array.isArray(dates)) {
     throw new Error("Dates must be an array");
   }
@@ -47,6 +48,7 @@ async function loadItem() {
   if (!Number.isFinite(bottomPercent) || bottomPercent < 0 || bottomPercent > 100) {
     throw new Error('The "Bottom %" value must be between 0 and 100');
   }
+  // [AI-POLISHED] END
 
   document.getElementById("year").textContent = item.Year ?? "";
   document.getElementById("title").textContent = item.Title ?? "";
@@ -195,6 +197,7 @@ function renderMedia(preview, path, title, gallery) {
   preview.appendChild(media);
 }
 
+// [AI-GENERATED] The function below, renderGallery(), was generated with the help of Claude (Anthropic).
 // Gallery: the images are stacked like cards; on hover (or tap on touch screens)
 // they spread out side by side. Clicking a card opens it large in a window.
 function renderGallery(preview, images, title) {
@@ -235,6 +238,7 @@ function renderGallery(preview, images, title) {
 
 }
 
+// [AI-GENERATED] The function below, renderModelFacts(), was generated with the help of Claude (Anthropic).
 function renderModelFacts(facts) {
   const container = document.getElementById("modelFacts");
   container.replaceChildren();
@@ -298,6 +302,7 @@ function renderModelFacts(facts) {
   });
 }
 
+// [AI-POLISHED] The function below, openImageDialog(), was written by us and polished with the help of Claude (Anthropic).
 // Image window: reuses the 3D model window (#modelDialog) to show one image large
 function openImageDialog(src, title) {
   const dialog = document.getElementById("modelDialog");

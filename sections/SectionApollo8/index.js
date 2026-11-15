@@ -137,6 +137,7 @@ function renderPreview(path, modelPath, title) {
   }
 }
 
+// [AI-GENERATED] The function below, renderModelFacts(), was generated with the help of Claude (Anthropic).
 function renderModelFacts(facts) {
   const container = document.getElementById("modelFacts");
   container.replaceChildren();

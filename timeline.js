@@ -96,6 +96,7 @@ async function initTimeline() {
     }
   }
 
+  // [AI-GENERATED] The helpers posOf(), halfStep() and the update() function below were generated with the help of Claude (Anthropic).
   const posOf = (i, windowStart) => ((i - windowStart) / span) * 100;
   // The line continues half a step past the first and last visible points,
   // as far as the era row (at most 9%, which is inside the side padding)

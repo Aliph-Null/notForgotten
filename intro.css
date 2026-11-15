@@ -75,6 +75,7 @@
   transition: opacity 0.5s ease;
 }
 
+/* [AI-GENERATED] The constellation line-drawing and star reveal styles below were generated with the help of Claude (Anthropic). */
 /* Lines connecting the stars; start hidden and "draw" themselves when .drawn is added */
 .intro-lines {
   fill: none;
@@ -157,6 +158,7 @@
   }
 }
 
+/* [AI-POLISHED] The exit transition styles below were written by us and polished with the help of Claude (Anthropic). */
 /* After the click */
 
 #intro.is-leaving .intro-sky {
