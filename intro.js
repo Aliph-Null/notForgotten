@@ -1,4 +1,34 @@
 (function () {
+  const videoIntro = document.getElementById("video-intro");
+  const introVideo = document.getElementById("video-intro-media");
+  const startButton = document.getElementById("video-intro-start");
+  const skipButton = document.getElementById("video-intro-skip");
+  const videoStatus = document.getElementById("video-intro-status");
+  let videoIntroDismissed = false;
+
+  function dismissVideoIntro() {
+    if (videoIntroDismissed) return;
+    videoIntroDismissed = true;
+    introVideo.pause();
+    videoIntro.classList.add("is-dismissing");
+    setTimeout(() => videoIntro.remove(), 350);
+  }
+
+  startButton.addEventListener("click", () => {
+    introVideo.play().catch(() => {
+      videoStatus.textContent = "Unable to play the intro. You can skip it to continue.";
+    });
+  });
+  skipButton.addEventListener("click", dismissVideoIntro);
+  introVideo.addEventListener("playing", () => {
+    startButton.hidden = true;
+    videoStatus.textContent = "";
+  });
+  introVideo.addEventListener("ended", dismissVideoIntro);
+  introVideo.addEventListener("error", () => {
+    videoStatus.textContent = "Intro video could not be loaded. You can skip it to continue.";
+  });
+
   const PHI = (1 + Math.sqrt(5)) / 2; 
   const STAR_COUNT = 13; 
   const SVG_NS = "http://www.w3.org/2000/svg";
