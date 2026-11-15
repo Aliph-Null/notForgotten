@@ -12,6 +12,15 @@
       "Background-id": 1
     },
     {
+      "Order": 4,
+      "id": "sec-4",
+      "title": "Eratosthenes measures the Earth",
+      "path": "sections/SectionEratosthenes/index.html",
+      "year": "240 BC",
+      "era": "Ancient astronomy`  ",
+      "Background-id": 8
+    },
+    {
       "Order": 5,
       "id": "sec-5",
       "title": "Ptolemy's geocentric model",
