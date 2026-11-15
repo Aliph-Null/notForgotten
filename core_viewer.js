@@ -29,6 +29,7 @@ async function initViewer() {
   let locked = false;
   const TRANSITION_COOLDOWN = 700;
 
+  // [AI-POLISHED] The functions sendBgState() and setActiveSection() below were written by us and polished with the help of Claude (Anthropic).
   function sendBgState(index) {
     const targetBgId = frames[index]?.dataset.bgId;
     if (targetBgId !== undefined && bgFrame && bgFrame.contentWindow) {
@@ -92,6 +93,7 @@ async function initViewer() {
       iframe.classList.add("active");
     }
 
+    // [AI-GENERATED] The iframe "load" listener below (safety net that injects wheel_event_forward.js) was generated with the help of Claude (Anthropic).
     // Safety net: a section page without wheel_event_forward.js (e.g. a missing
     // folder that loads a 404 page) gets the script added, so wheel and swipe
     // keep working on it

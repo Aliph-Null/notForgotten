@@ -24,6 +24,7 @@ core_viewer_test/
 
 ---
 
+<!-- [AI-POLISHED] This section was written by us and polished with the help of Claude (Anthropic). -->
 ## Cum funcționează
 
 1. `index.html` conține un container `#scroller` gol și încarcă `core_viewer.js`.

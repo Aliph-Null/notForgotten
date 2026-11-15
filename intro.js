@@ -1,34 +1,4 @@
 (function () {
-  const videoIntro = document.getElementById("video-intro");
-  const video = document.getElementById("video-intro-media");
-  const startButton = document.getElementById("video-intro-start");
-  const skipButton = document.getElementById("video-intro-skip");
-  const videoStatus = document.getElementById("video-intro-status");
-  let videoIntroDismissed = false;
-
-  function dismissVideoIntro() {
-    if (videoIntroDismissed) return;
-    videoIntroDismissed = true;
-    video.pause();
-    videoIntro.classList.add("is-dismissing");
-    setTimeout(() => videoIntro.remove(), 350);
-  }
-
-  startButton.addEventListener("click", () => {
-    video.play().catch(() => {
-      videoStatus.textContent = "Unable to play the intro. You can skip it to continue.";
-    });
-  });
-  skipButton.addEventListener("click", dismissVideoIntro);
-  video.addEventListener("playing", () => {
-    startButton.hidden = true;
-    videoStatus.textContent = "";
-  });
-  video.addEventListener("ended", dismissVideoIntro);
-  video.addEventListener("error", () => {
-    videoStatus.textContent = "Intro video could not be loaded. You can skip it to continue.";
-  });
-
   const PHI = (1 + Math.sqrt(5)) / 2; 
   const STAR_COUNT = 13; 
   const SVG_NS = "http://www.w3.org/2000/svg";
@@ -86,6 +56,7 @@
   document.body.appendChild(overlay);
 
 
+  // [AI-GENERATED] The function below, spiralLayout(), was generated with the help of Claude (Anthropic).
   // Golden spiral: the radius grows by PHI every quarter turn
 
   function spiralLayout() {
@@ -219,6 +190,7 @@
     return stars.map((_, i) => [x1 + ((x2 - x1) * i) / (STAR_COUNT - 1), y]);
   }
 
+  // [AI-POLISHED] The functions ease(), play() and finish() below were written by us and polished with the help of Claude (Anthropic).
   const ease = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
 
   let playing = false;

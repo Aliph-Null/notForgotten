@@ -309,6 +309,7 @@ h1 {
   line-height: 1.35;
 }
 
+/* [AI-GENERATED] The 3D model dialog styles below (from .model-dialog to .model-fact[data-side="right"]) were generated with the help of Claude (Anthropic). */
 .model-dialog {
   width: min(94dvw, 76rem);
   height: min(90dvh, 52rem);

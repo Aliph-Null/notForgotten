@@ -300,6 +300,7 @@
       </div>
     </aside>
     <script>
+      // [AI-POLISHED] The documentation comment below (usage, API, references, image credits) was written by us and polished with the help of Claude (Anthropic).
       /*
  COSMIC ATLAS v5 — one file, embedded artwork, no external requests or libraries.
  Embed as <iframe src="background.html" ...>. Controls are OFF by default.
@@ -752,6 +753,7 @@
           glow(c, r * 0.98, -spread * 0.48, r * 0.13 * rise, "#ffb14e80");
           c.restore();
         }
+        // [AI-GENERATED] The function below, sun(), was generated with the help of Claude (Anthropic).
         function sun(c, t) {
           bg(c, "#0d0b15", "#2c1419");
           starfield(c, t, 0.23);
@@ -2875,6 +2877,7 @@
           surface,
           solarSystem,
         ];
+        // [AI-GENERATED] START: The scene cross-fade system (currentWeights, normalizeState, setState, CosmicAtlas API, SET_STATE listener) was generated with the help of Claude (Anthropic).
         // A weighted offscreen composite is premultiplied with additive blending. Ordinary
         // source-over fades would briefly dim both opaque scenes in the middle.
         const sceneCanvas = off(1, 1),
@@ -2957,6 +2960,7 @@
           if (data && typeof data === "object" && data.type === "SET_STATE")
             setState(data.state);
         });
+        // [AI-GENERATED] END
         function resize() {
           W = Math.max(1, innerWidth);
           H = Math.max(1, innerHeight);
