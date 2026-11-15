@@ -111,6 +111,15 @@
       "Background-id": 11
     },
     {
+      "Order": 33,
+      "id": "sec-33",
+      "title": "Voyager 1 - don't forget me",
+      "path": "sections/Section33/index.html",
+      "year": "2024",
+      "era": "Modern era",
+      "Background-id": 12
+    },
+    {
       "Order": 34,
       "id": "sec-34",
       "title": "Artemis II, return to the Moon",
