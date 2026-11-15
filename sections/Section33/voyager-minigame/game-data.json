@@ -1,0 +1,190 @@
+{
+  "truth": {
+    "documentedOrder": ["PPS", "ISS", "IRIS", "PLS", "PRA", "UVS", "CRS", "LECP"],
+    "stillOn": ["MAG", "PWS"],
+    "puzzleMapping": ["C", "P", "R"],
+    "fact": "NASA documents cameras, plasma, and cosmic-ray sensing among the powered-down Voyager systems; magnetometer and plasma-wave sensing remain valuable interstellar measurements."
+  },
+  "blocks": {
+    "K": {
+      "letter": "K",
+      "name": "KERNEL",
+      "pages": "2×3",
+      "power": 10,
+      "science": 2,
+      "address": "0x40000",
+      "color": "#79a875",
+      "icon": "⌘",
+      "easy": "Boots the system and checks the other computers every 10 seconds.",
+      "medium": "// KERNEL: boot handshake + 10-second heartbeat.\n// Nothing else runs until the boot flag in q[3] is up, and the\n// FDS has no multiply, so the beat counter grows one tick at a time.\nq[3] = q[3] ^ 1;                  // raise the boot flag\nif ((F80 & q[3]) == 0) {          // F80 must echo the flag before we trust it\n  q[6] = q[6] + 1;                // one heartbeat tick\n  if (q[6] == 10) {               // ten ticks: time to ping the stack\n    q[6] = 0;\n    bus[0] = bus[0] | 0x02;       // 0x02 = subcomputer status request\n    wait(bus[0]);                 // hold the line until the reply lands\n    if ((bus[0] & 0x04) == 0) {   // 0x04 = every subcomputer answered\n      status = status | 0x20;     // raise the fault flag for telemetry\n    }\n  }\n}\nq[3] = q[3] & 0x0F;               // keep the boot flag, drop the rest",
+      "hard": "SETAD\nBOOT:  MLD     FLAG\n        LOR     1\n        PWD     FLAG\n        WAT     10\n        SKZ     F80\n        JMP     BOOT\nTICK:  MLD     COUNT\n        ADD     1\n        PWD     COUNT\n        MLD     COUNT\n        SUB     10\n        SKE     F83\n        JMP     TICK\n        OUT     2\n        MCX     1\n        MLD     F82\n        AND     4\n        SLC     F84\n        PWD     COUNT\n        JMP     TICK",
+      "hints": {
+        "easy": "Start here — nothing else on the board wakes up until it does.",
+        "medium": "Only one block flips its own flag, waits, and counts to ten before it pokes the bus.",
+        "hard": "A label that jumps into itself before anything else is allowed to run. Follow F80."
+      },
+      "chips": ["boot and heartbeat", "camera exposure", "frame packing", "heater timing", "particle count", "antenna pointing"],
+      "answer": 0
+    },
+    "T": {
+      "letter": "T",
+      "name": "TELEMETRY",
+      "pages": "1×4",
+      "power": 3,
+      "science": 4,
+      "address": "0x44000",
+      "color": "#6da5c4",
+      "icon": "≋",
+      "easy": "Packs the numbers we read into the 64-byte frames that fly home.",
+      "medium": "// TELEMETRY: pack 64 science words into one 64-byte frame.\n// Channel 0 (MDS) is the only path home, so every frame is\n// checksummed before it is allowed to leave the buffer.\np = 0;\ncarry = 0;\nchecksum = 0;\nwhile (p < 64) {\n  w = sample[p] ^ carry;          // fold the previous nibble in\n  frame[p] = (w & 0x3F) | bank;   // 6 data bits + bank select\n  carry = (w >> 2) & 0x0F;        // top 4 bits ride to the next word\n  checksum = checksum + frame[p]; // repeated addition, FDS style\n  p = p + 1;\n}\nframe[0] = frame[0] | ((checksum >> 8) & 0x01); // parity for the link\nif ((frame[0] & 0x01) != 0) flush(frame);       // complete: ship on MDS\ndma[0].word = frame[0];           // arm the MDS channel with the tail\ndma[0].count = dma[0].count - 1;\nstatus = status ^ 0x04;           // toggle the frame-ready flag",
+      "hard": "FRAME: SETAD\n       DMAAD   0\n       DMAEN   0\n       MLD     WORD\n       LXR     CARRY\n       AND     63\n       LOR     BANK\n       DMAOU   0\n       MLD     WORD\n       ADD     SUM\n       PWD     SUM\n       ISZ     GATE\n       SKO     F90\n       JMP     FRAME\n       PWD     F92\n       SETAU\n       DMAAD   1\n       DMAEN   1",
+      "hints": {
+        "easy": "Whatever flies home to Earth is packed into 64-byte letters first.",
+        "medium": "One block walks a 64-word buffer and carries a nibble from one word to the next.",
+        "hard": "Channel 0 is MDS — telemetry home — and it never yields priority. Find the DMA that owns it."
+      },
+      "chips": ["frame packing", "boot and heartbeat", "magnetic sampling", "camera exposure", "fuel heating", "memory erase"],
+      "answer": 0
+    },
+    "C": {
+      "letter": "C",
+      "name": "CAMERA DRIVER",
+      "pages": "2×2",
+      "power": 8,
+      "science": 6,
+      "address": "0x48000",
+      "color": "#c7895c",
+      "icon": "◉",
+      "easy": "Tells the two cameras when to take a picture.",
+      "medium": "// CAMERA DRIVER: trigger the two imaging science cameras (ISS).\n// Channel 2 owns the frame transfer, so the exposure mask is\n// latched first and the frame only moves once the buffer is empty.\nr = port[2];\nmask = (r >> 4) & 0x03;           // 2-bit exposure code from the camera\nif ((r & 0x20) == 0) {\n  retry = retry + 1;              // camera busy: wait for the next scan\n} else {\n  latch = (latch ^ mask) & 0x03;  // toggle the exposure line\n  dma[2].word = latch;            // hand the mask to the ISS channel\n  dma[2].count = dma[2].count - 1;\n}\nif (dma[2].count == 0) {\n  port[2] = port[2] | 0x80;       // frame moved: clear the busy flag\n  retry = 0;\n} else {\n  status = status | 0x40;         // frame still in flight\n}",
+      "hard": "IMAGE: SETAD\n       SWI     2\n       SKZ     F84\n       JMP     IMAGE\n       MLD     PORT\n       SRS     4\n       AND     3\nLATCH: LXR     LATCH\n       AND     3\n       PWD     LATCH\n       DMAAD   2\n       DMAIN   2\n       SKC     F85\n       SETJD\n       SLC     F86\n       JMP     IMAGE",
+      "hints": {
+        "easy": "The one that decides when the cameras blink.",
+        "medium": "It latches a 2-bit mask from a port and only releases the frame when the channel count runs dry.",
+        "hard": "SWI 2 is the imaging port. The frame moves only when F84 goes quiet."
+      },
+      "chips": ["camera exposure", "frame packing", "boot and heartbeat", "particle count", "heater timing", "magnetic sampling"],
+      "answer": 0
+    },
+    "M": {
+      "letter": "M",
+      "name": "MAGNETOMETER",
+      "pages": "1×2",
+      "power": 2,
+      "science": 5,
+      "address": "0x4C000",
+      "color": "#9b82c4",
+      "icon": "✣",
+      "easy": "Measures the magnetic fields of stars outside our Sun.",
+      "medium": "// MAGNETOMETER: three 12-bit flux samples in, one vector out.\n// It is one of the few instruments that stayed on for interstellar\n// science, so the word budget for its output is tiny.\na = in[1] & 0x0FFF;               // X flux, 12-bit two's complement\nb = in[2] & 0x0FFF;               // Y flux\nc = in[3] & 0x0FFF;               // Z flux\nbase = (a ^ b) + carry;           // fold the previous carry in\ncarry = (base >> 8) & 0x0F;\nvector[0] = base & 0xFF;          // strongest axis first\nvector[1] = (b - c) & 0xFF;       // shear between Y and Z\nif ((carry & 1) != 0) {\n  out[1] = vector[0];             // only the high carry words leave\n}\nif ((vector[0] & 0x80) != 0) {\n  status = status | 0x02;         // field flipped: mark the sample\n}",
+      "hard": "FIELD: SETAD\n       SWI     1\n       SKZ     F88\n       JMP     FIELD\n       MLD     MAGX\n       AND     4095\n       PWD     BASE\n       MLD     MAGY\n       LXR     BASE\n       ADD     CARRY\n       PWD     AXIS0\n       MLD     MAGY\n       SUB     MAGZ\n       PWD     AXIS1\n       MLD     CARRY\n       AND     1\n       SKZ     F89\n       SWO     1\n       JMP     FIELD",
+      "hints": {
+        "easy": "A compass for the magnetic fields of other stars.",
+        "medium": "Three 12-bit samples come in, one vector goes out. Only the high carry words leave.",
+        "hard": "Three fields, one vector. The last AND with 1 decides whether SWO 1 ever fires."
+      },
+      "chips": ["magnetic sampling", "camera exposure", "frame packing", "boot and heartbeat", "fuel heating", "particle count"],
+      "answer": 0
+    },
+    "R": {
+      "letter": "R",
+      "name": "COSMIC RAY",
+      "pages": "1×2",
+      "power": 2,
+      "science": 5,
+      "address": "0x50000",
+      "color": "#b17fa1",
+      "icon": "✦",
+      "easy": "Counts particles raining in from dead stars.",
+      "medium": "// COSMIC RAY: pulse counting from the particle detector.\n// Each pulse is an edge, not a level, so the last sample is kept\n// and XORed against the new one before anything is counted.\nsample = in[3];\nedge = sample ^ previous;         // 1 only where the line moved\nprevious = sample;\nif ((edge & 0x0400) == 0) {\n  gate = gate + 1;                // no pulse on the count line\n  if ((gate & 0x07) == 0) {\n    accum = accum + 1;            // tally every eighth quiet gate\n  }\n}\nif ((sample & 0x8000) != 0) {\n  status = status | 0x08;         // high-rate warning for the buffer\n  accum = accum + 4;              // the burst is worth four counts\n}\ndma[1].word = accum & 0xFF;       // stage the count for the tape",
+      "hard": "COUNT: SETAD\n       SWI     3\n       SKZ     F8A\n       JMP     COUNT\n       MLD     PULSE\n       LXR     LAST\n       PWD     LAST\n       AND     1024\n       SKZ     F8B\n       MLD     TALLY\n       ADD     1\n       PWD     TALLY\n       MLD     PULSE\n       AND     32768\n       SKO     F8C\n       MLD     TALLY\n       ADD     4\n       PWD     TALLY\n       DMAAD   1\n       DMAOU   1\n       JMP     COUNT",
+      "hints": {
+        "easy": "It counts the rain of dead stars.",
+        "medium": "It keeps the last sample, XORs the new one against it, and tallies every eighth quiet gate.",
+        "hard": "It remembers its last pulse in LAST. The high bit is the alarm and is worth four counts."
+      },
+      "chips": ["particle count", "magnetic sampling", "camera exposure", "frame packing", "antenna pointing", "heater timing"],
+      "answer": 0
+    },
+    "P": {
+      "letter": "P",
+      "name": "PLASMA",
+      "pages": "1×2",
+      "power": 4,
+      "science": 3,
+      "address": "0x54000",
+      "color": "#d29a5d",
+      "icon": "∿",
+      "easy": "Weighs the wind that comes from the Sun.",
+      "medium": "// PLASMA: solar-wind density and speed from two 10-bit channels.\n// The wind changes slowly, so one average out of every four phases\n// of a 16-count cycle is enough to keep the science budget happy.\nu = (in[4] & 0x03FF) - zero;      // density, 10-bit\nv = (in[5] & 0x03FF) - zero;      // speed, 10-bit\nphase = (phase + 1) & 0x0F;\nif ((phase & 3) == 0) {           // phases 0, 4, 8, 12 only\n  sum = sum + u;                  // repeated addition = multiply\n  drift = drift + (v >> 2);       // slow the speed down fourfold\n}\nif ((drift & 0x20) != 0) {\n  out[4] = sum & 0xFF;            // drift crossed the door: publish\n}\nif ((u & 0x200) != 0) {\n  status = status | 0x08;         // dense wind: flag for the buffer\n}",
+      "hard": "WIND:  SETAD\n       SWI     4\n       SKZ     F8D\n       JMP     WIND\n       MLD     DENSITY\n       AND     1023\n       PWD     SUM\n       MLD     PHASE\n       ADD     1\n       PWD     PHASE\n       MLD     PHASE\n       AND     3\n       SKE     F8E\n       JMP     DRIFT\n       MLD     SPEED\n       LRS     2\n       ADD     DRIFT\nDRIFT: MLD     DRIFT\n       ADD     SUM\n       PWD     DRIFT\n       MLD     DRIFT\n       AND     32\n       SKO     F8F\n       SWO     4\n       JMP     WIND",
+      "hints": {
+        "easy": "A wind gauge for the solar wind.",
+        "medium": "One average out of every four phases of a 16-count cycle. The drift bit is the door.",
+        "hard": "PHASE and 3: the sum only moves on four of sixteen counts, and DRIFT crosses 32."
+      },
+      "chips": ["solar wind", "particle count", "camera exposure", "frame packing", "boot and heartbeat", "magnetic sampling"],
+      "answer": 0
+    },
+    "H": {
+      "letter": "H",
+      "name": "HEATER CONTROL",
+      "pages": "1×3",
+      "power": 6,
+      "science": 3,
+      "address": "0x58000",
+      "color": "#d27b6f",
+      "icon": "⌁",
+      "easy": "Keeps the fuel tanks from freezing.",
+      "medium": "// HEATER CONTROL: keep the fuel tanks above the freeze line.\n// The relay may only close when the error is negative, and the\n// guard counter stops a stuck sensor from frying the tanks.\nt = in[6] & 0x0FFF;               // tank temperature, 12-bit\nerror = t - limit;                // negative = too cold\nif ((error & 0x0800) != 0) {\n  relay = relay | 0x01;           // close the heater relay\n  guard = guard + 1;\n} else {\n  relay = relay & 0x0E;           // open the relay\n  guard = 0;\n}\nif (guard > 3) {\n  status = status | 0x10;         // four beats hot: something is stuck\n  relay = relay & 0x0E;           // force it off until the next cycle\n}\nout[5] = relay & 0xFF;            // relay state for telemetry",
+      "hard": "THERM: SETAD\n       MLD     TEMP\n       AND     4095\n       SUB     MINIMUM\n       AND     2048\n       SKO     F8F\n       JMP     SAFE\n       MLD     RELAY\n       LOR     1\n       PWD     RELAY\n       MLD     GUARD\n       ADD     1\n       PWD     GUARD\nSAFE:  MLD     GUARD\n       ADD     3\n       SKE     F93\n       MLD     RELAY\n       AND     14\n       PWD     RELAY\n       WAT     20\n       JMP     THERM",
+      "hints": {
+        "easy": "The furnace that keeps the fuel tanks from freezing.",
+        "medium": "The relay closes only when the error's high bit is set, and a stuck sensor trips the guard.",
+        "hard": "TEMP minus MINIMUM: the 2048 bit says heat, the guard says stop, WAT 20 says wait."
+      },
+      "chips": ["fuel heating", "frame packing", "solar wind", "boot and heartbeat", "particle count", "camera exposure"],
+      "answer": 0
+    },
+    "G": {
+      "letter": "G",
+      "name": "GREETINGS",
+      "pages": "1×1",
+      "power": 0,
+      "science": 1,
+      "address": "0x5C000",
+      "color": "#d7b85c",
+      "icon": "✺",
+      "easy": "Plays the 55-language message when someone says hello.",
+      "medium": "// GREETINGS: the 55-language message, streamed on PRA (channel 3).\n// The trigger is a single word in the inbox; until it arrives the\n// block idles and costs nothing, which is why its power draw is zero.\nword = inbox[0] ^ inbox[1];\nword = word & 0x1F;\nif (word == 0x0D) {               // 0x0D = the hello word\n  ptr = 0;\n  while (ptr < 55) {              // one entry per language\n    dma[3].word = table[ptr];\n    dma[3].count = dma[3].count - 1;\n    ptr = ptr + 1;\n  }\n  status = status | 0x20;         // message is on the wire\n} else {\n  return = word;                  // keep the last word for the log\n}",
+      "hard": "HELLO: SETAD\n       MLD     INBOX\n       LXR     INBOX1\n       AND     31\n       SUB     13\n       SKZ     F94\n       JMP     RETURN\n       SETAU\n       DMAAD   3\n       DMAEN   3\nFIFTY: MLD     TABLE\n       DMAOU   3\n       ISZ     WORDS\n       SKO     F95\n       JMP     FIFTY\n       SETJD\n       WAT     55\nRETURN: JMP     HELLO",
+      "hints": {
+        "easy": "55 languages, played when someone says hello.",
+        "medium": "It idles for free until word 13 arrives in the inbox, then streams 55 entries on channel 3.",
+        "hard": "INBOX minus 13: zero means fifty-five words ride PRA out of the door."
+      },
+      "chips": ["greeting playback", "fuel heating", "frame packing", "camera exposure", "magnetic sampling", "boot and heartbeat"],
+      "answer": 0
+    },
+    "S": {
+      "letter": "S",
+      "name": "SCIENCE BUFFER",
+      "pages": "3×4",
+      "power": 12,
+      "science": 10,
+      "address": "0x60000",
+      "color": "#df7777",
+      "icon": "▦",
+      "easy": "The big one where pictures and readings wait for the tape recorder.",
+      "medium": "// SCIENCE BUFFER: staging area for pictures and readings.\n// 64 rotating slots, each holding one 4-word record, feed the tape\n// recorder on channel 1, and a checksum word rides at the end.\nslot = (slot + 1) & 0x3F;         // 64-slot ring\nbase = (slot << 2) | bank;        // slot * 4 words, banked\nif ((dma[1].count & 0x01) == 0) {\n  dma[1].word = memory[base];     // move one word to the DSS channel\n  dma[1].count = dma[1].count - 1;\n}\nchecksum = checksum + memory[base]; // every word that passes is added\nif ((status & 0x04) != 0) {\n  flush = 1;                      // telemetry asked for the tail\n}\nif (flush != 0) {\n  dma[1].word = checksum;         // the checksum closes the record\n  flush = 0;\n}",
+      "hard": "BUFF:  SETAD\n       DMAAD   1\n       DMAEN   1\n       DMADI   1\n       SKZ     F96\n       JMP     BUFF\n       MLD     SLOT\n       ADD     1\n       PWD     SLOT\n       MLD     SLOT\n       SLS     2\n       AND     63\n       LOR     BANK\n       PWD     BASE\n       MLD     BASE\n       ADD     CHECKSUM\n       PWD     CHECKSUM\n       MLD     STATUS\n       AND     4\n       SKE     F97\n       JMP     TAIL\n       MLD     BASE\n       DMAOU   1\n       JMP     BUFF\nTAIL:  MLD     CHECKSUM\n       DMAOU   1\n       SETJD\n       JMP     BUFF",
+      "hints": {
+        "easy": "The warehouse where pictures and readings wait for the tape recorder.",
+        "medium": "A 64-slot ring, one 4-word record at a time, and a checksum that closes every record.",
+        "hard": "Channel 1 is the tape: SLOT shifts left twice, the bank is or'ed in, and CHECKSUM rides the tail."
+      },
+      "chips": ["buffer and tape staging", "frame packing", "boot and heartbeat", "camera exposure", "solar wind", "fuel heating"],
+      "answer": 0
+    }
+  }
+}

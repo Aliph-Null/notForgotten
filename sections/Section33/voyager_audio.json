@@ -1,0 +1,55 @@
+{
+  "enabled": true,
+  "volume": 1,
+  "lines": {
+    "s01_l01": { "src": "audio/s01_l01.mp3", "volume": 1, "delay": 0 },
+    "s01_l02": { "src": "audio/s01_l02.mp3", "volume": 1, "delay": 0 },
+    "s01_l03": { "src": "audio/s01_l03.mp3", "volume": 1, "delay": 0 },
+    "s01_l04": { "src": "audio/s01_l04.mp3", "volume": 1, "delay": 0 },
+
+    "s02_l01": { "src": "audio/s02_l01.mp3", "volume": 1, "delay": 0 },
+    "s02_l02": { "src": "audio/s02_l02.mp3", "volume": 1, "delay": 0 },
+    "s02_l03": { "src": "audio/s02_l03.mp3", "volume": 1, "delay": 0 },
+
+    "s03_l01": { "src": "audio/s03_l01.mp3", "volume": 1, "delay": 0 },
+    "s03_l02": { "src": "audio/s03_l02.mp3", "volume": 1, "delay": 0 },
+    "s03_l03": { "src": "audio/s03_l03.mp3", "volume": 1, "delay": 0 },
+
+    "s04_l01": { "src": "audio/s04_l01.mp3", "volume": 1, "delay": 0 },
+    "s04_l02": { "src": "audio/s04_l02.mp3", "volume": 1, "delay": 0 },
+    "s04_l03": { "src": "audio/s04_l03.mp3", "volume": 1, "delay": 0 },
+    "s04_l04": { "src": "audio/s04_l04.mp3", "volume": 1, "delay": 0 },
+    "s04_l05": { "src": "audio/s04_l05.mp3", "volume": 1, "delay": 0 },
+    "s04_l06": { "src": "audio/s04_l06.mp3", "volume": 1, "delay": 0 },
+
+    "s05_l01": { "src": "audio/s05_l01.mp3", "volume": 1, "delay": 0 },
+    "s05_l02": { "src": "audio/s05_l02.mp3", "volume": 1, "delay": 0 },
+    "s05_l03": { "src": "audio/s05_l03.mp3", "volume": 1, "delay": 0 },
+
+    "s06_l01": { "src": "audio/s06_l01.mp3", "volume": 1, "delay": 0 },
+    "s06_l02": { "src": "audio/s06_l02.mp3", "volume": 1, "delay": 0 },
+    "s06_l03": { "src": "audio/s06_l03.mp3", "volume": 1, "delay": 0 },
+
+    "s07_l01": { "src": "audio/s07_l01.mp3", "volume": 1, "delay": 0 },
+    "s07_l02": { "src": "audio/s07_l02.mp3", "volume": 1, "delay": 0 },
+    "s07_l03": { "src": "audio/s07_l03.mp3", "volume": 1, "delay": 0 },
+
+    "s08_l01": { "src": "audio/s08_l01.mp3", "volume": 1, "delay": 0 },
+    "s08_l02": { "src": "audio/s08_l02.mp3", "volume": 1, "delay": 0 },
+    "s08_l03": { "src": "audio/s08_l03.mp3", "volume": 1, "delay": 0 },
+    "s08_l04": { "src": "audio/s08_l04.mp3", "volume": 1, "delay": 0 },
+
+    "s09_l01": { "src": "audio/s09_l01.mp3", "volume": 1, "delay": 0 },
+    "s09_l02": { "src": "audio/s09_l02.mp3", "volume": 1, "delay": 0 },
+    "s09_l03": { "src": "audio/s09_l03.mp3", "volume": 1, "delay": 0 },
+    "s09_l04": { "src": "audio/s09_l04.mp3", "volume": 0.8, "delay": 0 },
+
+    "e_g01": { "src": "audio/e_g01.mp3", "volume": 0.9, "delay": 0 },
+    "e_g02": { "src": "audio/e_g02.mp3", "volume": 0.9, "delay": 0 },
+    "e_g03": { "src": "audio/e_g03.mp3", "volume": 0.9, "delay": 0 },
+
+    "e_p01": { "src": "audio/e_p01.mp3", "volume": 1, "delay": 0 },
+    "e_p02": { "src": "audio/e_p02.mp3", "volume": 1, "delay": 0 },
+    "e_p03": { "src": "audio/e_p03.mp3", "volume": 1, "delay": 0 }
+  }
+}

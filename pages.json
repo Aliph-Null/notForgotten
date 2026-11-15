@@ -82,6 +82,13 @@
       "year": "1981",
       "era": "The Space Shuttle era",
       "Background-id": 1
+      "Order": 22,
+      "id": "sec-2",
+      "title": "Voyager 1 and 2",
+      "path": "sections/Section22/index.html",
+      "year": "1977",
+      "era": "The Space Shuttle era",
+      "Background-id": 3
     },
     {
       "Order": 24,
@@ -127,6 +134,13 @@
       "year": "2009",
       "era": "Modern era",
       "Background-id": 1
+      "Order": 33,
+      "id": "sec-33",
+      "title": "Voyager 1 - don't forget me",
+      "path": "sections/Section33/index.html",
+      "year": "2024",
+      "era": "Modern era",
+      "Background-id": 12
     },
     {
       "Order": 34,

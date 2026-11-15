@@ -1,0 +1,59 @@
+{
+  "gridSize": 10,
+  "game": {
+    "powerLimit": 38,
+    "scienceTotal": 39,
+    "requireRetirementFromTier": "medium"
+  },
+  "grid": {
+    "gap": 1,
+    "padding": 8,
+    "radius": 17,
+    "cellRadius": 5,
+    "cellBorder": "#d7e1da",
+    "cellBackground": "#eef3ef",
+    "boardBorder": "#d5e0d8",
+    "boardBackground": "#f7faf7"
+  },
+  "panel": {
+    "width": 250,
+    "border": "#d7e1da",
+    "background": "#ffffff"
+  },
+  "shape": {
+    "fillOpacity": 0.38,
+    "strokeWidth": 0.05,
+    "cornerRadius": 0.18,
+    "strokeLineJoin": "round",
+    "strokeLineCap": "round",
+    "overlapColor": "#d65353",
+    "overlapFill": "#ed737399",
+    "colors": {
+      "A": "#df7777",
+      "B": "#5b9ed1",
+      "C": "#d3a64e",
+      "D": "#8f72bd"
+    }
+  },
+  "cut": {
+    "previewColor": "#202a25",
+    "previewWidth": 4,
+    "tokenColor": "#202a25",
+    "validColor": "#2f9b68"
+  },
+  "ui": {
+    "labelBackground": "#ffffffb8",
+    "labelColor": "#21332a",
+    "unknownLabelBackground": "#ffffff80",
+    "unknownLabelColor": "#59665f"
+  },
+  "feedback": {
+    "particleCount": 14,
+    "particleMinDistance": 18,
+    "particleMaxDistance": 46,
+    "particleDuration": 650
+  },
+  "assembly": {
+    "lineCount": 50
+  }
+}

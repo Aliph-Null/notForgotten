@@ -4,7 +4,7 @@
   right: 0;
   bottom: 0;
   z-index: 10;
-  padding: 14px 8vw 30px;
+  padding: 28px 8vw 30px;
   background: linear-gradient(to top, #222 0%, transparent);
   pointer-events: none;
   font-family: var(--font-display, "Space Grotesk", sans-serif);
@@ -49,8 +49,8 @@
 .timeline-era::before,
 .timeline-era::after {
   content: "";
-  flex: 1 1 0;
-  min-width: 0; /* the side lines give way first so the era name has room */
+  flex: 1;
+  min-width: 12px;
   height: 1px;
   background: currentColor;
   opacity: 0.6;

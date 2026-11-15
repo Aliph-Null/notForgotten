@@ -55,7 +55,10 @@
   window.addEventListener(
     "wheel",
     (event) => {
-      if (ownsGestures(event.target)) {
+      if (
+        ownsGestures(event.target) ||
+        canScrollInside(event.target, event.deltaY)
+      ) {
         return;
       }
       const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
@@ -71,7 +74,11 @@
         // Horizontal trackpad swipes would otherwise trigger the browser's "Back"
         event.preventDefault();
       }
-      post({ type: "SECTION_WHEEL", deltaX: event.deltaX, deltaY: event.deltaY });
+      post({
+        type: "SECTION_WHEEL",
+        deltaX: event.deltaX,
+        deltaY: event.deltaY,
+      });
     },
     { passive: false },
   );
