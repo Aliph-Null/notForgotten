@@ -21,6 +21,15 @@
       "Background-id": 7
     },
     {
+      "Order": 3,
+      "id": "sec-3",
+      "title": "Babylonian star catalogue",
+      "path": "sections/SectionBabylonianStar/index.html",
+      "year": "1200 BC",
+      "era": "Ancient astronomy",
+      "Background-id": 7
+    },
+    {
       "Order": 4,
       "id": "sec-4",
       "title": "Eratosthenes measures the Earth",

@@ -1,0 +1,25 @@
+{
+  "Year": "1200 BC",
+  "Dates": [
+    {
+      "date": "c. 1200 BC",
+      "text": "An early Babylonian star catalogue records stars and constellations observed in Mesopotamia."
+    },
+    {
+      "date": "c. 1000 BC",
+      "text": "The MUL.APIN compendium organizes star groups and records when they rise and set."
+    },
+    {
+      "date": "7th century BC",
+      "text": "Babylonian astronomical diaries preserve regular observations of celestial events."
+    }
+  ],
+  "Title": "Babylonian star catalogue",
+  "Body-Text": "Babylonian scholars recorded stars and planetary motions on clay tablets, building on earlier Mesopotamian sky-watching. Their star lists helped organize the sky and track celestial cycles. Planets were linked with gods: Nabu with Mercury, Sin with the Moon, Shamash with the Sun, Ishtar with Venus, Ninurta with Saturn, and Nergal with Mars. Greek and Roman traditions later developed their own planetary associations, giving us many of the names still used today.",
+  "Path": "babylonian-tablet.jpg",
+  "Gallery": [],
+  "Captions": {},
+  "ModelPath": "",
+  "ModelFacts": [],
+  "Bottom %": 8
+}
