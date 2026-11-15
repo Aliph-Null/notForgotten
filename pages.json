@@ -12,6 +12,15 @@
       "Background-id": 1
     },
     {
+      "Order": 7,
+      "id": "sec-7",
+      "title": "Galileo discovers Jupiter's moons",
+      "path": "SectionGalileo/index.html",
+      "year": "1610",
+      "era": "The scientific revolution",
+      "Background-id": 12
+    },
+    {
       "Order": 8,
       "id": "sec-8",
       "title": "Newton's law of gravitation",

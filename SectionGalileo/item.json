@@ -1,0 +1,27 @@
+{
+  "Year": "1610",
+  "Dates": [
+    {
+      "date": "1610-01-07",
+      "text": "Galileo spots three objects near Jupiter, later identified as its moons."
+    },
+    {
+      "date": "1610-01-13",
+      "text": "He identifies a fourth moon orbiting Jupiter."
+    },
+    {
+      "date": "1610-03-13",
+      "text": "Sidereus Nuncius describes lunar mountains, Milky Way stars, and Jupiter's moons."
+    }
+  ],
+  "Title": "Galileo discovers Jupiter's moons",
+  "Body-Text": "In 1609, Galileo turned his improved telescope toward the night sky. He saw mountains and craters on the Moon, showing it was not a perfect sphere, and resolved the Milky Way into countless stars. In 1610, he discovered four moons orbiting Jupiter and observed the phases of Venus. Together, these findings challenged the belief that everything in the heavens revolved around Earth and helped transform our understanding of the Solar System.",
+  "Path": "galileo.webp",
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8
+}
