@@ -231,8 +231,8 @@ h1 {
   object-fit: contain;
 }
 
-/* Spread out: every card gets an equal slice of the box */
-.preview-stage.has-gallery:hover .gallery-card,
+/* Spread out: every card gets an equal slice of the box.
+   Phones: only while .is-expanded (set by a tap, removed when the image window closes) */
 .preview-stage.has-gallery.is-expanded .gallery-card {
   top: 12%;
   left: calc(3% + var(--i) * (94% / var(--count)));
@@ -241,9 +241,20 @@ h1 {
   transform: none;
 }
 
-.preview-stage.has-gallery:hover .gallery-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-6px) scale(1.04);
+/* Mouse only: on phones a tap leaves :hover "stuck", which kept the cards spread out */
+@media (hover: hover) {
+  .preview-stage.has-gallery:hover .gallery-card {
+    top: 12%;
+    left: calc(3% + var(--i) * (94% / var(--count)));
+    width: calc(94% / var(--count) - 1.5%);
+    height: 76%;
+    transform: none;
+  }
+
+  .preview-stage.has-gallery:hover .gallery-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-6px) scale(1.04);
+  }
 }
 
 
@@ -702,9 +713,6 @@ h1 {
   }
 }
 
-
-/* ---------- Captions: short text under each image (item.json "Captions") ---------- */
-
 .preview-caption {
   position: absolute;
   z-index: 3;
@@ -740,11 +748,20 @@ h1 {
 }
 
 /* Spread-out cards are narrow: smaller caption, at most 3 lines */
-.preview-stage.has-gallery:hover .gallery-caption,
 .preview-stage.has-gallery.is-expanded .gallery-caption {
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   font-size: 0.7rem;
+}
+
+@media (hover: hover) {
+  .preview-stage.has-gallery:hover .gallery-caption {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    font-size: 0.7rem;
+  }
 }

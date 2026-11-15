@@ -390,6 +390,18 @@ document.getElementById("modelDialog").addEventListener("click", (event) => {
   }
 });
 
+// Phones: the spread-out gallery closes again when the image window closes,
+document.getElementById("modelDialog").addEventListener("close", () => {
+  document.getElementById("preview").classList.remove("is-expanded");
+});
+
+document.addEventListener("click", (event) => {
+  const preview = document.getElementById("preview");
+  if (!preview.contains(event.target) && !event.target.closest("dialog")) {
+    preview.classList.remove("is-expanded");
+  }
+});
+
 loadItem().catch((error) => {
   console.error("Unable to render item:", error);
   document.getElementById("loadError").textContent = error.message;
