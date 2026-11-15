@@ -1,0 +1,33 @@
+{
+  "Year": "2000 BC",
+  "Dates": [
+    {
+      "date": "c. 1600 BC",
+      "text": "The disc is buried with a Bronze Age hoard on Mittelberg after centuries of use."
+    },
+    {
+      "date": "1999",
+      "text": "Metal detectorists illegally unearth the disc and hoard near Nebra, Germany."
+    },
+    {
+      "date": "2002",
+      "text": "Police recover the hoard in Basel and return it to Saxony-Anhalt authorities."
+    }
+  ],
+  "Title": "Nebra sky disc",
+  "Body-Text": "Burried on Mittelberg hill in Germany around 1600 BC, the disc, with a diameter of about 30 cm and a mass of 2.2 kg, displays a blue-green patina inlaid with gold symbols. It is believed to be world’s oldest known concrete depiction of the cosmos. Investigations revealed that the object had been în use around 400 years before burial, but that it’s use had been forgotten by the time of burial. The inlaid gold depicted full moon, a crescent moon about 4 or 5 days old and the Pleiades star cluster în a specific arrangement.",
+  "Path": "nebra.jpg",
+  "Gallery": [
+    ""
+  ],
+  "Captions": {
+    "nebra.jpg": "The Nebra Sky Disc, with gold inlays depicting stars, a crescent, a large solar or lunar disk, and horizon arcs."
+  },
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8
+}
