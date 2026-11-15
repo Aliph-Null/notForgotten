@@ -3,10 +3,10 @@
 :root {
   color-scheme: light;
   --ink: hsl(210, 6%, 99%);
-  --muted: hsl(210, 10%, 70%);
+  --muted: hsl(210, 10%, 85%);
   --line: rgba(23, 26, 29, 0.18);
   --accent: #df3d3d;
-  --panel: rgba(255, 255, 255, 0.72);
+  --panel: rgba(255, 255, 255, 0.33);
   --bottom-clearance: 0dvh;
 }
 
@@ -27,7 +27,7 @@ body {
   width: 100dvw;
   height: 100dvh;
   overflow: hidden;
-  background: linear-gradient(to top, #f7f7f400 0%, #e8eef300 100%);
+  background: #22222266;
 }
 
 .container {
