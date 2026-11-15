@@ -15,6 +15,11 @@
   const sky = document.createElement("div");
   sky.className = "intro-sky";
 
+  // Faint background stars (few, so the constellation stands out)
+  const starCanvas = document.createElement("canvas");
+  starCanvas.className = "intro-stars";
+  sky.appendChild(starCanvas);
+
   const svg = document.createElementNS(SVG_NS, "svg");
   svg.setAttribute("class", "intro-svg");
 
@@ -47,12 +52,7 @@
   hint.className = "intro-hint";
   hint.textContent = "Click the constellation";
 
-  // Image credit (required by NASA/ESA)
-  const credit = document.createElement("p");
-  credit.className = "intro-credit";
-  //credit.textContent = "Background: Hubble Ultra Deep Field — NASA, ESA, H. Teplitz, M. Rafelski, A. Koekemoer, R. Windhorst, Z. Levay";
-
-  overlay.append(sky, svg, trigger, hint, credit);
+  overlay.append(sky, svg, trigger, hint);
   document.body.appendChild(overlay);
 
 
@@ -96,9 +96,61 @@
     };
   }
 
+  // Same "random" sky every time (seeded random numbers)
+  function seeded(seed) {
+    return () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+  }
+
+  // Draws the faint background stars; fewer and dimmer around the constellation
+  function drawSky(box) {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+    starCanvas.width = w * dpr;
+    starCanvas.height = h * dpr;
+    const c = starCanvas.getContext("2d");
+    c.scale(dpr, dpr);
+    const rand = seeded(7);
+    const count = Math.round((w * h) / 16000);
+    for (let i = 0; i < count; i++) {
+      const x = rand() * w;
+      const y = rand() * h;
+      const nearConstellation =
+        x > box.left - 40 && x < box.left + box.width + 40 &&
+        y > box.top - 40 && y < box.top + box.height + 40;
+      if (nearConstellation && rand() < 0.6) continue;
+      const r = 0.3 + rand() * 0.9;
+      const alpha = (nearConstellation ? 0.15 : 0.25) + rand() * 0.4;
+      const tint = rand() < 0.2 ? "255, 225, 190" : "200, 215, 255";
+      c.beginPath();
+      c.arc(x, y, r, 0, Math.PI * 2);
+      c.fillStyle = `rgba(${tint}, ${alpha})`;
+      c.fill();
+    }
+
+    sky.querySelectorAll(".intro-twinkle").forEach((el) => el.remove());
+    for (let i = 0; i < 6; i++) {
+      const dot = document.createElement("span");
+      dot.className = "intro-twinkle";
+      let x, y;
+      do {
+        x = rand() * w;
+        y = rand() * h;
+      } while (x > box.left - 40 && x < box.left + box.width + 40 && y > box.top - 40 && y < box.top + box.height + 40);
+      dot.style.left = x + "px";
+      dot.style.top = y + "px";
+      dot.style.animationDelay = (rand() * 4).toFixed(2) + "s";
+      sky.appendChild(dot);
+    }
+  }
+
   // Draws the spiral, stars and lines, and places the click area over them
   function render() {
     const layout = spiralLayout();
+    drawSky(layout.box);
     spiral.setAttribute(
       "d",
       layout.curve.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" "),
@@ -181,7 +233,6 @@
     requestAnimationFrame(frame);
   }
 
-  // Fades out the stars and removes the overlay from the page
   function finish() {
     overlay.classList.add("is-done");
     setTimeout(() => {

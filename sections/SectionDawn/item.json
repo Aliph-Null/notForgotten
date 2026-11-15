@@ -1,0 +1,45 @@
+{
+  "Year": "2007",
+  "Dates": [
+    {
+      "date": "2007-09-27",
+      "text": "Dawn launches from Cape Canaveral on a Delta II rocket."
+    },
+    {
+      "date": "2011-07-15",
+      "text": "Dawn enters orbit around the giant asteroid Vesta."
+    },
+    {
+      "date": "2015-03-06",
+      "text": "Dawn arrives at Ceres, the first spacecraft to orbit a dwarf planet."
+    },
+    {
+      "date": "2018-11-01",
+      "text": "The mission ends after Dawn runs out of fuel; it stays in orbit around Ceres."
+    }
+  ],
+  "Title": "Dawn Spaceship",
+  "Body-Text": "Dawn was NASA's first truly interplanetary spaceship. Pushed by gentle ion engines, it spent 14 months orbiting the giant asteroid Vesta, then left for the dwarf planet Ceres. Both worlds sit in the main asteroid belt between Mars and Jupiter, and Dawn became the first spacecraft to orbit two of them.",
+  "Path": "dawn_vesta.jpg",
+  "Gallery": [
+    "dawn_ceres_two_faces.jpg",
+    "dawn_vesta_color.jpg",
+    "dawn_ceres_crater.jpg",
+    "dawn_diagram.png"
+  ],
+  "Captions": {
+    "dawn_vesta.jpg": "The giant asteroid Vesta, photographed by Dawn in 2011",
+    "dawn_ceres_two_faces.jpg": "Two faces of Ceres, seen as Dawn approached in February 2015",
+    "dawn_vesta_color.jpg": "Colour-enhanced view of Vesta's rugged, cratered surface",
+    "dawn_ceres_crater.jpg": "A large impact crater on Ceres, seen from Dawn's low orbit",
+    "dawn_diagram.png": "Dawn's main parts: ion thrusters, cameras, antennas and solar arrays"
+  },
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8,
+  "Credit": "Images: NASA/JPL-Caltech/UCLA/MPS/DLR/IDA (public domain)"
+}

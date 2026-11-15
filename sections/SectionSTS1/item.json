@@ -1,0 +1,37 @@
+{
+  "Year": "1981",
+  "Dates": [
+    {
+      "date": "1981-04-12",
+      "text": "Columbia lifts off from Launch Complex 39A with John Young and Robert Crippen."
+    },
+    {
+      "date": "1981-04-14",
+      "text": "After 37 orbits, Columbia lands on the dry lakebed at Edwards Air Force Base."
+    },
+    {
+      "date": "2011-07-21",
+      "text": "Atlantis lands, ending the 135-mission Space Shuttle program."
+    }
+  ],
+  "Title": "STS-1 First space shuttle flight",
+  "Body-Text": "On 12 April 1981, Space Shuttle Columbia lifted off on STS-1, the first flight of a reusable spacecraft. Commander John Young, who had walked on the Moon during Apollo 16, and pilot Robert Crippen spent 54 hours in orbit. Over 135 missions, the shuttle went on to fly 355 astronauts into space.",
+  "Path": "sts1_launch.jpg",
+  "Gallery": [
+    "sts1_reflection.jpg",
+    "sts1_booster_separation.webp"
+  ],
+  "Captions": {
+    "sts1_launch.jpg": "Columbia clears the launch tower on STS-1, 12 April 1981",
+    "sts1_reflection.jpg": "The first shuttle launch, reflected in the water near Pad 39A",
+    "sts1_booster_separation.webp": "The two solid rocket boosters separate, about two minutes after launch"
+  },
+  "ModelPath": "",
+  "ModelFacts": [
+    "",
+    "",
+    ""
+  ],
+  "Bottom %": 8,
+  "Credit": "All images: NASA (public domain)"
+}

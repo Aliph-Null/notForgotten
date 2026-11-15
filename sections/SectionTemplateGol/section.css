@@ -371,8 +371,11 @@ h1 {
 }
 
 .model-dialog {
+  /* Centred in the space above the timeline (global.css sets margin: 0 on everything) */
+  inset: 0 0 130px;
+  margin: auto;
   width: min(94dvw, 76rem);
-  height: min(90dvh, 52rem);
+  height: min(calc(100dvh - 150px), 52rem);
   max-width: none;
   max-height: none;
   padding: 0;
@@ -394,8 +397,8 @@ h1 {
   grid-template-columns: minmax(0, 1fr);
   place-items: center;
   width: 100%;
-  height: calc(100% - var(--bottom-clearance));
-  margin: 0 auto var(--bottom-clearance);
+  height: 100%; /* the window already sits above the timeline */
+  margin: 0;
   overflow: hidden;
   border-radius: inherit;
   background: #111a22;
@@ -444,6 +447,40 @@ h1 {
   width: 100%;
   height: 100%;
   --poster-color: transparent;
+}
+
+/* Image window: same window as the 3D model, showing a clicked image large */
+.preview-stage img.zoomable,
+.preview-stage.has-gallery .gallery-card {
+  cursor: zoom-in;
+}
+
+.model-dialog.is-image .model-viewer-frame {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 7rem);
+  height: calc(100% - 3.5rem);
+  background: #0b1118;
+}
+
+.model-dialog.is-image .model-viewer-frame img {
+  display: block;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  object-fit: contain;
+}
+
+.image-dialog-caption {
+  flex: 0 0 auto;
+  max-width: none;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-align: center;
 }
 
 .model-error {
@@ -604,18 +641,28 @@ h1 {
   }
 
   .model-dialog {
+    inset: 0 0 140px;
     width: 96dvw;
-    height: 88dvh;
+    height: calc(100dvh - 160px);
   }
 
   .dialog-content {
-    margin: 0 0 var(--bottom-clearance);
+    margin: 0;
     padding: 0;
   }
 
   .model-viewer-frame {
     width: 82%;
     height: 70%;
+  }
+
+  .model-dialog.is-image .model-viewer-frame {
+    width: 92%;
+    height: 80%;
+  }
+
+  .image-dialog-caption {
+    font-size: 0.8rem;
   }
 
   .model-facts {
