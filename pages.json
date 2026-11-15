@@ -183,6 +183,15 @@
       "Background-id": 1
       },
       {
+        "Order": 32,
+      "id": "sec-32",
+      "title": "Perseverance & Ingenuity",
+      "path": "sections/Section32/index.html",
+      "year": "2021",
+      "era": "Modern era",
+      "Background-id": 11
+      },
+      {
       "Order": 33,
       "id": "sec-33",
       "title": "Voyager 1 - don't forget me",
