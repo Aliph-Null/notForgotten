@@ -5,11 +5,11 @@
   bottom: 0;
   z-index: 10;
   padding: 28px 8vw 30px;
-  background: linear-gradient(to top, #f2f2f2b8 calc(100% - 30px), transparent);
+  background: linear-gradient(to top, #222 0%, transparent);
   pointer-events: none;
   font-family: var(--font-display, "Space Grotesk", sans-serif);
   overflow: hidden;
-  --timeline-passed: #00173b;
+  --timeline-passed: #92add4c4;
   --timeline-upcoming: #8fa2dc;
 }
 
