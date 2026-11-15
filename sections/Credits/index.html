@@ -9,7 +9,6 @@
     --text: #f2f2f5;
     --muted: rgba(242, 242, 245, .55);
     --accent: #8ab4ff;
-    --fade: 14%;
   }
 
   html, body {
@@ -64,7 +63,7 @@
 
   .items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     gap: .75rem;
     width: 100%;
   }
@@ -156,6 +155,10 @@
 
   @media (max-width: 30rem) {
     .track { padding-right: 1rem; padding-left: 1rem; }
+  }
+
+  @media (max-width: 22rem) {
+    .items-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
