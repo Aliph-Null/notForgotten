@@ -1,0 +1,28 @@
+{
+  "Year": "1957",
+  "Dates": [
+    {
+      "date": "1957-10-04",
+      "text": "Sputnik 1 launches and becomes the first artificial satellite."
+    },
+    {
+      "date": "1957-10-26",
+      "text": "Its batteries run out and the radio beeps fall silent."
+    },
+    {
+      "date": "1958-01-04",
+      "text": "Sputnik 1 re-enters the atmosphere and burns up."
+    }
+  ],
+  "Title": "Sputnik 1, first satellite",
+  "Body-Text": "On 4 October 1957, the Soviet Union launched Sputnik 1. The world's first artificial satellite was only 58 cm across, weighed 83.6 kg and circled Earth about every 98 minutes. A single launch marked the start of the space age and of the space race between the United States and the USSR.",
+  "Path": "",
+  "ModelPath": "sputnik-1.glb",
+  "ModelFacts": [
+    "Diameter: 58 cm",
+    "Mass: 83.6 kg",
+    "One orbit: about 98 minutes",
+    "Four antennas broadcast its famous beeps"
+  ],
+  "Bottom %": 8
+}

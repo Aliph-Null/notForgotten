@@ -1,0 +1,32 @@
+{
+  "Year": "1990",
+  "Dates": [
+    {
+      "date": "1990-04-24",
+      "text": "Space Shuttle Discovery lifts off with Hubble in its cargo bay."
+    },
+    {
+      "date": "1990-04-25",
+      "text": "Hubble is released into orbit."
+    },
+    {
+      "date": "1993-12-02",
+      "text": "The first servicing mission launches to correct Hubble's flawed mirror."
+    },
+    {
+      "date": "2009-05-11",
+      "text": "The fifth and final servicing mission launches."
+    }
+  ],
+  "Title": "Hubble launched",
+  "Body-Text": "Named after Edwin Hubble, who proved that other galaxies exist, the telescope was ready by 1985, but the Challenger disaster grounded the shuttles. Engineers used the delay to improve it. On 24 April 1990, Discovery carried Hubble to orbit, where astronauts would later service and upgrade it.",
+  "Path": "",
+  "ModelPath": "Hubble Space Telescope (A).glb",
+  "ModelFacts": [
+    "Primary mirror: 2.4 m across",
+    "Length: about 13.2 m",
+    "Orbits Earth about every 95 minutes",
+    "Serviced by astronauts five times"
+  ],
+  "Bottom %": 8
+}
