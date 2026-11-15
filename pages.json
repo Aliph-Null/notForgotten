@@ -127,6 +127,8 @@
       "year": "1981",
       "era": "The Space Shuttle era",
       "Background-id": 1
+    },
+    {
       "Order": 22,
       "id": "sec-2",
       "title": "Voyager 1 and 2",
@@ -179,6 +181,8 @@
       "year": "2009",
       "era": "Modern era",
       "Background-id": 1
+      },
+      {
       "Order": 33,
       "id": "sec-33",
       "title": "Voyager 1 - don't forget me",
