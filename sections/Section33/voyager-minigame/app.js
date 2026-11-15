@@ -967,9 +967,20 @@ function normalizePiece(item) {
   const minX = Math.min(...item.shape.cells.map(([x]) => x));
   const minY = Math.min(...item.shape.cells.map(([, y]) => y));
   if (minX !== 0 || minY !== 0) {
+    const pointerAnchors = pointers
+      .filter((pointer) => pointer.owner === item)
+      .map((pointer) => ({
+        pointer,
+        column: item.column + pointer.local[0],
+        row: item.row + pointer.local[1]
+      }));
     item.column += minX;
     item.row += minY;
     item.shape.cells = item.shape.cells.map(([x, y]) => [x - minX, y - minY]);
+    pointerAnchors.forEach(({ pointer, column, row }) => {
+      const local = item.shape.cells.find(([x, y]) => item.column + x === column && item.row + y === row);
+      if (local) pointer.local = local;
+    });
   }
 }
 
@@ -1228,6 +1239,55 @@ function checkMission() {
   }
 }
 
+function getReturnBlockers() {
+  if (!state) return ["mission data is not ready"];
+
+  const occupied = new Set();
+  let hasOverlap = false;
+  let hasForbidden = false;
+  pieces.forEach((item) => item.shape.cells.forEach(([x, y]) => {
+    const column = item.column + x;
+    const row = item.row + y;
+    const key = `${column},${row}`;
+    if (occupied.has(key)) hasOverlap = true;
+    occupied.add(key);
+    if (row < 0 || row >= state.gridHeight || column < 0 || column >= state.gridSize
+      || state.grid[row]?.[column] > 0) {
+      hasForbidden = true;
+    }
+  }));
+
+  const pointersValid = !pendingStitch && pointers.every(({ owner, local, other }) =>
+    pieces.includes(owner)
+    && pieces.includes(other)
+    && !retiredKeys.has(owner.shape.rootKey)
+    && !retiredKeys.has(other.shape.rootKey)
+    && owner !== other
+    && Array.isArray(local)
+    && owner.shape.cells.some(([x, y]) => x === local[0] && y === local[1]));
+  const activeRoots = new Set(
+    pieces
+      .filter((item) => !retiredKeys.has(item.shape.rootKey))
+      .map((item) => item.shape.rootKey)
+  );
+  const blockers = [];
+  if (!pointersValid) blockers.push("finish or repair fragment pointers");
+  if (hasOverlap) blockers.push("remove block overlaps");
+  if (hasForbidden) blockers.push("move blocks off dead or reserved pages");
+  if (!activeRoots.has("K")) blockers.push("restore the Kernel block");
+  if (!activeRoots.has("T")) blockers.push("restore the Telemetry block");
+  return blockers;
+}
+
+function returnToRoot() {
+  const blockers = getReturnBlockers();
+  if (blockers.length) {
+    document.querySelector("#mission-log").textContent = `RETURN CHECK · ${blockers.join(" · ")}`;
+    return;
+  }
+  window.location.href = "../../../index.html";
+}
+
 function runBootSequence() {
   const log = document.querySelector("#mission-log");
   ["BOOT 01 · KERNEL", "BOOT 02 · TELEMETRY", "BOOT 03 · SCIENCE LINKS", "BOOT COMPLETE · SIGNAL CLEAN"].forEach((line, index) => {
@@ -1312,9 +1372,7 @@ window.addEventListener("resize", () => {
   layoutPieces();
 });
 document.querySelector("#truth-check").addEventListener("click", verifyTruth);
-document.querySelector("#signal-button").addEventListener("click", () => {
-  window.dispatchEvent(new CustomEvent("memory-graveyard-signal-scene"));
-});
+document.querySelector("#signal-button").addEventListener("click", returnToRoot);
 
 loadGame().catch((error) => {
   document.querySelector("#mission-log").textContent = error.message;
